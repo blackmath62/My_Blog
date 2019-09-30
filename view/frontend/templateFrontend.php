@@ -554,7 +554,7 @@
                                 <input type='submit' value='Se connecter' class="btn btn-success">
                             </form>
                             </br>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Fermer</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fermer</button>
                         </div>
                     </div>
                 </div>
