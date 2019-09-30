@@ -40,7 +40,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="#page-top">Pochet Jérôme</a>
+                <a class="navbar-brand" href="#page-top">Accueil</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -61,6 +61,9 @@
                     <li class="page-scroll">
                         <a href="#contact">Contact</a>
                     </li>
+                    <li class="page-scroll">
+                        <a href="#logoutModal" data-toggle="modal">Se connecter</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -77,7 +80,7 @@
                     <div class="intro-text">
                         <span class="name">Pochet Jérôme</span>
                         <hr class="star-light">
-                        <span class="skills">Développer Web PHP</span>
+                        <span class="skills">Développeur Web HTML, CSS, PHP, SQL</span>
                     </div>
                 </div>
             </div>
@@ -190,13 +193,13 @@
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                    <p>Etudiant sur Openclassroom, j'ai acquis les connaissances me permettant de développer des sites en PHP.</p>
+                    <p>Etudiant sur Openclassroom, j'ai acquis les connaissances me permettant de développer des sites Web en utilisant les languages Html, Css, PHP et SQL.</p>
                 </div>
                 <div class="col-lg-4">
-                    <p>Disponible immédiatement, mes connaissances me permettent d'éffectuer la maintenance de votre site Web PHP</p>
+                    <p>Disponible immédiatement, mes connaissances me permettent d'éffectuer la création, la transformation et la maintenance de votre site Web</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="#" class="btn btn-lg btn-outline">
+                    <a href="public/doc/CV.pdf" class="btn btn-lg btn-outline">
                         <i class="fa fa-download"></i> Télécharger mon CV
                     </a>
                 </div>
@@ -221,35 +224,28 @@
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Nom</label>
-                                <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
+                                <input type="text" class="form-control" placeholder="Nom / Prénom" id="name" required data-validation-required-message="Please enter your name.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Mail</label>
-                                <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address.">
-                                <p class="help-block text-danger"></p>
-                            </div>
-                        </div>
-                        <div class="row control-group">
-                            <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Téléphone</label>
-                                <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter your phone number.">
+                                <input type="email" class="form-control" placeholder="Votre adresse mail" id="email" required data-validation-required-message="Please enter your email address.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Message</label>
-                                <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                                <textarea rows="5" class="form-control" placeholder="Votre message" id="message" required data-validation-required-message="Please enter a message."></textarea>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <br>
                         <div id="success"></div>
                         <div class="row">
-                            <div class="form-group col-xs-12">
+                            <div class="form-group col-xs-12 align-items-center">
                                 <button type="submit" class="btn btn-success btn-lg">Envoyer</button>
                             </div>
                         </div>
@@ -266,8 +262,8 @@
                 <div class="row">
                     <div class="footer-col col-md-4">
                         <h3>Mon adresse</h3>
-                        <p>18 rue Jules Ferry
-                            <br>35300, Fougéres</p>
+                        <p>18 rue de la statue de la liberté
+                            <br>72500, Los Angeles</p>
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>Réseaux Sociaux</h3>
@@ -291,7 +287,7 @@
                     </div>
                     <div class="footer-col col-md-4">
                         <h3>à propos</h3>
-                        <p>Prenez contact avec moi pour discuter de votre projet <a href=mailto:jpochet@lhermitte.fr>jpochet@lhermitte.fr</a>.</p>
+                        <p>C'est avec plaisir que nous discuterons de votre projet : <a href=mailto:jpochet@lhermitte.fr>jpochet@jpochet.fr</a>.</p>
                     </div>
                 </div>
             </div>
@@ -327,21 +323,21 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Le language HTML</h2>
                             <hr class="star-primary">
-                            <img src="public/img/portfolio/html5.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="public/img/html.png" class="img-responsive img-centered" alt="">
+                            <p>C'est là que tout a commencé, j'ai acquis les connaissances en Html me permettant de concevoir un site vitrine Statique, Ce language est la base de la conception Web.</p>
                             <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
+                                <li>Projet:
+                                    <strong>Apprentissage de la conception d'un site Web Statique
                                     </strong>
                                 </li>
                                 <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
+                                    <strong>samedi 2 mars 2019
                                     </strong>
                                 </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
+                                <li>Language:
+                                    <strong>HTML
                                     </strong>
                                 </li>
                             </ul>
@@ -364,21 +360,21 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Language CSS</h2>
                             <hr class="star-primary">
-                            <img src="public/img/portfolio/css3.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="public/img/css.png" class="img-responsive img-centered" alt="">
+                            <p>Le CSS est un language qui permet de travailler sur la mise en page de votre site Web, ce language est incontournable dans la conception Web, il permet de faire des site Responsive !</p>
                             <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
+                                <li>Projet:
+                                    <strong>Apprentissage de la mise en page de site Web
                                     </strong>
                                 </li>
                                 <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
+                                    <strong>samedi 2 mars 2019
                                     </strong>
                                 </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
+                                <li>Language:
+                                    <strong>CSS
                                     </strong>
                                 </li>
                             </ul>
@@ -401,21 +397,21 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Language PHP</h2>
                             <hr class="star-primary">
-                            <img src="public/img/portfolio/php.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="public/img/php.png" class="img-responsive img-centered" alt="">
+                            <p>Le PHP est un language orienté serveur, c'est à dire que le site envoie des requêtes au serveur qui lui réponds en affichant les pages en fonction du compte client par exemple, ce language permet de créer des sites dynamiques avec des comptes clients, blogs, etc ...</p>
                             <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
+                                <li>Projet:
+                                    <strong>Conception d'un Blog
                                     </strong>
                                 </li>
                                 <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
+                                    <strong>Octobre 2019
                                     </strong>
                                 </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
+                                <li>Language:
+                                    <strong>PHP
                                     </strong>
                                 </li>
                             </ul>
@@ -438,25 +434,25 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Création d'un site Web Wordpress</h2>
                             <hr class="star-primary">
-                            <img src="public/img/portfolio/wordpress.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="public/img/wordpress.png" class="img-responsive img-centered" alt="">
+                            <p>Création d'un site Web avec le CMS Wordpress. Le client souhaitait avoir un site lui permettant de louer et vendre des chalets de luxe. Le site présenté les biens dans leurs intégralités (photos, descriptifs détaillés des biens). Le site contenait un formulaire de contact et était responsive</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
+                                    <strong>Chalets et Caviar
                                     </strong>
                                 </li>
                                 <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
+                                    <strong>samedi 2 mars 2019
                                     </strong>
                                 </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
+                                <li>CMS:
+                                    <strong>Wordpress
                                     </strong>
                                 </li>
                             </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fermer</button>
                         </div>
                     </div>
                 </div>
@@ -475,25 +471,25 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Boostraps</h2>
                             <hr class="star-primary">
-                            <img src="public/img/portfolio/boostraps.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="public/img/bootstrap.png" class="img-responsive img-centered" alt="">
+                            <p>Formé à l'utilisation de boostraps, je serai à même de mettre rapidement à bien votre projet de création de site Web totalement responsive, Effectivement, celui ci sera à la fois trés design et adapté aux smarphones, tablettes, phablettes et PC. </p>
                             <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
+                                <li>Maitrise:
+                                    <strong>Bootstrap
                                     </strong>
                                 </li>
                                 <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
+                                    <strong>lundi 8 avril 2019
                                     </strong>
                                 </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
+                                <li>interêt:
+                                    <strong>Site Web Design et responsive
                                     </strong>
                                 </li>
                             </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fermer</button>
                         </div>
                     </div>
                 </div>
@@ -512,31 +508,60 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Création de Base de données en SQL</h2>
                             <hr class="star-primary">
-                            <img src="public/img/portfolio/sql.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="public/img/phpmyadmin.png" class="img-responsive img-centered" alt="">
+                            <p>Création de base de données sur phpMySql pour diverses projets dont un concernant la restauration avec gestion des livraisons clients. La mission consistait en la gestion et la création de plat du jour, le stockage d'un fichier client avec mot de passe sécurisé, la gestion des livreurs qui sont géolocalisés. </p>
                             <ul class="list-inline item-details">
                                 <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
+                                    <strong>Express Food
                                     </strong>
                                 </li>
                                 <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
+                                    <strong>Juillet 2019
                                     </strong>
                                 </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
+                                <li>Activité du client:
+                                    <strong>Restauration
                                     </strong>
                                 </li>
                             </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fermer</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="portfolio-modal modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="">
+                            <h2>Se connecter</h2>
+                            <hr class="star-primary">
+                            <img src="public/img/pageconnect.png" class="img-responsive img-centered" alt="">
+                            <form action="index.php">
+                                <label>Mail : <input type='email' method='POST' class="form-control"></label>
+                                <label>Mot de passe : <input type='password' method='POST' class="form-control"></label>
+                                <input type='submit' value='Se connecter' class="btn btn-success">
+                            </form>
+                            </br>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- jQuery -->
     <script src="public/vendor/jquery/jquery.min.js"></script>
