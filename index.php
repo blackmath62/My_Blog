@@ -12,7 +12,33 @@ if (isset($_GET['action'])) {
         switch ($_GET['action']) {
                 case 'connexion':
                         connexion();
-                        break;                
+                        break;
+                case 'inscription':
+                        register();
+                        break;
+                case 'states':
+                        amount_day_order();
+                        break;
+                case 'passforget':
+                        passforget();
+                        break;
+                case 'get_passforget':
+                        get_passforget();
+                        break;
+                case 'check_connexion':
+                        check_connexion();
+                        break;
+                case 'check_register':
+                        check_register();
+                        break;
+                case 'passchange':
+                        $idconnect = $_GET['id'];
+                        $controltoken = $_GET['token'];
+                        passchange($idconnect, $controltoken);
+                        break;
+                case 'get_passchange':
+                        get_passchange();
+                        break;             
         }
 } else {
         pageNoFound();
