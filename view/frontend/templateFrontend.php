@@ -549,9 +549,11 @@
                             <hr class="star-primary">
                             <img src="public/img/pageconnect.png" class="img-responsive img-centered" alt="">
                             <form action="index.php">
-                                <label>Mail : <input type='email' method='POST' class="form-control"></label>
-                                <label>Mot de passe : <input type='password' method='POST' class="form-control"></label>
+                            <div class="row"><label>Mail : <input id="exampleInputEmail" aria-describedby="emailHelp" type='email' method='POST' class="form-control"></label></div>
+                            <div class="column"><label>Mot de passe : <input type='password' method='POST' class="form-control"></label></div>
                                 <input type='submit' value='Se connecter' class="btn btn-success">
+                                <p><a href="index.php/action=register">Créer un compte</a> </p>
+                                <p><a href="index.php/action=forgotpassword" a>Mot de passe oublié ?</a></p>
                             </form>
                             </br>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Fermer</button>
