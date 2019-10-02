@@ -62,7 +62,7 @@
                         <a href="#contact">Contact</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#logoutModal" data-toggle="modal">Se connecter</a>
+                        <a href="index.php?action=connexion">Se connecter</a>
                     </li>
                 </ul>
             </div>

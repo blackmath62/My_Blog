@@ -69,3 +69,4 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
   
 
 
+}

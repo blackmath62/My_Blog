@@ -1,0 +1,29 @@
+.nopuce{
+	list-style: none;
+}
+.center{
+text-align: center;
+
+}
+.cadre{
+	border: 2px solid grey;
+	border-radius: 3px;
+	max-width: 10%;
+	align-self: center;
+}
+.flex{
+	display: flex;
+	justify-content: space-around ;
+}
+
+.text-orange{
+	color: orange;
+}
+.align{
+	padding-top: 25%;
+	
+}
+.little{
+	max-height: 60px;
+	
+}
