@@ -222,22 +222,16 @@ function sendContact()
     session_start();
     
         $nom = htmlspecialchars($_POST['name']); // déclaration de la variable mailconnect
-        $societe = htmlspecialchars($_POST['societe']); // déclaration de la variable mailconnect
         $mail = htmlspecialchars($_POST['email']); // déclaration de la variable mailconnect
-        $objet = htmlspecialchars($_POST['objet']); // déclaration de la variable mailconnect
         $message = htmlspecialchars($_POST['message']); // déclaration de la variable mailconnect
-        $mailconnect = htmlspecialchars($_SESSION['mail']); // déclaration de la variable mailconnect       
-                // Envoyer un mail avec le Token à l'utilisateur concerné
                 $header = "MIME-Version: 1.0\r\n";
                 $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
                 $header .= 'Content-Type:text/html; charset="utf-8"' . "\n";
                 $header .= 'Content-Transfer-Encoding: 8bit';
 
-                mail("jpochet@lhermitte.fr", "$objet", $message, $header);
-                $error = "Votre mail a bien été envoyé, merci pour votre participation !";
-                header('Location: index.php?action=contact');
-                $connexionmodelStates = new \memberSpace\Model\adminManager(); // créer un Objet
-                $saveMessage = $connexionmodelStates->savecontact($nom,$societe,$mail,$objet,$message); // appel de la fonction qui vérifie l'existance du mail dans la BDD           
+                mail("jpochet@lhermitte.fr", "Mail en provenance de jpochet.fr", $message, $header);
+                $error = "Votre mail a bien été envoyé !";
+                header('Location: index.php');       
     require('view/frontend/contact.php');
 }
 function profil()
