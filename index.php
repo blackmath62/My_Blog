@@ -38,7 +38,10 @@ if (isset($_GET['action'])) {
                         break;
                 case 'get_passchange':
                         get_passchange();
-                        break;             
+                        break;
+                case 'send':
+                        sendContact();
+                        break;
         }
 } else {
         pageNoFound();

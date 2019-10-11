@@ -50,7 +50,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#portfolio">Portfolio</a>
+                        <a href="#portfolio">Connaissances</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#blog">Blog</a>
@@ -92,7 +92,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Portfolio</h2>
+                    <h2>Connaissances</h2>
                     <hr class="star-primary">
                 </div>
             </div>
@@ -220,25 +220,25 @@
                 <div class="col-lg-8 col-lg-offset-2">
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                     <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form name="sentMessage" id="contactForm" action='index.php?action=send' method='POST' novalidate> <!--le probléme vient de là id -->
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Nom</label>
-                                <input type="text" class="form-control" placeholder="Nom / Prénom" id="name" required data-validation-required-message="Please enter your name.">
+                                <input type="text" class="form-control" placeholder="Nom / Prénom" id="name" name="name" required data-validation-required-message="Veuillez saisir votre nom.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Mail</label>
-                                <input type="email" class="form-control" placeholder="Votre adresse mail" id="email" required data-validation-required-message="Please enter your email address.">
+                                <input type="email" class="form-control" placeholder="Votre adresse mail" id="email" name="email" required data-validation-required-message="Veuillez renseigner votre adresse mail.">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Message</label>
-                                <textarea rows="5" class="form-control" placeholder="Votre message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                                <textarea rows="5" class="form-control" placeholder="Votre message" id="message" name="message" required data-validation-required-message="Veuillez saisir un message."></textarea>
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -246,7 +246,7 @@
                         <div id="success"></div>
                         <div class="row">
                             <div class="form-group col-xs-12 align-items-center">
-                                <button type="submit" class="btn btn-success btn-lg">Envoyer</button>
+                                <input type="submit" class="btn btn-success btn-lg" value="Envoyer">
                             </div>
                         </div>
                     </form>
@@ -549,8 +549,8 @@
                             <hr class="star-primary">
                             <img src="public/img/pageconnect.png" class="img-responsive img-centered" alt="">
                             <form action="index.php">
-                            <div class="row"><label>Mail : <input id="exampleInputEmail" aria-describedby="emailHelp" type='email' method='POST' class="form-control"></label></div>
-                            <div class="column"><label>Mot de passe : <input type='password' method='POST' class="form-control"></label></div>
+                                <div class="row"><label>Mail : <input id="exampleInputEmail" aria-describedby="emailHelp" type='email' method='POST' class="form-control"></label></div>
+                                <div class="column"><label>Mot de passe : <input type='password' method='POST' class="form-control"></label></div>
                                 <input type='submit' value='Se connecter' class="btn btn-success">
                                 <p><a href="index.php/action=register">Créer un compte</a> </p>
                                 <p><a href="index.php/action=forgotpassword" a>Mot de passe oublié ?</a></p>

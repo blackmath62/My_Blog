@@ -10,7 +10,7 @@
         <div class="card-body p-0">
           <!-- Nested Row within Card Body -->
           <div class="row">
-            <div class="col-lg-6 d-none d-lg-block"><a> <img class='col-lg-12 d-none d-lg-block align' src="public/img/changepassword.jpg"></a></div>
+            <div class="col-lg-6 d-none d-lg-block"><a> <img class='col-lg-12 d-none d-lg-block align' src="public/images/logrobylhermitte.png"></a></div>
             <div class="col-lg-6">
               <div class="p-5">
                 <div class="text-center">
