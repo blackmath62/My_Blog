@@ -13,8 +13,14 @@ if (isset($_GET['action'])) {
                 case 'connexion':
                         connexion();
                         break;
+                case 'check_connexion':
+                        check_connexion();
+                        break;
                 case 'inscription':
                         register();
+                        break;
+                case 'check_register':
+                        check_register();
                         break;
                 case 'states':
                         amount_day_order();
@@ -24,12 +30,6 @@ if (isset($_GET['action'])) {
                         break;
                 case 'get_passforget':
                         get_passforget();
-                        break;
-                case 'check_connexion':
-                        check_connexion();
-                        break;
-                case 'check_register':
-                        check_register();
                         break;
                 case 'passchange':
                         $idconnect = $_GET['id'];
@@ -42,6 +42,10 @@ if (isset($_GET['action'])) {
                 case 'send':
                         sendContact();
                         break;
+                default: 
+                        pageNoFound();
+                        break;
+
         }
 } else {
         pageNoFound();

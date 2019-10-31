@@ -16,7 +16,7 @@ function connexion()
         $ip = 'Déconnecté';
         // Suppression des variables de session et de la session
         $connexionmodel = new \memberSpace\Model\MemberManager();
-        $majIp = $connexionmodel->listConnect($ip, $mailconnect);
+        //$majIp = $connexionmodel->listConnect($ip, $mailconnect);
     }
     $_SESSION = array();
     session_destroy();
@@ -69,6 +69,7 @@ function register()
 {
     require('view/frontend/connect/registerview.php');
 }
+
 
 function check_register() // la fonction
 {
