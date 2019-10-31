@@ -77,19 +77,18 @@ function check_register() // la fonction
     {
         $mailconnect = htmlspecialchars($_POST['identifiant']);  //on déclare les variables
         $mdpconnect = password_hash($_POST['mdpconnect'], PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
-        $mdpconnectsecond = password_hash($_POST['mdp_register_verif'], PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
         $check_connect = $connexionmodel->check_exist($mailconnect); // on vérifie si le compte n'existe pas déjà
         $userexist = $check_connect->rowCount(); // compter le nombre de ligne 
         if ($userexist == 1) {
 
-            $error = "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
+            $error = $userexist . "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
         } elseif ($userexist == 0) {
             if ($_POST['mdpconnect'] == $_POST['mdp_register_verif']) //si les 2 mots de passes sont identiques
             {
 
                 $register = $connexionmodel->addRegister($mailconnect, $mdpconnect);
 
-                $error = " Nous avons créé votre compte " . $mailconnect . " ! L'administrateur va débloquer votre compte pour que vous puissiez consulter le site intranet" . '</br';
+                $error = $userexist . " Nous avons créé votre compte " . $mailconnect . " ! L'administrateur va débloquer votre compte pour que vous puissiez consulter le site intranet" . '</br';
             }
         }
     }

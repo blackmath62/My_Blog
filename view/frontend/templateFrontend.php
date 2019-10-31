@@ -16,10 +16,13 @@
 
     <!-- Theme CSS -->
     <link href="public/css/freelancer.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="public/css/blog-home.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -162,7 +165,7 @@
     </section>
 
     <!-- blog Section -->
-    <section class="success" id="blog">
+    <section class="" id="blog">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -170,16 +173,22 @@
                     <hr class="star-light">
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>Prenez le temps de de consulter mes différents posts, ceux ci vous permettrons d'en apprendre plus sur moi !</p>
+            <!-- Blog Post -->
+            <div class="card mb-4 text-center">
+                <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
+                <div class="card-body">
+                    <h2 class="card-title">Chapo</h2>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                    <a href="#" class="btn btn-primary">Lire plus ! &rarr;</a>
                 </div>
-                <div class="col-lg-4">
-                    <p>Disponible immédiatement, mes connaissances me permettent d'éffectuer la maintenance de votre site Web PHP</p>
+                <div class="card-footer text-muted">
+                    Posted on January 1, 2017
                 </div>
             </div>
         </div>
     </section>
+
+
 
 
     <!-- About Section -->
@@ -191,11 +200,11 @@
                     <hr class="star-light">
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
+            <div class="row text-center">
+                <div class="col-lg-12">
                     <p>Etudiant sur Openclassroom, j'ai acquis les connaissances me permettant de développer des sites Web en utilisant les languages Html, Css, PHP et SQL.</p>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-12">
                     <p>Disponible immédiatement, mes connaissances me permettent d'éffectuer la création, la transformation et la maintenance de votre site Web</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
@@ -220,7 +229,8 @@
                 <div class="col-lg-8 col-lg-offset-2">
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                     <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                    <form name="sentMessage" id="contactForm" action='index.php?action=send' method='POST' novalidate> <!--le probléme vient de là id -->
+                    <form name="sentMessage" id="contactForm" novalidate>
+                        <!--le probléme vient de là id -->
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Nom</label>
@@ -246,7 +256,7 @@
                         <div id="success"></div>
                         <div class="row">
                             <div class="form-group col-xs-12 align-items-center">
-                                <input type="submit" class="btn btn-success btn-lg" value="Envoyer">
+                                <button type="submit" class="btn btn-success btn-lg">Envoyer</button>
                             </div>
                         </div>
                     </form>

@@ -55,6 +55,9 @@
                 <div class="text-center">
                   <a class="small" href="index.php?action=inscription">Inscription !</a>
                 </div>
+                <div class="text-center">
+                <a class="small" href="index.php">Retour à la page d'accueil</a>
+                </div>
               </div>
             </div>
           </div>

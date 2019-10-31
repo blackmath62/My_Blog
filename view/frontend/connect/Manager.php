@@ -10,7 +10,7 @@ class Manager // Déclaration de la classe Manager
     {
         try{ // php execute le code dans try
         
-        $db = new \PDO('mysql:host=localhost;dbname=test;charset=utf8', 'dbuser', ''); // on appel à la BDD
+        $db = new \PDO('mysql:host=localhost;dbname=my_blog;charset=utf8', 'root', ''); // on appel à la BDD
         return $db;
         }
             // en cas d'erreur il execute le code contenu dans catch voir cours orienté objet
