@@ -22,7 +22,7 @@
     <link href="public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -229,7 +229,7 @@
                 <div class="col-lg-8 col-lg-offset-2">
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
                     <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form name="sentMessage" id="contactForm" action='index.php?action=send' novalidate>
                         <!--le probléme vient de là id -->
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
@@ -264,7 +264,31 @@
             </div>
         </div>
     </section>
-
+    
+    <form action="https://formspree.io/YOUR_EMAIL" method="POST" />
+    <div class="control-group">
+        <div class="form-group floating-label-form-group controls mb-0 pb-2"> <label>Name</label>
+            <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Veuillez rentrer votre nom.">
+            <p class="help-block text-danger"></p>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="form-group floating-label-form-group controls mb-0 pb-2"> <label>Adresse mail</label>
+            <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Veuillez entrer votre adresse mail.">
+            <p class="help-block text-danger"></p>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="form-group floating-label-form-group controls mb-0 pb-2"> <label>Message</label>
+            <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Veuillez saisir votre message."></textarea>
+            <p class="help-block text-danger"></p>
+        </div>
+    </div> <br>
+    <div id="success"></div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">Envoyer</button>
+    </div>
+    </form>
     <!-- Footer -->
     <footer class="text-center">
         <div class="footer-above">
@@ -279,20 +303,15 @@
                         <h3>Réseaux Sociaux</h3>
                         <ul class="list-inline">
                             <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+                                <a href="https://www.facebook.com/quepuisjefairepour.nous" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
                             </li>
                             <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>
+                                <a href="https://twitter.com/Jardinew62" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
                             </li>
                             <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+                                <a href="https://www.linkedin.com/in/jerome-pochet-018b92177/" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
                             </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
-                            </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
-                            </li>
+
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">

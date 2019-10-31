@@ -1,7 +1,7 @@
 <?php ob_start(); ?>
 
 
-
+<p>Nous n'avons rien a afficher</p>
 
 
 <?php
