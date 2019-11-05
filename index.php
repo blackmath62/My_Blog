@@ -16,14 +16,14 @@ if (isset($_GET['action'])) {
                 case 'check_connexion':
                         check_connexion();
                         break;
+                case 'kill_connexion':
+                        kill_connexion();
+                        break;
                 case 'inscription':
                         register();
                         break;
                 case 'check_register':
                         check_register();
-                        break;
-                case 'states':
-                        amount_day_order();
                         break;
                 case 'passforget':
                         passforget();
@@ -42,10 +42,9 @@ if (isset($_GET['action'])) {
                 case 'send':
                         sendContact();
                         break;
-                default: 
+                default:
                         pageNoFound();
                         break;
-
         }
 } else {
         pageNoFound();

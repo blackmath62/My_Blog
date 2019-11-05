@@ -4,8 +4,9 @@ require_once('Model/MemberManager.php');
 
 // connexion function
 
-function pageNoFound(){
-    require('view/frontend/pageNoFound.php'); 
+function pageNoFound()
+{
+    require('view/frontend/pageNoFound.php');
 }
 
 function connexion()
@@ -21,6 +22,12 @@ function connexion()
     $_SESSION = array();
     session_destroy();
     require('view/frontend/connect/loginview.php');
+}
+function kill_connexion()
+{
+    session_start();
+    session_destroy();
+    header('Location: index.php');
 }
 
 function check_connexion() // la fonction   la partie connexion est bonne ne plus toucher
@@ -46,11 +53,9 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
                 { // Comparaison du pass envoyé via le formulaire avec la base
                     session_start();   // connexion a une session utilisateur
                     $_SESSION['mail'] = $profil['mail'];
-                    $_SESSION['type_profil'] = $profil['type_profil'];
+                    $_SESSION['law_label'] = $profil['law_label'];
                     $mailconnect = $_SESSION['mail'];
-                    $ip = 'Connecté';
-                    $majIp = $connexionmodel->listConnect($ip, $mailconnect);
-                    header('Location: index.php?action=states');
+                    header('Location: index.php');
                 } elseif (isset($mailconnect)) {
                     $error = "Mail ou mot de passe incorrect !";
                 }
@@ -67,7 +72,7 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
 
 function register()
 {
-    require('view/frontend/connect/registerview.php');
+    require('view/frontend/htmlTemplate.php');
 }
 
 
@@ -82,14 +87,14 @@ function check_register() // la fonction
         $userexist = $check_connect->rowCount(); // compter le nombre de ligne 
         if ($userexist == 1) {
 
-            $error = $userexist . "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
+            $error = "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
         } elseif ($userexist == 0) {
             if ($_POST['mdpconnect'] == $_POST['mdp_register_verif']) //si les 2 mots de passes sont identiques
             {
 
                 $register = $connexionmodel->addRegister($mailconnect, $mdpconnect);
 
-                $error = $userexist . " Nous avons créé votre compte " . $mailconnect . " ! L'administrateur va débloquer votre compte pour que vous puissiez consulter le site intranet" . '</br';
+                $error = " Nous avons créé votre compte " . $mailconnect . " ! L'administrateur va débloquer votre compte pour que vous puissiez consulter le site intranet" . '</br';
             }
         }
     }
@@ -132,9 +137,9 @@ function get_passforget()
             {
                 $error = " Nous vous avons envoyé un mail pour réinitialiser votre mot de passe" . '</br>' . '</br>';
 
-                $id = $profil['id'];
+                $id = $profil['users_id'];
                 $receivetoken = $connexionmodel->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
-                $Token = $profil['mail'] . $profil['type_profil'] . $profil['date_creation']; // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
+                $Token = $profil['mail'] . $profil['law_label'] . $profil['create_date_users']; // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
                 $hash_Token = password_hash($Token, PASSWORD_DEFAULT); // On hash le token
                 $addtoken = $receivetoken->execute(array($hash_Token, $mailconnect)); // On insere dans la BDD
                 // Envoyer un mail avec le Token à l'utilisateur concerné
@@ -145,7 +150,7 @@ function get_passforget()
 
                 $message = 'Bonjour, ' . '</br>' . '</br>' .
                     'Veuillez sur le lien ci dessous pour changer votre mot de passe : ' . '</br>' . '</br>'
-                    . "<a href='http://localhost/espace_membre/index.php?action=passchange&id=" . $id . "&token=" . $hash_Token . "'>Changer de mot de passe</a>"
+                    . "<a href='http://localhost/my_blog/index.php?action=passchange&id=" . $id . "&token=" . $hash_Token . "'>Changer de mot de passe</a>"
 
                     . '</br>' . '</br>' . 'Cdt,';
 
@@ -165,8 +170,8 @@ function passchange($idconnect, $controltoken)
 {
     $error = 'Veuillez saisir votre nouveau mot de passe';
     session_start();
-    $_SESSION['id'] = $idconnect;
-    $_SESSION['Token'] = $controltoken;
+    $_SESSION['users_id'] = $idconnect;
+    $_SESSION['token'] = $controltoken;
     require('view/frontend/connect/change-forgot-password.php');
 }
 
@@ -174,14 +179,14 @@ function passchange($idconnect, $controltoken)
 function get_passchange()
 {
     session_start();
-    $idconnect = $_SESSION['id'];
-    $controltoken = $_SESSION['Token'];
+    $idconnect = $_SESSION['users_id'];
+    $controltoken = $_SESSION['token'];
     $connexionmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
     if (isset($idconnect) and isset($controltoken)) {
         $check_id = $connexionmodel->check_id($idconnect); // appel de la fonction qui vérifie l'existance du mail dans la BDD
         while ($profil = $check_id->fetch()) // on boucle pour récupérer les infos sur l'user
         {
-            if ($profil['Token'] == $controltoken) {;
+            if ($profil['token'] == $controltoken) {;
                 $newpassword = $_POST['newmdp'];
                 $controlnewpassword = $_POST['controlnewmdp'];
                 if ($newpassword == $controlnewpassword) {
@@ -201,7 +206,7 @@ function get_passchange()
     }
     require('view/frontend/connect/change-forgot-password.php');
 }
-
+/*
 function getAdmin()
 {
     session_start();
@@ -220,22 +225,22 @@ function contact()
 function sendContact()
 {
     session_start();
-    
-        $nom = htmlspecialchars($_POST['name']); // déclaration de la variable mailconnect
-        $mail = htmlspecialchars($_POST['email']); // déclaration de la variable mailconnect
-        $message = htmlspecialchars($_POST['message']); // déclaration de la variable mailconnect
-                $header = "MIME-Version: 1.0\r\n";
-                $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
-                $header .= 'Content-Type:text/html; charset="utf-8"' . "\n";
-                $header .= 'Content-Transfer-Encoding: 8bit';
 
-                mail("jpochet@lhermitte.fr", "Mail en provenance de jpochet.fr", $message, $header);
-                $error = "Votre mail a bien été envoyé !";
-                header('Location: index.php');       
+    $nom = htmlspecialchars($_POST['name']); // déclaration de la variable mailconnect
+    $mail = htmlspecialchars($_POST['email']); // déclaration de la variable mailconnect
+    $message = htmlspecialchars($_POST['message']); // déclaration de la variable mailconnect
+    $header = "MIME-Version: 1.0\r\n";
+    $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
+    $header .= 'Content-Type:text/html; charset="utf-8"' . "\n";
+    $header .= 'Content-Transfer-Encoding: 8bit';
+
+    mail("jpochet@lhermitte.fr", "Mail en provenance de jpochet.fr", $message, $header);
+    $error = "Votre mail a bien été envoyé !";
+    header('Location: index.php');
     require('view/frontend/contact.php');
 }
 function profil()
 {
     session_start();
     require('view/frontend/profil.php');
-}
+}*/
