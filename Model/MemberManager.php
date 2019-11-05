@@ -40,15 +40,11 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
     public function addRegister($mailconnect, $mdpconnect)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant        
-        $req = $db->prepare('INSERT INTO users(mail, mdp, users_name, users_last_name, law_id, img_users, token ) VALUES(:mail, :mdp, :nom, :prenom, :law,:img,:token)');
+        $req = $db->prepare('INSERT INTO users(mail, mdp ) VALUES(:mail, :mdp)');
         $addregister = $req->execute(array(
-            'mail' => 'jpochet@lhermitte.fr', //$mailconnect,
-            'mdp' => 'poussin', //$mdpconnect,
-            'nom' => 'pochet',
-            'prenom' => 'jerome',
-            'law' => 4,
-            'img' => 'image',
-            'token' => 'token',
+            'mail' => $mailconnect,
+            'mdp' => $mdpconnect,
+            
         ));
         //$adduser->bindParam(1, $mailconnect); 
         //$adduser->bindParam(2, $mdpconnect);
