@@ -1,80 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="jpochet" content="">
-
-    <title>jpochet</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Theme CSS -->
-    <link href="public/css/freelancer.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="public/css/blog-home.css" rel="stylesheet">
-    <!-- Custom Fonts -->
-    <link href="public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body id="page-top" class="index">
-
-    <!-- Navigation -->
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand" href="#page-top">Accueil</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden">
-                        <a href="#page-top"></a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#portfolio">Connaissances</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#blog">Blog</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#about">à propos</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#contact">Contact</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="index.php?action=connexion">Se connecter</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-
-    <!-- Header -->
+<?php session_start() ?>
+     <!-- Header -->
     <header>
         <div class="container">
             <div class="row">
@@ -188,9 +113,6 @@
         </div>
     </section>
 
-
-
-
     <!-- About Section -->
     <section class="success" id="about">
         <div class="container">
@@ -265,73 +187,6 @@
         </div>
     </section>
     
-    <form action="https://formspree.io/YOUR_EMAIL" method="POST" />
-    <div class="control-group">
-        <div class="form-group floating-label-form-group controls mb-0 pb-2"> <label>Name</label>
-            <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Veuillez rentrer votre nom.">
-            <p class="help-block text-danger"></p>
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="form-group floating-label-form-group controls mb-0 pb-2"> <label>Adresse mail</label>
-            <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Veuillez entrer votre adresse mail.">
-            <p class="help-block text-danger"></p>
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="form-group floating-label-form-group controls mb-0 pb-2"> <label>Message</label>
-            <textarea class="form-control" id="message" rows="5" placeholder="Message" required="required" data-validation-required-message="Veuillez saisir votre message."></textarea>
-            <p class="help-block text-danger"></p>
-        </div>
-    </div> <br>
-    <div id="success"></div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">Envoyer</button>
-    </div>
-    </form>
-    <!-- Footer -->
-    <footer class="text-center">
-        <div class="footer-above">
-            <div class="container">
-                <div class="row">
-                    <div class="footer-col col-md-4">
-                        <h3>Mon adresse</h3>
-                        <p>18 rue de la statue de la liberté
-                            <br>72500, Los Angeles</p>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>Réseaux Sociaux</h3>
-                        <ul class="list-inline">
-                            <li>
-                                <a href="https://www.facebook.com/quepuisjefairepour.nous" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href="https://twitter.com/Jardinew62" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="https://www.linkedin.com/in/jerome-pochet-018b92177/" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
-                            </li>
-
-                        </ul>
-                    </div>
-                    <div class="footer-col col-md-4">
-                        <h3>à propos</h3>
-                        <p>C'est avec plaisir que nous discuterons de votre projet : <a href=mailto:jpochet@lhermitte.fr>jpochet@jpochet.fr</a>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-below">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        Copyright &copy; pochetjerome
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
         <a class="btn btn-primary" href="#page-top">
@@ -593,23 +448,9 @@
         </div>
     </div>
 
+<?php
 
-    <!-- jQuery -->
-    <script src="public/vendor/jquery/jquery.min.js"></script>
+$content = ob_get_clean();
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="public/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-
-    <!-- Contact Form JavaScript -->
-    <script src="public/js/jqBootstrapValidation.js"></script>
-    <script src="public/js/contact_me.js"></script>
-
-    <!-- Theme JavaScript -->
-    <script src="public/js/freelancer.min.js"></script>
-
-</body>
-
-</html>
+require('view/frontend/htmlTemplate.php');
+?>
