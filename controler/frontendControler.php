@@ -72,7 +72,7 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
 
 function register()
 {
-    require('view/frontend/htmlTemplate.php');
+    require('view/frontend//connect/registerview.php');
 }
 
 
