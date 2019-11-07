@@ -6,7 +6,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="#page-top">Accueil</a>
+                <a class="navbar-brand" href="index.php#page-top">Accueil</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -16,16 +16,16 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#portfolio">Connaissances</a>
+                        <a href="index.php#portfolio">Connaissances</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#blog">Blog</a>
+                        <a href="index.php#blog">Blog</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">à propos</a>
+                        <a href="index.php#about">à propos</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">Contact</a>
+                        <a href="index.php#contact">Contact</a>
                     </li>
                     <li class="page-scroll">
                         <?php if(isset($_SESSION['mail'])){?>

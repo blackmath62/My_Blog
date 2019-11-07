@@ -1,11 +1,12 @@
 <?php ob_start(); ?>
+<section>
 <div class="container">
 
   <div class="card o-hidden border-0 shadow-lg my-5">
     <div class="card-body p-0">
       <!-- Nested Row within Card Body -->
       <div class="row">
-        <div class="col-lg-7">
+        <div class="col-lg-7 center-block">
           <div class="p-5">
             <div class="text-center">
               <h1 class="h4 text-gray-900 mb-4">Inscription !</h1>
@@ -48,10 +49,8 @@
   </div>
 
 </div>
-
+            </section>
 <?php
-$colorcontent = 'bg-gradient-success';
 $content = ob_get_clean();
-
-require('view/frontend/templateConnect.php');
+require('view/frontend/htmlTemplate.php');
 ?>

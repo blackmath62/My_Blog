@@ -39,9 +39,10 @@
     <?php include 'Header.php' ?>
     <!-- Main Content -->
     <div id="content">
-      <?php echo $content?>
- 
+      <?= $content ?>
+
       <?php include 'Footer.php' ?>
+
       <!-- End of Content Wrapper -->
     </div>
   </div>

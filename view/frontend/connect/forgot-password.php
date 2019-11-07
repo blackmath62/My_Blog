@@ -1,4 +1,5 @@
 <?php ob_start(); ?>
+<section>
 <div class="container">
 
   <!-- Outer Row -->
@@ -10,7 +11,7 @@
         <div class="card-body p-0">
           <!-- Nested Row within Card Body -->
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 center-block">
               <div class="p-5">
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-2">Mot de passe oublié?</h1>
@@ -45,9 +46,8 @@
   </div>
 
 </div>
+</section>
 <?php
-$colorcontent = 'bg-gradient-warning';
 $content = ob_get_clean();
-
-require('view/frontend/templateConnect.php');
+require('view/frontend/htmlTemplate.php');
 ?>
