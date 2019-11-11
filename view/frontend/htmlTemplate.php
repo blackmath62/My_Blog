@@ -1,35 +1,29 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
-  <meta name="jpochet" content="">
+  <meta name="author" content="">
 
-  <title>jpochet</title>
+  <title>JPochet</title>
 
-  <!-- Bootstrap Core CSS -->
-  <link href="public/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Theme CSS -->
-  <link href="public/css/freelancer.min.css" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="public/css/blog-home.css" rel="stylesheet">
-  <!-- Custom Fonts -->
+  <!-- Font Awesome Icons -->
+  <link href="public/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="public/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="public/css/style.css" rel="stylesheet" type="text/css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
+  <!-- Plugin CSS -->
+  <link href="public/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <!-- Theme CSS - Includes Bootstrap -->
+  <link href="public/css/creative.min.css" rel="stylesheet">
 
 </head>
 
@@ -49,21 +43,18 @@
 
   <!-- End of Page Wrapper -->
 
-  <!-- jQuery -->
-  <script src="public/vendor/jquery/jquery.min.js"></script>
-
-  <!-- Bootstrap Core JavaScript -->
-  <script src="public/vendor/bootstrap/js/bootstrap.min.js"></script>
+ <!-- Bootstrap core JavaScript -->
+ <script src="public/vendor/jquery/jquery.min.js"></script>
+  <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+  <script src="public/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="public/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
-  <!-- Contact Form JavaScript -->
-  <script src="public/js/jqBootstrapValidation.js"></script>
-  <script src="public/js/contact_me.js"></script>
+  <!-- Custom scripts for this template -->
+  <script src="public/js/creative.min.js"></script>
 
-  <!-- Theme JavaScript -->
-  <script src="public/js/freelancer.min.js"></script>
+
 
 </body>
 

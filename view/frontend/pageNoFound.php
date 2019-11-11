@@ -1,12 +1,16 @@
 <?php ob_start(); ?>
 
-
-<p>Nous n'avons rien a afficher</p>
-
+<div class="container">
+    <section class="page-section">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+<?=$error?>
+        </div>
+    </section>
+</div>
 
 <?php
 
 $content = ob_get_clean();
 
-require('view/frontend/templateFrontend.php');
+require('view/frontend/htmlTemplate.php');
 ?>
