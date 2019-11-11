@@ -8,6 +8,7 @@ ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise e
 // a le même effet qu'include, c'est à dire pour ramener une page mais à l'avantage de ne rien renvoyer en cas d'erreur
 
 require('controler/frontendControler.php');
+
 if (isset($_GET['action'])) {
         switch ($_GET['action']) {
                 case 'connexion':
@@ -36,16 +37,19 @@ if (isset($_GET['action'])) {
                         $controltoken = $_GET['token'];
                         passchange($idconnect, $controltoken);
                         break;
+                case 'send_Mail_Password':
+                        send_Mail_Password();
+                        break;
                 case 'get_passchange':
                         get_passchange();
                         break;
                 case 'send':
                         sendContact();
                         break;
-                default:
-                        pageNoFound();
+                case 'longPost':
+                        longPost();
                         break;
         }
 } else {
-        pageNoFound();
+        blog();
 }

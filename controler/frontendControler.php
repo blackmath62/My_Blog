@@ -1,6 +1,7 @@
 <?php
 
 require_once('Model/MemberManager.php');
+require_once('Model/BlogManager.php');
 
 // connexion function
 
@@ -109,18 +110,22 @@ function passforget()
 
 function blog()
 {
-    $blogmodel = new \memberSpace\Model\TheBlogManager(); // créer un Objet
-    session_start();
-
-    if (isset($_POST['postMessage']) and !empty($_POST['postMessage'])) {
-        $mailConnect = $_SESSION['mail'];
-        $postMessage = htmlspecialchars($_POST['postMessage']);
-        $getPostMessage = $blogmodel->getPost($mailConnect, $postMessage); // injecter le message
-
-    }
-
-    require('view/frontend/blogView.php');
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    
+    $blogmodel = $connexionmodel -> rqblog();
+    
+    require('view/frontend/templateFrontend.php');
 }
+
+function longPost()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    
+    $blogmodel = $connexionmodel -> rqblog();
+    
+    require('view/frontend/longPost.php');
+}
+
 // fonction qui envoie le mail à l'utilisateur
 function get_passforget()
 {
@@ -135,8 +140,8 @@ function get_passforget()
         {
             if ($userexist == 1) // si l'user = 1 c'est qu'il existe
             {
-                $error = " Nous vous avons envoyé un mail pour réinitialiser votre mot de passe" . '</br>' . '</br>';
-
+                
+                header('Location: index.php?action=send_Mail_Password');
                 $id = $profil['users_id'];
                 $receivetoken = $connexionmodel->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
                 $Token = $profil['mail'] . $profil['law_label'] . $profil['create_date_users']; // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
@@ -163,6 +168,11 @@ function get_passforget()
         }
     }
     require('view/frontend/connect/change-forgot-password.php');
+}
+
+function send_Mail_Password(){
+    $error = " Nous vous avons envoyé un mail pour réinitialiser votre mot de passe, vous pouvez fermer cette fenêtre" . '</br>' . '</br>';
+    require('view/frontend/pageNoFound.php');
 }
 
 // Fonction pour demander la saisie du nouveau mot de passe
