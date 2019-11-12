@@ -26,6 +26,12 @@
                         <div class="footer-col col-md-4">
                             <h3>à propos</h3>
                             <p>C'est avec plaisir que nous discuterons de votre projet : <a href=mailto:jpochet@lhermitte.fr>jpochet@jpochet.fr</a>.</p>
+                            <?php 
+                            if(!empty($_SESSION)){
+                            if($_SESSION['law_id'] == 1){ ?>
+                            <a href=mailto:jpochet@lhermitte.fr>Administration</a>
+                            <?php }
+                            } ?>
                         </div>
                     </div>
                 </div>

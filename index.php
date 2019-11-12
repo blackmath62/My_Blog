@@ -49,6 +49,9 @@ if (isset($_GET['action'])) {
                 case 'longPost':
                         longPost();
                         break;
+                case 'admin':
+                        getAdmin();
+                        break;
         }
 } else {
         blog();

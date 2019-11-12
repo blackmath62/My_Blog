@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
-<section>
-  <div class="container">
+<div class="container">
+<section class="page-section">
 
     <div class="card o-hidden border-0 shadow-lg my-5">
       <div class="card-body p-0">
@@ -44,9 +44,9 @@
         </div>
       </div>
     </div>
-
+    </section>
   </div>
-</section>
+
 <?php
 $content = ob_get_clean();
 require('view/frontend/htmlTemplate.php');

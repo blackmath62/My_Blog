@@ -1,7 +1,6 @@
 <?php ob_start(); ?>
-<section>
-  <div class="container">
-
+<div class="container">
+<section class="page-section">
     <!-- Outer Row -->
     <div class="row justify-content-center">
 
@@ -44,9 +43,9 @@
       </div>
 
     </div>
-
+    </section>
   </div>
-</section>
+
 <?php
 $content = ob_get_clean();
 require('view/frontend/htmlTemplate.php');

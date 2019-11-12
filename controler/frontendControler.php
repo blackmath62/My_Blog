@@ -31,6 +31,11 @@ function kill_connexion()
     header('Location: index.php');
 }
 
+function getAdmin(){
+
+    require('view/backend/templateBackend.php');
+}
+
 function check_connexion() // la fonction   la partie connexion est bonne ne plus toucher
 {
     // Instanciation d'un objet dans un namespace
@@ -56,6 +61,7 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
                     $_SESSION['mail'] = $profil['mail'];
                     $_SESSION['law_label'] = $profil['law_label'];
                     $mailconnect = $_SESSION['mail'];
+                    $_SESSION['law_id'] = $profil['law_id'];
                     header('Location: index.php');
                 } elseif (isset($mailconnect)) {
                     $error = "Mail ou mot de passe incorrect !";
