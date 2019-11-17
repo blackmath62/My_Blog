@@ -50,7 +50,6 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
         $userexist = $check_connect->rowCount(); // compter le nombre de ligne  
 
         if ($userexist == 1) {
-            setcookie('mail', $mailconnect, time() + 365 * 24 * 3600, null, null, false, true); // On écrit un cookie
 
             $connect = $connexionmodel->getconnect($mailconnect);
             while ($profil = $connect->fetch()) { // on boucle sur le MemberManager/connect
@@ -59,6 +58,7 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
                 { // Comparaison du pass envoyé via le formulaire avec la base
                     session_start();   // connexion a une session utilisateur
                     $_SESSION['mail'] = $profil['mail'];
+                    $_SESSION['users_id'] = $profil['users_id'];
                     $_SESSION['law_label'] = $profil['law_label'];
                     $mailconnect = $_SESSION['mail'];
                     $_SESSION['law_id'] = $profil['law_id'];
@@ -114,22 +114,45 @@ function passforget()
     require('view/frontend/connect/forgot-password.php');
 }
 
-function blog()
+function home()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     
-    $blogmodel = $connexionmodel -> rqblog();
+    $blogmodel = $connexionmodel -> lastPost();
     
     require('view/frontend/templateFrontend.php');
 }
-
 function longPost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $postnumber = $_GET['id'];
+    $blogmodel = $connexionmodel -> getLongPost($postnumber);
+        $title = $blogmodel['post_title'];
+        $datepost = $blogmodel['post_date'];
+        $postmessage = $blogmodel['post_content'];
+        $postnumber = $blogmodel['post_id'];
+        $postuser = $blogmodel['mail'];
+    require('view/frontend/postView.php');
+}
+
+function allPost()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     
-    $blogmodel = $connexionmodel -> rqblog();
+    $blogmodel = $connexionmodel -> allPost();
     
-    require('view/frontend/longPost.php');
+    require('view/frontend/allPostView.php');
+}
+function getComment()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $title = $_POST['subject'];
+    $content = $_POST['message'];
+    $postId = $_GET["id"];
+    $usersId = $_SESSION['users_id']; 
+    $blogmodel = $connexionmodel -> addComment($title, $content, $postId, $usersId);
+    
+    require('view/frontend/postComment.php');
 }
 
 // fonction qui envoie le mail à l'utilisateur

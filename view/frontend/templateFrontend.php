@@ -34,23 +34,23 @@
 <section class="p-5" id="services">
     <div class="container center">
         <!-- Blog Post -->
-        <a class="btn btn-primary btn-xl btn-block js-scroll-trigger text-center" href="#about">blog</a>
-        <div class="flex">
+        <a class="h1 font-weight-bold">blog</a>
+        <div class="d-lg-flex d-xl-flex d-md-flex">
         <?php
 
         while ($postblog = $blogmodel->fetch()) {
-            $chapo = $postblog['post_title'];
+            $title = $postblog['post_title'];
             $datepost = $postblog['post_date'];
-            $postmessage = $postblog['post_content'];
+            $chapo = $postblog['post_content'];
             $postuser = $postblog['mail'];
             $postnumber = $postblog['post_id'];
             ?>
-            <div class="text-center" id=<?=$postnumber?>>
+            <div class="text-center" id="<?=$postnumber?>">
                 <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
                 <div class="card-body">
-                    <h2 class="card-title"><?= $chapo ?></h2>
-                    <p class="card-text"><?= substr($postmessage, 0, 200).'...' ?></p>
-                    <a href="index.php?action=longPost" class="btn btn-primary">Lire plus ! &rarr;</a>
+                    <h2 class="card-title"><?= substr($title, 0, 25).'...' ?></h2>
+                    <p class="card-text"><?= substr($chapo, 0, 200).'...' ?></p>
+                    <a href="index.php?action=longPost&id=<?=$postnumber ?>" class="btn btn-primary">Lire plus ! &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
                     Posté le <?= $datepost ?> par <?= $postuser ?>
@@ -58,6 +58,7 @@
             </div>
         <?php } ?>
     </div>
+    <a class="btn btn-primary btn-xl btn-block js-scroll-trigger text-center" href="index.php?action=blog">Consulter tous mes posts</a>
     </div>
 </section>
 

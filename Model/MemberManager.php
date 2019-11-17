@@ -5,18 +5,13 @@ namespace memberSpace\Model;
 require_once("Model/Manager.php");
 class MemberManager extends Manager // la classe CommentManager hérite de Manager
 {
-    public function test() {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $check_profil = $db->query("SELECT * FROM users ");
-        return $check_profil;
-    }
-    
+        
     public function check_exist($mailconnect)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $check_profil = $db->prepare("SELECT * FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
         $check_profil->execute(array($mailconnect));
-
+       
         return $check_profil;
     }
     public function check_id($idconnect)
@@ -28,7 +23,7 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
         return $check_id;
     }
 
-    public function getconnect($mailconnect) // la partie connexion est bonne ne plus toucher
+    public function getconnect($mailconnect) 
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $userconnect = $db->prepare("SELECT mail,mdp,users.law_id FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
@@ -46,11 +41,6 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
             'mdp' => $mdpconnect,
             
         ));
-        //$adduser->bindParam(1, $mailconnect); 
-        //$adduser->bindParam(2, $mdpconnect);
-        //$adduser->bindParam(3, 3);
-        //var_dump($adduser); // affiche la valeur d'une variable, comme le console log
-        //die(); // arrête le procecuss
         return $addregister;
     }
 

@@ -46,13 +46,19 @@ if (isset($_GET['action'])) {
                 case 'send':
                         sendContact();
                         break;
+                case 'blog':
+                        allPost();
+                        break;
                 case 'longPost':
                         longPost();
                         break;
                 case 'admin':
                         getAdmin();
                         break;
+                        case 'commentaire':
+                                getComment();
+                                break;
         }
 } else {
-        blog();
+        home();
 }

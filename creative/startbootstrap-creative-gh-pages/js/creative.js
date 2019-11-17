@@ -25,7 +25,7 @@
     target: '#mainNav',
     offset: 75
   });
-
+/*
   // Collapse Navbar
   var navbarCollapse = function() {
     if ($("#mainNav").offset().top > 100) {
@@ -38,7 +38,7 @@
   navbarCollapse();
   // Collapse the navbar when page is scrolled
   $(window).scroll(navbarCollapse);
-
+*/
   // Magnific popup calls
   $('#portfolio').magnificPopup({
     delegate: 'a',

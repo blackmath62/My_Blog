@@ -29,7 +29,7 @@
                             <?php 
                             if(!empty($_SESSION)){
                             if($_SESSION['law_id'] == 1){ ?>
-                            <a href=mailto:jpochet@lhermitte.fr>Administration</a>
+                            <a href="index.php?action=admin">Administration</a>
                             <?php }
                             } ?>
                         </div>

@@ -27,6 +27,8 @@ text-align: center;
 	max-height: 60px;
 	
 }
-.color-white{
-color: white;
-}
+html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name { font-size : 1rem ; }
+@media (min-width: 300px) { html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name { font-size : 0.9rem ; } } 
+@media (min-width: 768px) { html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name { font-size : 0.8rem ; } } 
+@media (min-width: 1200px) { html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name { font-size : 0.9rem ; } } 
+

@@ -5,31 +5,39 @@ namespace memberSpace\Model;
 require_once("Model/Manager.php");
 class BlogManager extends Manager // la classe CommentManager hérite de Manager
 {
-    public function rqblog() {
+    public function lastPost() {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $check_profil = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");
-        return $check_profil;
+        $lastPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");
+        return $lastPostResult;
+        
+    }
+    public function getLongPost($postnumber) {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $longPostResult = $db->prepare("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id) WHERE post_id = ?");
+        $longPostResult->execute(array($postnumber));
+        $PostResult = $longPostResult->fetch();
+        return $PostResult;
         
     }
     
-    public function check_exist($mailconnect)
-    {
+    public function allPost() {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $check_profil = $db->prepare("SELECT * FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
-        $check_profil->execute(array($mailconnect));
-
-        return $check_profil;
+        $allPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC");
+        return $allPostResult;
+        
     }
     
-    public function addRegister($mailconnect, $mdpconnect)
+    public function addComment($title, $content, $postId,$usersId)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant        
-        $req = $db->prepare('INSERT INTO users(mail, mdp ) VALUES(:mail, :mdp)');
-        $addregister = $req->execute(array(
-            'mail' => $mailconnect,
-            'mdp' => $mdpconnect,   
+        $req = $db->prepare('INSERT INTO comment(comment_title, comment_content, post_id, users_id ) VALUES(:title, :content, :id, :users)');
+        $addcomment = $req->execute(array(
+            'title' => $title,
+            'content' => $content,
+            'id' => $postId,
+            'users' => $usersId    // C'EST L'ID UTILISATEUR QUI BLOQUE L'INTEGRATION
         ));
-        return $addregister;
+        return $addcomment;
     }
 
     public function changepass($idconnect, $hashnewpass, $cleartoken)
