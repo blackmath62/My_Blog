@@ -32,8 +32,7 @@ while ($listComment = $commentmodel->fetch()) {
                     	        <p><a href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong><?=$commentTitle ?></strong> par <?=$commentUser ?></a></p>
                     	        <p><?php echo nl2br($commentMessage) ?></p> <!--Pour avoir les sauts de ligne à l'affichage-->
                     	        <p>
-                    	            <a class="float-right btn btn-outline-primary ml-2">  <i class="fa fa-reply"></i> Reply</a>
-                    	            <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>
+                    	            <a class="float-right btn text-white btn-danger"> <i class="fa fa-bell"></i> Signaler</a>
                     	       </p>
                     	    </div>
             	        </div>
