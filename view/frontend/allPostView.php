@@ -16,7 +16,7 @@
             <div class="card-body">
                 <h2 class="card-title btn-xl btn-primary"><?= $title ?></h2>
                 <p class="card-text"><?= substr($postmessage, 0, 200).'...' ?></p>
-                <a href="index.php?action=longPost&id=<?=$postnumber?>&users=<?=$_GET['users_id'] ?>" class="btn btn-primary">Lire plus ! &rarr;</a>
+                <a href="index.php?action=longPost&id=<?=$postnumber?>" class="btn btn-primary">Lire plus ! &rarr;</a>
             </div>
             <div class="card-footer text-muted">
                 Posté le <?= $datepost ?> par <?= $postuser ?>

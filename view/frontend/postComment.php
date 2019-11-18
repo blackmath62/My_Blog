@@ -9,7 +9,7 @@
     </section>
 </div>
 <?php
-
+header('refresh:3; url= index.php?action=longPost&id=' . $postId );
 $content = ob_get_clean();
 
 require('view/frontend/htmlTemplate.php');

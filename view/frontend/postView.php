@@ -2,19 +2,50 @@
 <div class="container ">
 <section class="page-section">
     <!-- Blog Post -->
-    <div class="text-center" id="<?=$postnumber?>">
+    <div class="text-center border" id="<?=$postnumber?>">
             <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
 
             <div class="card-body">
                 <h2 class="card-title btn-xl btn-primary"><?= $title ?></h2>
-                <p class="card-text"><?= $postmessage ?></p>
+                <p class="card-text"><?= nl2br($postmessage) ?></p>
             </div>
             <div class="card-footer text-muted">
                 Posté le <?= $datepost ?> par <?= $postuser ?>
             </div>
         </div>
 </section>
-<?php $postId = $_GET["id"]; ?>
+<?php 
+while ($listComment = $commentmodel->fetch()) { 
+        $commentTitle = $listComment['comment_title'];
+        $dateComment = $listComment['comment_date'];
+        $commentMessage = $listComment['comment_content'];
+        $commentUser = $listComment['mail'];
+    ?>
+<div class="card card-inner mb-4">
+            	    <div class="card-body">
+            	        <div class="row">
+                    	    <div class="col-md-2">
+                    	        <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                    	        <p class="text-secondary text-center"><?= $dateComment ?></p>
+                    	    </div>
+                    	    <div class="col-md-10">
+                    	        <p><a href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong><?=$commentTitle ?></strong> par <?=$commentUser ?></a></p>
+                    	        <p><?php echo nl2br($commentMessage) ?></p> <!--Pour avoir les sauts de ligne à l'affichage-->
+                    	        <p>
+                    	            <a class="float-right btn btn-outline-primary ml-2">  <i class="fa fa-reply"></i> Reply</a>
+                    	            <a class="float-right btn text-white btn-danger"> <i class="fa fa-heart"></i> Like</a>
+                    	       </p>
+                    	    </div>
+            	        </div>
+            	    </div>
+                </div>
+
+<?php } 
+$postId = $_GET["id"]; ?>
+
+<?php 
+
+if(isset($_SESSION['users_id'])){ ?>
 <!--Commentaires-->
 <section class="mb-4 center bg-primary pt-4" id="contact">
     <!--Section heading-->
@@ -57,6 +88,7 @@
 </section>
 </div>
 <?php
+}
 $content = ob_get_clean();
 require('view/frontend/htmlTemplate.php');
 ?>

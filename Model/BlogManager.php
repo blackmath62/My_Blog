@@ -11,6 +11,13 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         return $lastPostResult;
         
     }
+    public function postComment($postnumber) {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $lastComment = $db->prepare("SELECT comment_title, comment_date, comment_content, users_id, users.mail FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? ORDER BY comment_date");
+        $lastComment->execute(array($postnumber));
+        return $lastComment;
+        
+    }
     public function getLongPost($postnumber) {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $longPostResult = $db->prepare("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id) WHERE post_id = ?");

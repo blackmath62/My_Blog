@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 error_reporting(E_ALL);
 ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise en prod
 

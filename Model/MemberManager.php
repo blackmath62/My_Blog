@@ -26,7 +26,7 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
     public function getconnect($mailconnect) 
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $userconnect = $db->prepare("SELECT mail,mdp,users.law_id FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
+        $userconnect = $db->prepare("SELECT users_id, mail,mdp,users.law_id FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
         $userconnect->execute(array($mailconnect));
 
         return $userconnect;

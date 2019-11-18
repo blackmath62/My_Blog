@@ -32,3 +32,9 @@ html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project
 @media (min-width: 768px) { html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name { font-size : 0.8rem ; } } 
 @media (min-width: 1200px) { html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name { font-size : 0.9rem ; } } 
 
+.card-inner{
+    margin-left: 4rem;
+}
+.page-section{
+	padding-bottom: 2rem;
+}

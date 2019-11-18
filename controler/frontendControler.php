@@ -12,10 +12,9 @@ function pageNoFound()
 
 function connexion()
 {
-    session_start();
     if (isset($_SESSION['mail'])) {
         $mailconnect = $_SESSION['mail'];
-        $ip = 'Déconnecté';
+        $usersId = $_SESSION['users_id'];
         // Suppression des variables de session et de la session
         $connexionmodel = new \memberSpace\Model\MemberManager();
         //$majIp = $connexionmodel->listConnect($ip, $mailconnect);
@@ -26,7 +25,6 @@ function connexion()
 }
 function kill_connexion()
 {
-    session_start();
     session_destroy();
     header('Location: index.php');
 }
@@ -56,7 +54,6 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
                 $isPasswordCorrect = password_verify($_POST['mdpconnect'], $profil['mdp']); // Comparaison du pass envoyé via le formulaire avec la base    
                 if ($isPasswordCorrect)  // si c'est égale à 1  et le mot de passe est correct
                 { // Comparaison du pass envoyé via le formulaire avec la base
-                    session_start();   // connexion a une session utilisateur
                     $_SESSION['mail'] = $profil['mail'];
                     $_SESSION['users_id'] = $profil['users_id'];
                     $_SESSION['law_label'] = $profil['law_label'];
@@ -74,6 +71,7 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
     } else {
         $error = "Veuillez renseigner votre mail et mdp ";
     }
+    
     require('view/frontend/connect/loginview.php');
 }
 
@@ -117,7 +115,6 @@ function passforget()
 function home()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    
     $blogmodel = $connexionmodel -> lastPost();
     
     require('view/frontend/templateFrontend.php');
@@ -132,7 +129,10 @@ function longPost()
         $postmessage = $blogmodel['post_content'];
         $postnumber = $blogmodel['post_id'];
         $postuser = $blogmodel['mail'];
+    $commentmodel = $connexionmodel -> postComment($postnumber);
+       
     require('view/frontend/postView.php');
+
 }
 
 function allPost()
@@ -151,9 +151,12 @@ function getComment()
     $postId = $_GET["id"];
     $usersId = $_SESSION['users_id']; 
     $blogmodel = $connexionmodel -> addComment($title, $content, $postId, $usersId);
-    
     require('view/frontend/postComment.php');
 }
+
+
+
+
 
 // fonction qui envoie le mail à l'utilisateur
 function get_passforget()
@@ -208,7 +211,6 @@ function send_Mail_Password(){
 function passchange($idconnect, $controltoken)
 {
     $error = 'Veuillez saisir votre nouveau mot de passe';
-    session_start();
     $_SESSION['users_id'] = $idconnect;
     $_SESSION['token'] = $controltoken;
     require('view/frontend/connect/change-forgot-password.php');
@@ -217,7 +219,6 @@ function passchange($idconnect, $controltoken)
 // fonction quand l'utilisateur a changé son mot de passe
 function get_passchange()
 {
-    session_start();
     $idconnect = $_SESSION['users_id'];
     $controltoken = $_SESSION['token'];
     $connexionmodel = new \memberSpace\Model\MemberManager(); // créer un Objet

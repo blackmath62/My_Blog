@@ -1,4 +1,3 @@
-
 <?php ob_start(); ?>
 <!-- Masthead -->
 <header class="masthead">
