@@ -55,9 +55,27 @@ if (isset($_GET['action'])) {
                 case 'admin':
                         getAdmin();
                         break;
-                        case 'commentaire':
-                                getComment();
-                                break;
+                case 'commentaire':
+                        getComment();
+                        break;
+                case 'newPost':
+                        newPost();
+                        break;
+                case 'deletePost':
+                        deletePost();
+                        break;
+                case 'changePost':
+                        changePost();
+                        break;
+                case 'usersList':
+                        usersList();
+                        break;
+                case 'commentReport':
+                        commentReport();
+                        break;
+                case 'commentModeration':
+                        commentModeration();
+                        break;
         }
 } else {
         home();

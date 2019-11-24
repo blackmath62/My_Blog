@@ -31,7 +31,7 @@ function kill_connexion()
 
 function getAdmin(){
 
-    require('view/backend/templateBackend.php');
+    require('view/backend/backendHome.php');
 }
 
 function check_connexion() // la fonction   la partie connexion est bonne ne plus toucher
@@ -134,7 +134,56 @@ function longPost()
     require('view/frontend/postView.php');
 
 }
-
+function newPost()
+{
+    if(!empty($_POST['subject']) and !empty($_POST['message'])){
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $title = $_POST['subject'];
+    $content = $_POST['message'];
+    $usersId = $_SESSION['users_id'];
+    $newPost = $connexionmodel->newPost($title, $content, $usersId);
+    }
+    require('view/backend/newPost.php');
+}
+function changePost()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    
+    //$newPost = $connexionmodel -> newPost();
+    
+    require('view/backend/changePost.php');
+}
+function deletePost()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $postnumber = $_GET['id'];
+    $GetdeletePost = $connexionmodel -> deletePostNow($postnumber);
+    require('view/backend/deletePost.php');
+}
+function usersList()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    
+    //$usersList = $connexionmodel -> usersList();
+    
+    require('view/backend/usersList.php');
+}
+function commentModeration()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    
+    //$commentModeration = $connexionmodel -> commentModeration();
+    
+    require('view/backend/commentModeration.php');
+}
+function commentReport()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    
+    //$commentReport = $connexionmodel -> commentReport();
+    
+    require('view/backend/commentReport.php');
+}
 function allPost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
