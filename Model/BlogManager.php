@@ -59,8 +59,8 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     public function deletePostNow($postnumber)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant     
-        $req = $db->prepare('DELETE FROM `post_list` WHERE post_id = ?)');
-        $deletePost = $req->execute(array($_GET['id']));
+        $req = $db->prepare('DELETE FROM post_list WHERE post_id = ?');
+        $deletePost = $req->execute(array($postnumber));
         return $deletePost; 
     }
 

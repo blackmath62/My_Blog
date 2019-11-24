@@ -157,7 +157,7 @@ function deletePost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     $postnumber = $_GET['id'];
-    $GetdeletePost = $connexionmodel -> deletePostNow($postnumber);
+    $GetdeletePost = $connexionmodel->deletePostNow($postnumber);
     require('view/backend/deletePost.php');
 }
 function usersList()
