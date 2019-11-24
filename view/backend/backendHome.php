@@ -14,7 +14,7 @@
                 </a>
             </div>
             <div class="col-lg-2 col-sm-5 border">
-                <a href="index.php?action=changePost">
+                <a href="index.php?action=blog">
                     <img class="img-fluid" src="public/img/modifier.jpg" alt="">
 
                     <div class="project-category text-center">

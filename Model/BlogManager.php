@@ -16,7 +16,12 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         $lastComment = $db->prepare("SELECT comment_title, comment_date, comment_content, users_id, users.mail FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? ORDER BY comment_date LIMIT 6");
         $lastComment->execute(array($postnumber));
         return $lastComment;
-        
+    }
+    public function getChangePost($postnumber) {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $lastComment = $db->prepare("SELECT post_title, post_content FROM post_list where post_id = ?");
+        $lastComment->execute(array($postnumber));
+        return $lastComment;
     }
     public function getLongPost($postnumber) {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
@@ -63,6 +68,13 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         $deletePost = $req->execute(array($postnumber));
         return $deletePost; 
     }
+    public function updatePostNow($subject, $message, $postnumber)
+    {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant     
+        $req = $db->prepare('UPDATE post_list SET post_title = :title ,post_content = :post WHERE post_id= :id');
+        $updatePost = $req->execute(array('title'=>$subject,'post'=>$message,'id'=>$postnumber));
+        return $updatePost; 
+    }
 
     public function changepass($idconnect, $hashnewpass, $cleartoken)
     {
@@ -73,3 +85,4 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     }
   
 }
+

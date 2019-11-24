@@ -67,6 +67,9 @@ if (isset($_GET['action'])) {
                 case 'changePost':
                         changePost();
                         break;
+                case 'updatePost':
+                        updatePost();
+                        break;
                 case 'usersList':
                         usersList();
                         break;

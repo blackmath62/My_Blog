@@ -148,16 +148,27 @@ function newPost()
 function changePost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    
-    //$newPost = $connexionmodel -> newPost();
-    
+    $postnumber = $_GET['id'];
+    $changePost = $connexionmodel -> getChangePost($postnumber);
+    /*$title = $changePost['post_title'];
+    $message = $changePost['post_content'];
+    */var_dump($changePost);
+    die();
     require('view/backend/changePost.php');
+}
+function updatePost()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $updatePost = $connexionmodel -> updatePostNow($subject, $message, $postnumber);
+    header('refresh:3; url= index.php?action=admin');
+    require('view/backend/updatePost.php');
 }
 function deletePost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     $postnumber = $_GET['id'];
     $GetdeletePost = $connexionmodel->deletePostNow($postnumber);
+    header('refresh:3; url= index.php?action=admin');
     require('view/backend/deletePost.php');
 }
 function usersList()
@@ -202,10 +213,6 @@ function getComment()
     $blogmodel = $connexionmodel -> addComment($title, $content, $postId, $usersId);
     require('view/frontend/postComment.php');
 }
-
-
-
-
 
 // fonction qui envoie le mail à l'utilisateur
 function get_passforget()
