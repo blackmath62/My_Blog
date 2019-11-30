@@ -14,7 +14,7 @@
                          <a class="nav-link js-scroll-trigger" href="index.php#services">Blog</a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link js-scroll-trigger" href="index.php#portfolio">Portfolio</a>
+                         <a class="nav-link js-scroll-trigger" href="index.php#portfolio">Connaissances</a>
                      </li>
                      <li class="nav-item">
                          <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact</a>

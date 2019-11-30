@@ -34,6 +34,7 @@
     <div class="container center">
         <!-- Blog Post -->
         <a class="h1 font-weight-bold">blog</a>
+        <hr class="divider my-4">
         <div class="d-lg-flex d-xl-flex d-md-flex">
         <?php
 
@@ -57,7 +58,7 @@
             </div>
         <?php } ?>
     </div>
-    <a class="btn btn-primary btn-xl btn-block js-scroll-trigger text-center" href="index.php?action=blog">Consulter tous mes posts</a>
+    <a class="btn btn-primary js-scroll-trigger text-center m-4 btn-xl" href="index.php?action=blog">Consulter tous mes posts</a>
     </div>
 </section>
 
@@ -232,30 +233,31 @@
 </section>
 <!-- Contact Section -->
 <!--Section: Contact v.2-->
-<section class="mb-4 center bg-primary pt-4" id="contact">
+<section class="mb-4 center pt-4" id="contact">
     <!--Section heading-->
-    <h2 class="h1-responsive font-weight-bold text-center text-white">Contactez moi</h2>
+    <h2 class="h1-responsive font-weight-bold text-center">Contactez moi</h2>
     <!--Section description-->
-    <p class="text-center w-responsive mx-auto mb-5 text-white">Envoyez moi un message, je me ferai un plaisir d'y répondre.</p>
+    <hr class="divider my-4">
+    <p class="text-center w-responsive mx-auto mb-5">Envoyez moi un message, je me ferai un plaisir d'y répondre.</p>
     <div class="row">
         <!--Grid column-->
-        <div class="col-md-9 mb-md-0 mb-5 mx-auto">
+        <div class="col-md-9 mx-auto border rounded p-3">
             <form id="contact-form" name="contact-form" action="mail.php" method="POST">
                 <!--Grid row-->
                 <div class="row">
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
+                        <label for="name">Votre nom</label>
                             <input type="text" id="name" name="name" class="form-control">
-                            <label for="name" class="text-white">Votre nom</label>
                         </div>
                     </div>
                     <!--Grid column-->
                     <!--Grid column-->
                     <div class="col-md-6">
-                        <div class="md-form mb-0 text-white">
-                            <input type="text" id="email" name="email" class="form-control text-white">
-                            <label for="email" class="">Votre mail</label>
+                        <div class="md-form mb-0">
+                        <label for="email" class="">Votre mail</label>
+                            <input type="text" id="email" name="email" class="form-control">
                         </div>
                     </div>
                     <!--Grid column-->
@@ -264,9 +266,9 @@
                 <!--Grid row-->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="md-form mb-0 text-white">
-                            <input type="text" id="subject" name="subject" class="form-control text-white">
-                            <label for="subject" class="">Objet</label>
+                        <div class="md-form mb-0">
+                        <label for="subject" class="pt-3">Objet</label>
+                            <input type="text" id="subject" name="subject" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -276,22 +278,22 @@
                     <!--Grid column-->
                     <div class="col-md-12">
 
-                        <div class="md-form text-white center">
+                        <div class="md-form center">
+                        <label for="message" class="pt-3">Message</label>
                             <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
-                            <label for="message">Message</label>
                         </div>
 
                     </div>
                 </div>
                 <!--Grid row-->
             </form>
-            <div class="text-center m-5">
-                <a class="btn btn-light btn-xl js-scroll-trigger" onclick="document.getElementById('contact-form').submit();">Envoyer</a>
+            <div class="text-center m-3">
+                <a class="btn btn-xl js-scroll-trigger btn-primary text-white" onclick="document.getElementById('contact-form').submit();">Envoyer</a>
             </div>
             <div class="status"></div>
         </div>
     </div>
-
+    <hr class="border-primary p-1 m-4">
 </section>
 <!--Section: Contact v.2-->
 <?php

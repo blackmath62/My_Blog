@@ -1,5 +1,4 @@
 <?php ob_start(); ?>
-
 <div class="container">
     <!--Section heading-->
     <h2 class="h1-responsive font-weight-bold text-center mt-5 pt-5">Administration</h2>
@@ -12,9 +11,9 @@
                 <form id="contact-form" name="contact-form" action="index.php?action=newPost" method="POST">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="md-form mb-0">
+                            <div class="md-form mb-0 center">
                                 <label for="subject" class="">Titre</label>
-                                <input type="text" id="subject" name="subject" class="form-control">
+                                <input type="text" id="subject" name="subject" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -26,13 +25,13 @@
 
                             <div class="md-form center">
                                 <label for="message">Post</label>
-                                <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
+                                <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea>
                             </div>
 
                         </div>
                     </div>
                     <div class="text-center m-5">
-                    <a class="btn btn-primary btn-xl js-scroll-trigger text-white" onclick="document.getElementById('contact-form').submit();">Déposer le post</a>
+                    <button class="btn btn-primary btn-xl js-scroll-trigger text-white">Déposer le post</button>
                 </div>
                 <div class="status"></div>
                 </form>
@@ -40,7 +39,21 @@
         </div>
     </section>
 </div>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector:'textarea',
+        height:500,
+        menubar:false,
+        plugins:[
+            'advlist autolink link lists image charmap print preview anchor textcolor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code help'
+        ],
+        toolbar:'insert | undo redo | styleselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+    });
+</script>
 <?php
 $content = ob_get_clean();
 require('view/frontend/htmlTemplate.php');

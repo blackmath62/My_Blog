@@ -1,11 +1,11 @@
 <?php ob_start(); ?>
 <!-- Portfolio Section -->
 <section class="p-5 m-5">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row no-gutters">
-            <div class="col-lg-2 col-sm-5 border">
+            <div class="col-lg-4 col-sm-5 center">
                 <a href="index.php?action=newPost">
-                    <img class="img-fluid" src="public/img/add.jpg" alt="">
+                <i class="fa fa-plus-square fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
                         <h4>Créer un post</h4>
@@ -13,9 +13,9 @@
 
                 </a>
             </div>
-            <div class="col-lg-2 col-sm-5 border">
+            <div class="col-lg-4 col-sm-5 center">
                 <a href="index.php?action=blog">
-                    <img class="img-fluid" src="public/img/modifier.jpg" alt="">
+                <i class="fa fa-pencil fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
                         <h4>Modifier un post</h4>
@@ -23,9 +23,9 @@
 
                 </a>
             </div>
-            <div class="col-lg-2 col-sm-5 border">
+            <div class="col-lg-4 col-sm-5 center">
                 <a href="index.php?action=blog">
-                    <img class="img-fluid" src="public/img/supprimer.jpg" alt="">
+                <i class="fa fa-trash fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
                         <h4>Supprimer un post</h4>
@@ -33,9 +33,9 @@
 
                 </a>
             </div>
-            <div class="col-lg-2 col-sm-5 border">
+            <div class="col-lg-4 col-sm-5 center">
                 <a href="index.php?action=usersList">
-                    <img class="img-fluid" src="public/img/users.jpg" alt="">
+                <i class="fa fa-user fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
                         <h4>Utilisateurs</h4>
@@ -43,9 +43,9 @@
 
                 </a>
             </div>
-            <div class="col-lg-2 col-sm-5 border">
+            <div class="col-lg-4 col-sm-5 center">
                 <a href="index.php?action=commentModeration">
-                    <img class="img-fluid" src="public/img/moderation.jpg" alt="">
+                <i class="fa fa-comments fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
                         <h4>Modération des commentaires</h4>
@@ -53,9 +53,9 @@
 
                 </a>
             </div>
-            <div class="col-lg-2 col-sm-5 border">
+            <div class="col-lg-4 col-sm-5 center">
                 <a href="index.php?action=commentReport">
-                    <img class="img-fluid" src="public/img/signaler.jpg" alt="">
+                <i class="fa fa-bell fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center project-name">
                         <h4 class="">Commentaires signalés</h4>
