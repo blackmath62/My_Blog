@@ -150,16 +150,17 @@ function changePost()
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     $postnumber = $_GET['id'];
     $changePost = $connexionmodel -> getChangePost($postnumber);
-    /*$title = $changePost['post_title'];
+    $title = $changePost['post_title'];
     $message = $changePost['post_content'];
-    */var_dump($changePost);
-    die();
     require('view/backend/changePost.php');
 }
 function updatePost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $updatePost = $connexionmodel -> updatePostNow($subject, $message, $postnumber);
+    $postnumber = $_GET['id'];
+    $title = $_POST['subject'];
+    $message = $_POST['message'];
+    $updatePost = $connexionmodel -> updatePostNow($title, $message, $postnumber);
     header('refresh:3; url= index.php?action=admin');
     require('view/backend/updatePost.php');
 }
@@ -174,11 +175,10 @@ function deletePost()
 function usersList()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    
-    //$usersList = $connexionmodel -> usersList();
-    
+    $allUsers = $connexionmodel -> getUsersList(); 
     require('view/backend/usersList.php');
 }
+
 function commentModeration()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet

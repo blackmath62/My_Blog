@@ -38,3 +38,6 @@ html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project
 .page-section{
 	padding-bottom: 2rem;
 }
+.visible{
+	overflow: visible;
+}
