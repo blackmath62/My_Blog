@@ -5,40 +5,44 @@ namespace memberSpace\Model;
 require_once("Model/Manager.php");
 class BlogManager extends Manager // la classe CommentManager hérite de Manager
 {
-    public function lastPost() {
+    public function lastPost()
+    {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $lastPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");
         return $lastPostResult;
-        
     }
-    public function postComment($postnumber) {
+    public function postComment($postnumber)
+    {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $lastComment = $db->prepare("SELECT comment_title, comment_date, comment_content, users_id, users.mail FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? ORDER BY comment_date LIMIT 6");
         $lastComment->execute(array($postnumber));
         return $lastComment;
     }
-    public function getChangePost($postnumber) {
+    public function getChangePost($postnumber)
+    {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $lastComment = $db->prepare("SELECT post_title, post_content FROM post_list where post_id = ?");
-        $lastComment->execute(array($postnumber));
-        return $lastComment;
+        $ChangePost = $db->prepare("SELECT post_title, post_content FROM post_list where post_id = ?");
+        $ChangePost->execute(array($postnumber));
+        $getChangePost = $ChangePost->fetch();
+        return $getChangePost;
     }
-    public function getLongPost($postnumber) {
+    public function getLongPost($postnumber)
+    {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $longPostResult = $db->prepare("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id) WHERE post_id = ?");
         $longPostResult->execute(array($postnumber));
         $PostResult = $longPostResult->fetch();
         return $PostResult;
-        
     }
-    
-    public function allPost() {
+
+    public function allPost()
+    {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $allPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC");
         return $allPostResult;
     }
-    
-    public function addComment($title, $content, $postId,$usersId)
+
+    public function addComment($title, $content, $postId, $usersId)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant        
         $req = $db->prepare('INSERT INTO comment(comment_title, comment_content, post_id, users_id ) VALUES(:title, :content, :id, :users)');
@@ -50,7 +54,7 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         ));
         return $addcomment;
     }
-    public function newPost($title, $content,$usersId)
+    public function newPost($title, $content, $usersId)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant        
         $req = $db->prepare('INSERT INTO post_list(post_title, post_content, users_id ) VALUES(:title, :content, :users)');
@@ -66,14 +70,14 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         $db = $this->dbConnect(); // la base de donnée de l'objet courant     
         $req = $db->prepare('DELETE FROM post_list WHERE post_id = ?');
         $deletePost = $req->execute(array($postnumber));
-        return $deletePost; 
+        return $deletePost;
     }
     public function updatePostNow($subject, $message, $postnumber)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant     
         $req = $db->prepare('UPDATE post_list SET post_title = :title ,post_content = :post WHERE post_id= :id');
-        $updatePost = $req->execute(array('title'=>$subject,'post'=>$message,'id'=>$postnumber));
-        return $updatePost; 
+        $updatePost = $req->execute(array('title' => $subject, 'post' => $message, 'id' => $postnumber));
+        return $updatePost;
     }
 
     public function changepass($idconnect, $hashnewpass, $cleartoken)
@@ -83,6 +87,10 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         $addtoken = $changepasstoken->execute(array('checkid' => $idconnect, 'newpass' => $hashnewpass, 'cleartoken' => $cleartoken)); // On insere dans la BDD 
         return $addtoken;
     }
-  
+    public function getUsersList()
+    {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $checkUsersList = $db->query("SELECT * FROM law INNER JOIN users ON users.law_id = law.law_id");
+        return $checkUsersList;
+    }
 }
-
