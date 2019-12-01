@@ -66,4 +66,23 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
 
         return $check_id;
     }
+    public function getUsersList()
+    {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $checkUsersList = $db->query("SELECT * FROM law INNER JOIN users ON users.law_id = law.law_id");
+        return $checkUsersList;
+    }
+    public function getLawList()
+    {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $lawList = $db->query("SELECT * FROM law");
+        return $lawList;
+    }
+    public function getChangeLawUser($idLaw,$idUser)
+    {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant        
+        $changeLawUser = $db->prepare('UPDATE users SET law_id = :law WHERE users_id = :user'); // on prépare l'insertion dans la BDD
+        $getChangeLawUser = $changeLawUser->execute(array('law' => $idLaw, 'user' => $idUser)); // On insere dans la BDD 
+        return $getChangeLawUser;
+    }
 }

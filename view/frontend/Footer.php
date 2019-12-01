@@ -4,13 +4,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="footer-col col-md-4">
-                            <h3>Mon adresse</h3>
+                            <h3 class="m-4">Mon adresse</h3>
                             <p>18 rue de la statue de la liberté
                                 <br>72500, Los Angeles</p>
                         </div>
                         <div class="footer-col col-md-4">
-                            <h3>Réseaux Sociaux</h3>
-                            <ul class="list-inline flex">
+                            <h3 class="m-4">Réseaux Sociaux</h3>
+                            <ul class="list-inline flex m-4">
                                 <li>
                                     <a href="https://www.facebook.com/quepuisjefairepour.nous" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook fa-2x"></i></a>
                                 </li>
@@ -24,7 +24,7 @@
                             </ul>
                         </div>
                         <div class="footer-col col-md-4">
-                            <h3>à propos</h3>
+                            <h3 class="m-4">à propos</h3>
                             <p>C'est avec plaisir que nous discuterons de votre projet : <a href=mailto:jpochet@lhermitte.fr>jpochet@jpochet.fr</a>.</p>
                             <?php 
                             if(!empty($_SESSION)){
@@ -39,7 +39,7 @@
             <div class="footer-below">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 m-5">
                             Copyright &copy; pochetjerome
                         </div>
                     </div>

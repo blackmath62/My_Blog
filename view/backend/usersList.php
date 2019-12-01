@@ -1,51 +1,70 @@
 <?php ob_start(); ?>
 <section class="page-section">
+    <h1 class="text-center w-responsive mx-auto mb-5">Liste des utilisateurs </h1>
     <div class="container">
-        <p class="text-center w-responsive mx-auto mb-5">Liste des utilisateurs </p>
         <div class="row">
             <div class="col-lg-12">
                 <div class="main-box clearfix">
                     <div class="table-responsive">
                         <table class="table user-list">
-                            <thead>
+                            <thead class="border rounded bg-primary text-white">
                                 <tr>
-                                    <th><span>Utilisateur</span></th>
-                                    <th><span>date création</span></th>
+                                    <th class="text-center"><span>Utilisateur</span></th>
+                                    <th class="text-center"><span>date création</span></th>
                                     <th class="text-center"><span>droit</span></th>
-                                    <th>&nbsp;</th>
+                                    <th class="text-center"><span>Action</span></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
+                                /*$lawvaleur = array('lawIdValue','lawLabelValue' );*/
+                                // On récupére la liste des droits dans un tableau
+                                $j = 1;
+                                while ($listLaw = $allLaw->fetch()) {
+                                    $lawId[$j] = $listLaw['law_id'];
+                                    $lawLabel[$j] = $listLaw['law_label'];
+                                    $j++;
+                                }
+                                $lawnumber = $allLaw->rowCount(); // compter le nombre de ligne
+
                                 while ($listUsers = $allUsers->fetch()) {
+                                    $usersId = $listUsers['users_id'];
                                     $usersMail = $listUsers['mail'];
                                     $usersdate = $listUsers['create_date_users'];
-                                    $userlaw = $listUsers['law_label'];
-                                    
+                                    $userslaw = $listUsers['law_label'];
+                                    $usersLawId = $listUsers['law_id'];
                                     ?>
                                     <tr>
-                                        <td>
-                                            <a class=""><?= $usersMail ?></a>
-                                        </td>
-                                        <td>
-                                            <?= $usersdate ?>
+                                        <td class="text-center">
+                                            <a class="text-center"><?= $usersMail ?></a>
                                         </td>
                                         <td class="text-center">
-                                            <span class="label label-default"><?= $userlaw ?></span>
+                                            <?= $usersdate ?>
                                         </td>
-                                        <td style="width: 25%;">
-                                            <a href="#" class="table-link">
-                                                <span class="fa-stack">
-                                                    <i class="fa fa-square fa-stack-2x"></i>
-                                                    <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                                </span>
-                                            </a>
-                                            <a href="#" class="table-link danger">
+
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group" aria-label="First group">
+                                                <?php
+                                                // Pour chaque utilisateur afficher tous les droits disponible sous forme de bouton pour pouvoir changer de droit
+                                                    for ($i=1; $i <= $lawnumber; $i++) {
+                                                        if ($lawId[$i] == $usersLawId) {
+                                                            $lawColor = "primary";
+                                                        } else {
+                                                            $lawColor = "secondary";
+                                                        }
+                                                        ?>
+                                                    <a type="button" href="index.php?action=changeLawUser&id=<?= $lawId[$i] ?>&userid=<?= $usersId ?>" class="btn btn-<?= $lawColor ?>"><?= $lawLabel[$i]; ?></a>
+                                                <?php } ?>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="index.php?action=deleteUser&id=<?= $usersId ?>" class="table-link danger">
                                                 <span class="fa-stack">
                                                     <i class="fa fa-square fa-stack-2x"></i>
                                                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                                                 </span>
                                             </a>
+                                            <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups"></div>
                                         </td>
                                     </tr>
                                 <?php } ?>

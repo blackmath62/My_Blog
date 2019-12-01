@@ -87,10 +87,5 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         $addtoken = $changepasstoken->execute(array('checkid' => $idconnect, 'newpass' => $hashnewpass, 'cleartoken' => $cleartoken)); // On insere dans la BDD 
         return $addtoken;
     }
-    public function getUsersList()
-    {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $checkUsersList = $db->query("SELECT * FROM law INNER JOIN users ON users.law_id = law.law_id");
-        return $checkUsersList;
-    }
+    
 }

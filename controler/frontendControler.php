@@ -174,8 +174,9 @@ function deletePost()
 }
 function usersList()
 {
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $allUsers = $connexionmodel -> getUsersList(); 
+    $UsersLawmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $allLaw = $UsersLawmodel -> getLawList();
+    $allUsers = $UsersLawmodel -> getUsersList();
     require('view/backend/usersList.php');
 }
 
@@ -187,6 +188,18 @@ function commentModeration()
     
     require('view/backend/commentModeration.php');
 }
+
+function ChangeLawUser()
+{
+    $changeLawModel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $idLaw = $_GET['id'];
+    $idUser = $_GET['userid'];
+    $changelaw = $changeLawModel -> getChangeLawUser($idLaw,$idUser);
+    /*header('refresh:0; url= index.php?action=usersList');*/
+    header('Location: index.php?action=usersList');
+    require('view/backend/changeLawView.php');
+}
+
 function commentReport()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
@@ -302,41 +315,3 @@ function get_passchange()
     }
     require('view/frontend/connect/change-forgot-password.php');
 }
-/*
-function getAdmin()
-{
-    session_start();
-    $connexionmodelStates = new \memberSpace\Model\adminManager(); // créer un Objet
-    $admin = $connexionmodelStates->sectionArticle(); // appel de la fonction qui vérifie l'existance du mail dans la BDD
-    $droit = $connexionmodelStates->droitAdmin(); // appel de la fonction qui vérifie l'existance du mail dans la BDD
-    $listdroit = $connexionmodelStates->listdroitAdmin(); // appel de la fonction qui vérifie l'existance du mail dans la BDD
-    require('view/backend/administration.php');
-}
-
-function contact()
-{
-    session_start();
-    require('view/frontend/contact.php');
-}
-function sendContact()
-{
-    session_start();
-
-    $nom = htmlspecialchars($_POST['name']); // déclaration de la variable mailconnect
-    $mail = htmlspecialchars($_POST['email']); // déclaration de la variable mailconnect
-    $message = htmlspecialchars($_POST['message']); // déclaration de la variable mailconnect
-    $header = "MIME-Version: 1.0\r\n";
-    $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
-    $header .= 'Content-Type:text/html; charset="utf-8"' . "\n";
-    $header .= 'Content-Transfer-Encoding: 8bit';
-
-    mail("jpochet@lhermitte.fr", "Mail en provenance de jpochet.fr", $message, $header);
-    $error = "Votre mail a bien été envoyé !";
-    header('Location: index.php');
-    require('view/frontend/contact.php');
-}
-function profil()
-{
-    session_start();
-    require('view/frontend/profil.php');
-}*/
