@@ -5,13 +5,13 @@ namespace memberSpace\Model;
 require_once("Model/Manager.php");
 class MemberManager extends Manager // la classe CommentManager hérite de Manager
 {
-        
+
     public function check_exist($mailconnect)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $check_profil = $db->prepare("SELECT * FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
         $check_profil->execute(array($mailconnect));
-       
+
         return $check_profil;
     }
     public function check_id($idconnect)
@@ -23,7 +23,7 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
         return $check_id;
     }
 
-    public function getconnect($mailconnect) 
+    public function getconnect($mailconnect)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $userconnect = $db->prepare("SELECT users_id, mail,mdp,users.law_id FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
@@ -39,7 +39,7 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
         $addregister = $req->execute(array(
             'mail' => $mailconnect,
             'mdp' => $mdpconnect,
-            
+
         ));
         return $addregister;
     }
@@ -78,11 +78,18 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
         $lawList = $db->query("SELECT * FROM law");
         return $lawList;
     }
-    public function getChangeLawUser($idLaw,$idUser)
+    public function getChangeLawUser($idLaw, $idUser)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant        
         $changeLawUser = $db->prepare('UPDATE users SET law_id = :law WHERE users_id = :user'); // on prépare l'insertion dans la BDD
         $getChangeLawUser = $changeLawUser->execute(array('law' => $idLaw, 'user' => $idUser)); // On insere dans la BDD 
         return $getChangeLawUser;
+    }
+    public function deleteUser($idUser)
+    {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant     
+        $req = $db->prepare('DELETE FROM users WHERE users_id = ?');
+        $deleteUser = $req->execute(array($idUser));
+        return $deleteUser;
     }
 }

@@ -45,8 +45,8 @@
                                         <td class="text-center">
                                             <div class="btn-group" role="group" aria-label="First group">
                                                 <?php
-                                                // Pour chaque utilisateur afficher tous les droits disponible sous forme de bouton pour pouvoir changer de droit
-                                                    for ($i=1; $i <= $lawnumber; $i++) {
+                                                    // Pour chaque utilisateur afficher tous les droits disponible sous forme de bouton pour pouvoir changer de droit
+                                                    for ($i = 1; $i <= $lawnumber; $i++) {
                                                         if ($lawId[$i] == $usersLawId) {
                                                             $lawColor = "primary";
                                                         } else {
@@ -58,16 +58,25 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
-                                            <a href="index.php?action=deleteUser&id=<?= $usersId ?>" class="table-link danger">
-                                                <span class="fa-stack">
-                                                    <i class="fa fa-square fa-stack-2x"></i>
-                                                    <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                                </span>
-                                            </a>
+
+                                            <a type="button" href="#delete<?= $usersId ?>" rel="modal:open" class="btn btn-danger">Supprimer le compte</a>
+                                            <!-- Modal HTML embedded directly into document -->
+                                <div id="delete<?= $usersId ?>" class="modal visible h-25 text-center">
+                                    <p class="p-2">Veuillez confirmer la suppression de l'utilisateur</p>
+                                    <div class="d-flex justify-content-center flex-column">
+                                        <a href="#" class="btn btn-xl btn-success m-2" rel="modal:close">Non ! je ne veux pas supprimer l'utilisateur !</a>
+                                        <a href="index.php?action=deleteUser&userid=<?= $usersId ?>" class="btn btn-xl btn-danger m-2" rel="">Je suis sûr de vouloir le supprimer</a>
+                                    </div>
+                                </div>
+                                <!-- END Modal HTML embedded directly into document -->
                                             <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups"></div>
+
                                         </td>
+
                                     </tr>
+
                                 <?php } ?>
+                                
                             </tbody>
                         </table>
                     </div>

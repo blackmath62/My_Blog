@@ -29,7 +29,8 @@ function kill_connexion()
     header('Location: index.php');
 }
 
-function getAdmin(){
+function getAdmin()
+{
 
     require('view/backend/backendHome.php');
 }
@@ -71,7 +72,7 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
     } else {
         $error = "Veuillez renseigner votre mail et mdp ";
     }
-    
+
     require('view/frontend/connect/loginview.php');
 }
 
@@ -115,33 +116,32 @@ function passforget()
 function home()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $blogmodel = $connexionmodel -> lastPost();
-    
+    $blogmodel = $connexionmodel->lastPost();
+
     require('view/frontend/templateFrontend.php');
 }
 function longPost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     $postnumber = $_GET['id'];
-    $blogmodel = $connexionmodel -> getLongPost($postnumber);
-        $title = $blogmodel['post_title'];
-        $datepost = $blogmodel['post_date'];
-        $postmessage = $blogmodel['post_content'];
-        $postnumber = $blogmodel['post_id'];
-        $postuser = $blogmodel['mail'];
-    $commentmodel = $connexionmodel -> postComment($postnumber);
-       
-    require('view/frontend/postView.php');
+    $blogmodel = $connexionmodel->getLongPost($postnumber);
+    $title = $blogmodel['post_title'];
+    $datepost = $blogmodel['post_date'];
+    $postmessage = $blogmodel['post_content'];
+    $postnumber = $blogmodel['post_id'];
+    $postuser = $blogmodel['mail'];
+    $commentmodel = $connexionmodel->postComment($postnumber);
 
+    require('view/frontend/postView.php');
 }
 function newPost()
 {
-    if(!empty($_POST['subject']) and !empty($_POST['message'])){
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $title = $_POST['subject'];
-    $content = $_POST['message'];
-    $usersId = $_SESSION['users_id'];
-    $newPost = $connexionmodel->newPost($title, $content, $usersId);
+    if (!empty($_POST['subject']) and !empty($_POST['message'])) {
+        $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+        $title = $_POST['subject'];
+        $content = $_POST['message'];
+        $usersId = $_SESSION['users_id'];
+        $newPost = $connexionmodel->newPost($title, $content, $usersId);
     }
     require('view/backend/newPost.php');
 }
@@ -149,7 +149,7 @@ function changePost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     $postnumber = $_GET['id'];
-    $changePost = $connexionmodel -> getChangePost($postnumber);
+    $changePost = $connexionmodel->getChangePost($postnumber);
     $title = $changePost['post_title'];
     $message = $changePost['post_content'];
     require('view/backend/changePost.php');
@@ -160,7 +160,7 @@ function updatePost()
     $postnumber = $_GET['id'];
     $title = $_POST['subject'];
     $message = $_POST['message'];
-    $updatePost = $connexionmodel -> updatePostNow($title, $message, $postnumber);
+    $updatePost = $connexionmodel->updatePostNow($title, $message, $postnumber);
     header('refresh:3; url= index.php?action=admin');
     require('view/backend/updatePost.php');
 }
@@ -175,17 +175,17 @@ function deletePost()
 function usersList()
 {
     $UsersLawmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
-    $allLaw = $UsersLawmodel -> getLawList();
-    $allUsers = $UsersLawmodel -> getUsersList();
+    $allLaw = $UsersLawmodel->getLawList();
+    $allUsers = $UsersLawmodel->getUsersList();
     require('view/backend/usersList.php');
 }
 
 function commentModeration()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    
+
     //$commentModeration = $connexionmodel -> commentModeration();
-    
+
     require('view/backend/commentModeration.php');
 }
 
@@ -194,26 +194,36 @@ function ChangeLawUser()
     $changeLawModel = new \memberSpace\Model\MemberManager(); // créer un Objet
     $idLaw = $_GET['id'];
     $idUser = $_GET['userid'];
-    $changelaw = $changeLawModel -> getChangeLawUser($idLaw,$idUser);
+    $changelaw = $changeLawModel->getChangeLawUser($idLaw, $idUser);
     /*header('refresh:0; url= index.php?action=usersList');*/
     header('Location: index.php?action=usersList');
     require('view/backend/changeLawView.php');
 }
 
+function deleteUser()
+{
+    $deleteUserModel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $idUser = $_GET['userid'];
+    $getDeleteUser = $deleteUserModel->deleteUser($idUser);
+    /*header('refresh:0; url= index.php?action=usersList');*/
+    header('Location: index.php?action=usersList');
+    require('view/backend/deleteUserView.php');
+}
+
 function commentReport()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    
+
     //$commentReport = $connexionmodel -> commentReport();
-    
+
     require('view/backend/commentReport.php');
 }
 function allPost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    
-    $blogmodel = $connexionmodel -> allPost();
-    
+
+    $blogmodel = $connexionmodel->allPost();
+
     require('view/frontend/allPostView.php');
 }
 function getComment()
@@ -222,8 +232,8 @@ function getComment()
     $title = $_POST['subject'];
     $content = $_POST['message'];
     $postId = $_GET["id"];
-    $usersId = $_SESSION['users_id']; 
-    $blogmodel = $connexionmodel -> addComment($title, $content, $postId, $usersId);
+    $usersId = $_SESSION['users_id'];
+    $blogmodel = $connexionmodel->addComment($title, $content, $postId, $usersId);
     require('view/frontend/postComment.php');
 }
 
@@ -241,7 +251,7 @@ function get_passforget()
         {
             if ($userexist == 1) // si l'user = 1 c'est qu'il existe
             {
-                
+
                 header('Location: index.php?action=send_Mail_Password');
                 $id = $profil['users_id'];
                 $receivetoken = $connexionmodel->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
@@ -271,7 +281,8 @@ function get_passforget()
     require('view/frontend/connect/change-forgot-password.php');
 }
 
-function send_Mail_Password(){
+function send_Mail_Password()
+{
     $error = " Nous vous avons envoyé un mail pour réinitialiser votre mot de passe, vous pouvez fermer cette fenêtre" . '</br>' . '</br>';
     require('view/frontend/pageNoFound.php');
 }

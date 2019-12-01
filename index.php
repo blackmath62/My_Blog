@@ -82,6 +82,9 @@ if (isset($_GET['action'])) {
                 case 'changeLawUser':
                         ChangeLawUser();
                         break;
+                case 'deleteUser':
+                        deleteUser();
+                        break;
         }
 } else {
         home();
