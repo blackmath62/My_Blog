@@ -40,7 +40,7 @@
     </section>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script type="text/javascript" src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=bo070cj0cufoos572vlo44q1qz8r433p93zx0dftzsgkdr5h"></script>
 <script>
     tinymce.init({
         selector:'textarea',
