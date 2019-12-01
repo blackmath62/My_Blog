@@ -130,6 +130,7 @@ function longPost()
     $postmessage = $blogmodel['post_content'];
     $postnumber = $blogmodel['post_id'];
     $postuser = $blogmodel['mail'];
+    $modificationDate = $blogmodel['modification_date'];
     $commentmodel = $connexionmodel->postComment($postnumber);
 
     require('view/frontend/postView.php');
