@@ -14,7 +14,7 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     public function postComment($postnumber)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $lastComment = $db->prepare("SELECT comment_title, comment_date, comment_content, users_id, users.mail FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? ORDER BY comment_date LIMIT 6");
+        $lastComment = $db->prepare("SELECT comment_title, comment_date, comment_content, users_id, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? AND validate_id = 2  ORDER BY comment_date LIMIT 6");
         $lastComment->execute(array($postnumber));
         return $lastComment;
     }
@@ -29,7 +29,7 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     public function getLongPost($postnumber)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $longPostResult = $db->prepare("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id) WHERE post_id = ?");
+        $longPostResult = $db->prepare("SELECT post_id, post_title, post_date, post_content, users_id, users.mail, modification_date FROM users INNER JOIN post_list USING(users_id) WHERE post_id = ?");
         $longPostResult->execute(array($postnumber));
         $PostResult = $longPostResult->fetch();
         return $PostResult;
@@ -38,7 +38,7 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     public function allPost()
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $allPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC");
+        $allPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail, modification_date FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC");
         return $allPostResult;
     }
 
@@ -75,8 +75,8 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     public function updatePostNow($subject, $message, $postnumber)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant     
-        $req = $db->prepare('UPDATE post_list SET post_title = :title ,post_content = :post WHERE post_id= :id');
-        $updatePost = $req->execute(array('title' => $subject, 'post' => $message, 'id' => $postnumber));
+        $req = $db->prepare('UPDATE post_list SET post_title = :title ,post_content = :post, modification_date = :changeDate WHERE post_id= :id');
+        $updatePost = $req->execute(array('title' => $subject, 'post' => $message, 'id' => $postnumber, 'changeDate' => date("Y-m-d H:i:s")));
         return $updatePost;
     }
 

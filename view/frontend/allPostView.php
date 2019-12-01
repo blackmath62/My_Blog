@@ -9,6 +9,7 @@
             $postmessage = $postblog['post_content'];
             $postnumber = $postblog['post_id'];
             $postuser = $postblog['mail'];
+            $modificationDate = $postblog['modification_date'];
             ?>
             <div class="text-center border m-2" id="<?= $postnumber ?>">
                 <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
@@ -20,6 +21,9 @@
                 </div>
                 <div class="card-footer text-muted d-flex">
                     <p class="d-flex mr-auto p-2">Posté le <?= $datepost ?> par <?= $postuser ?></p>
+                    <?php if(isset($modificationDate)){ ?>
+                    <p class="d-flex mr-right p-2">Modifié le <?=$modificationDate ?> par <?=$postuser ?></p>
+                    <?php } ?> 
                     <?php if (!empty($_SESSION)) {
                             if ($_SESSION['law_id'] == 1) { ?>
                     <a href="index.php?action=changePost&id=<?= $postnumber ?>" class="table-link">
