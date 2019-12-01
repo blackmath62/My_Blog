@@ -79,6 +79,9 @@ if (isset($_GET['action'])) {
                 case 'commentModeration':
                         commentModeration();
                         break;
+                case 'changeLawUser':
+                        ChangeLawUser();
+                        break;
         }
 } else {
         home();
