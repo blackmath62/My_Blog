@@ -2,7 +2,7 @@
 
 require_once('Model/MemberManager.php');
 require_once('Model/BlogManager.php');
-
+require_once('Model/CommentManager.php');
 // connexion function
 
 function pageNoFound()
@@ -183,11 +183,21 @@ function usersList()
 
 function commentModeration()
 {
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
 
     //$commentModeration = $connexionmodel -> commentModeration();
 
     require('view/backend/commentModeration.php');
+}
+function getReportComment()
+{
+    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
+    $usersId = $_SESSION['users_id'];
+    $postnumber = $_GET['postid'];
+    $commentId = $_GET['commentid'];
+    $commentModeration = $Commentmodel -> commentReport($usersId, $postnumber, $commentId);
+    header('Location:index.php?action=longPost&id='.$_GET['postid']);
+    require('view/frontend/reportComment.php');
 }
 
 function ChangeLawUser()

@@ -14,7 +14,7 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     public function postComment($postnumber)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $lastComment = $db->prepare("SELECT comment_title, comment_date, comment_content, users_id, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? AND validate_id = 2  ORDER BY comment_date LIMIT 6");
+        $lastComment = $db->prepare("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? AND validate_id = 2  ORDER BY comment_date LIMIT 6");
         $lastComment->execute(array($postnumber));
         return $lastComment;
     }

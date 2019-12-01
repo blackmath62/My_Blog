@@ -21,6 +21,7 @@
     </section>
     <?php
     while ($listComment = $commentmodel->fetch()) {
+        $commentId = $listComment['comment_id'];
         $commentTitle = $listComment['comment_title'];
         $dateComment = $listComment['comment_date'];
         $commentMessage = $listComment['comment_content'];
@@ -38,7 +39,7 @@
                         <p><?php echo nl2br($commentMessage) ?></p>
                         <!--Pour avoir les sauts de ligne à l'affichage-->
                         <p>
-                            <a class="float-right btn text-white btn-danger"> <i class="fa fa-bell"></i> Signaler</a>
+                            <a class="float-right btn text-white btn-danger" href="index.php?action=reportComment&commentid=<?=$commentId ?>&postid=<?=$postnumber ?>"> <i class="fa fa-bell"></i> Signaler</a>
                         </p>
                     </div>
                 </div>

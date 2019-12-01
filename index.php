@@ -85,6 +85,9 @@ if (isset($_GET['action'])) {
                 case 'deleteUser':
                         deleteUser();
                         break;
+                case 'reportComment':
+                        getReportComment();
+                        break;
         }
 } else {
         home();
