@@ -12,6 +12,11 @@ class CommentManager extends Manager // la classe CommentManager hérite de Mana
         $addReport->execute(array($usersId, $commentId, $postnumber));
         return $addReport;
     }
-    
+    public function checkAllreadyReport($usersId, $postnumber){
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $checkAllreadyReport = $db->prepare("SELECT comment_id from report_comment WHERE users_id = ? AND post_id = ? ");
+        $checkAllreadyReport->execute(array($usersId, $postnumber));
+        return $checkAllreadyReport;
+    }
 
 }

@@ -13,7 +13,10 @@
             ?>
             <div class="text-center border m-2" id="<?= $postnumber ?>">
                 <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
+                <div d-flex flex-row>
                 <h2 class="card-title btn-primary rounded-top p-2"><?= $title ?></h2>
+                <p>41 Nouveaux commentaires </p>
+                </div>
                 <div class="card-body">
                     
                     <p class="card-text"><?= substr($postmessage, 0, 200) . '...' ?></p>

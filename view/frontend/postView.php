@@ -4,18 +4,18 @@
         <!-- Blog Post -->
         <div class="text-center border" id="<?= $postnumber ?>">
             <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
-
+            <h2 class="card-title btn-primary rounded p-2"><?= $title ?></h2>
             <div class="card-body">
-                <h2 class="card-title btn-xl btn-primary"><?= $title ?></h2>
+
                 <p class="card-text"><?= nl2br($postmessage) ?></p>
             </div>
             <div class="text-muted card-footer d-flex">
-            <p class="mr-auto p-2">Posté le <?= $datepost ?> par <?= $postuser ?></p>
-            <?php $modificationDate = $blogmodel['modification_date'];
-                    ?>
-            <?php if (isset($modificationDate)) { ?>
-                <p class="mr-right p-2">Modifié le <?= $modificationDate ?> par <?= $postuser ?></p>
-            <?php } ?>
+                <p class="mr-auto p-2">Posté le <?= $datepost ?> par <?= $postuser ?></p>
+                <?php $modificationDate = $blogmodel['modification_date'];
+                ?>
+                <?php if (isset($modificationDate)) { ?>
+                    <p class="mr-right p-2">Modifié le <?= $modificationDate ?> par <?= $postuser ?></p>
+                <?php } ?>
             </div>
         </div>
     </section>
@@ -39,8 +39,19 @@
                         <p><?php echo nl2br($commentMessage) ?></p>
                         <!--Pour avoir les sauts de ligne à l'affichage-->
                         <p>
-                            <a class="float-right btn text-white btn-danger" href="index.php?action=reportComment&commentid=<?=$commentId ?>&postid=<?=$postnumber ?>"> <i class="fa fa-bell"></i> Signaler</a>
-                        </p>
+                        <?php
+                        /*$reportCount = $checkAllreadyReport->rowCount(); // compter le nombre de ligne*/
+                        while($reportList = $checkAllreadyReport->fetchAll()){ // compter le nombre de ligne 
+                        $Report = array_values($reportList);
+                        var_dump($Report);
+                        var_dump($_SESSION['users_id']) ;
+                        } ?>
+                        
+                            <a class="float-right btn text-white btn-success" href="index.php?action=removeReport&commentid=<?= $commentId ?>&postid=<?= $postnumber ?>"> <i class="fa fa-bell-slash"></i> Retirer Signalement</a> 
+                            <a class="float-right btn text-white btn-danger" href="index.php?action=reportComment&commentid=<?= $commentId ?>&postid=<?= $postnumber ?>"> <i class="fa fa-bell"></i> Signaler</a>
+
+
+                        </p>       
                     </div>
                 </div>
             </div>
@@ -53,7 +64,7 @@
 
     if (isset($_SESSION['users_id'])) { ?>
         <!--Commentaires-->
-        <section class="mb-4 center bg-primary pt-4" id="contact">
+        <section class="mb-4 center bg-primary pt-4 rounded" id="contact">
             <!--Section heading-->
             <h2 class="h1-responsive font-weight-bold text-center text-white">Déposez un commentaire</h2>
             <div class="row">
@@ -65,7 +76,7 @@
                             <div class="col-md-12">
                                 <div class="md-form mb-0 text-white">
                                     <label for="subject" class="">Titre</label>
-                                    <input type="text" id="subject" name="subject" class="form-control">
+                                    <input type="text" id="subject" name="subject" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -77,16 +88,17 @@
 
                                 <div class="md-form text-white center">
                                     <label for="message">Message</label>
-                                    <textarea type="text" id="message" name="message" rows="5" class="form-control md-textarea"></textarea>
+                                    <textarea type="text" id="message" name="message" rows="5" class="form-control md-textarea" required></textarea>
                                 </div>
 
                             </div>
                         </div>
                         <!--Grid row-->
+                        <div class="text-center m-5">
+                            <button class="btn btn-light btn-xl js-scroll-trigger">Envoyer</button>
+                        </div>
                     </form>
-                    <div class="text-center m-5">
-                        <a class="btn btn-light btn-xl js-scroll-trigger" onclick="document.getElementById('contact-form').submit();">Envoyer</a>
-                    </div>
+
                     <div class="status"></div>
                 </div>
             </div>

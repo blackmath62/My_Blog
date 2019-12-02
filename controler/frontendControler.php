@@ -123,6 +123,7 @@ function home()
 function longPost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $commentConnexionModel = new \memberSpace\Model\CommentManager(); // créer un Objet
     $postnumber = $_GET['id'];
     $blogmodel = $connexionmodel->getLongPost($postnumber);
     $title = $blogmodel['post_title'];
@@ -130,9 +131,11 @@ function longPost()
     $postmessage = $blogmodel['post_content'];
     $postnumber = $blogmodel['post_id'];
     $postuser = $blogmodel['mail'];
+    $usersId = $_SESSION['users_id'];
     $modificationDate = $blogmodel['modification_date'];
     $commentmodel = $connexionmodel->postComment($postnumber);
-
+    $checkAllreadyReport = $commentConnexionModel->checkAllreadyReport($usersId, $postnumber);
+    var_dump($postnumber);
     require('view/frontend/postView.php');
 }
 function newPost()
@@ -197,6 +200,7 @@ function getReportComment()
     $commentId = $_GET['commentid'];
     $commentModeration = $Commentmodel -> commentReport($usersId, $postnumber, $commentId);
     header('Location:index.php?action=longPost&id='.$_GET['postid']);
+    /*$error = "Votre signalement a bien été enregistré";*/
     require('view/frontend/reportComment.php');
 }
 
