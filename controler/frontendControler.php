@@ -135,7 +135,6 @@ function longPost()
     $modificationDate = $blogmodel['modification_date'];
     $commentmodel = $connexionmodel->postComment($postnumber);
     $checkAllreadyReport = $commentConnexionModel->checkAllreadyReport($usersId, $postnumber);
-    var_dump($postnumber);
     require('view/frontend/postView.php');
 }
 function newPost()
@@ -186,9 +185,9 @@ function usersList()
 
 function commentModeration()
 {
-    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
+    $CommentModel = new \memberSpace\Model\CommentManager(); // créer un Objet
 
-    //$commentModeration = $connexionmodel -> commentModeration();
+    $commentModeration = $CommentModel -> searchCommentWaitValidation();
 
     require('view/backend/commentModeration.php');
 }
@@ -203,6 +202,19 @@ function getReportComment()
     /*$error = "Votre signalement a bien été enregistré";*/
     require('view/frontend/reportComment.php');
 }
+function getRemoveReport()
+{
+    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
+    $usersId = $_SESSION['users_id'];
+    $postnumber = $_GET['postid'];
+    $commentId = $_GET['commentid'];
+    $RemoveReportNow = $Commentmodel -> removeReport($usersId, $postnumber, $commentId);
+    header('Location:index.php?action=longPost&id='.$_GET['postid']);
+    /*$error = "Votre signalement a bien été enregistré";*/
+    require('view/frontend/removeReportView.php');
+}
+
+
 
 function ChangeLawUser()
 {
@@ -210,7 +222,6 @@ function ChangeLawUser()
     $idLaw = $_GET['id'];
     $idUser = $_GET['userid'];
     $changelaw = $changeLawModel->getChangeLawUser($idLaw, $idUser);
-    /*header('refresh:0; url= index.php?action=usersList');*/
     header('Location: index.php?action=usersList');
     require('view/backend/changeLawView.php');
 }
@@ -220,7 +231,6 @@ function deleteUser()
     $deleteUserModel = new \memberSpace\Model\MemberManager(); // créer un Objet
     $idUser = $_GET['userid'];
     $getDeleteUser = $deleteUserModel->deleteUser($idUser);
-    /*header('refresh:0; url= index.php?action=usersList');*/
     header('Location: index.php?action=usersList');
     require('view/backend/deleteUserView.php');
 }
@@ -236,8 +246,10 @@ function commentReport()
 function allPost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-
+    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
     $blogmodel = $connexionmodel->allPost();
+    $numberComment = $Commentmodel->numberCommentReport();
+    $numberWaitComment = $Commentmodel->numberCommentWait();
 
     require('view/frontend/allPostView.php');
 }

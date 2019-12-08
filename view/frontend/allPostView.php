@@ -3,6 +3,8 @@
     <section class="page-section">
         <!-- Blog Post -->
         <?php
+        $nbReport = $numberComment->fetchAll(PDO::FETCH_COLUMN);
+        $nbCommentWait = $numberWaitComment->fetchAll(PDO::FETCH_COLUMN);
         while ($postblog = $blogmodel->fetch()) {
             $title = $postblog['post_title'];
             $datepost = $postblog['post_date'];
@@ -15,7 +17,34 @@
                 <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
                 <div d-flex flex-row>
                 <h2 class="card-title btn-primary rounded-top p-2"><?= $title ?></h2>
-                <p>41 Nouveaux commentaires </p>
+                <?php if (!empty($_SESSION)) { // n'afficher que si l'utilisateur est administrateur
+                            if ($_SESSION['law_id'] == 1) { ?>
+                <?php
+                        if(in_array($postnumber,$nbReport,true)){ // n'afficher que s'il y a des commentaires signalés  
+                    $numberCommentReport = count(array_keys($nbReport,$postnumber));  // compter le nombre d'occurence de commentaire signalé pour le post
+                        ?>
+                <a class="table-link">
+                        <span class="fa-stack ml-2">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-bell fa-stack-1x fa-inverse btn-danger rounded"> <?=$numberCommentReport ?></i>
+                        </span>
+                    </a>
+                <?php 
+                             }  } }  ?>
+
+                    <?php 
+                    if(in_array($postnumber,$nbCommentWait,true)){ // n'afficher que s'il y a des commentaires signalés  
+                        $numberWaitComment = count(array_keys($nbCommentWait,$postnumber));  // compter le nombre d'occurence de commentaire signalé pour le post
+                            ?>         
+
+                    <a class="table-link">
+                        <span class="fa-stack ml-2">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-clock-o fa-stack-1x fa-inverse btn-warning rounded"> <?=$numberWaitComment ?></i>
+                        </span>
+                    </a>
+                    <?php }  ?>
+
                 </div>
                 <div class="card-body">
                     

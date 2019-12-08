@@ -20,6 +20,7 @@
         </div>
     </section>
     <?php
+    $reportList = $checkAllreadyReport->fetchAll(PDO::FETCH_COLUMN);
     while ($listComment = $commentmodel->fetch()) {
         $commentId = $listComment['comment_id'];
         $commentTitle = $listComment['comment_title'];
@@ -40,17 +41,16 @@
                         <!--Pour avoir les sauts de ligne à l'affichage-->
                         <p>
                         <?php
-                        /*$reportCount = $checkAllreadyReport->rowCount(); // compter le nombre de ligne*/
-                        while($reportList = $checkAllreadyReport->fetchAll()){ // compter le nombre de ligne 
-                        $Report = array_values($reportList);
-                        var_dump($Report);
-                        var_dump($_SESSION['users_id']) ;
-                        } ?>
-                        
-                            <a class="float-right btn text-white btn-success" href="index.php?action=removeReport&commentid=<?= $commentId ?>&postid=<?= $postnumber ?>"> <i class="fa fa-bell-slash"></i> Retirer Signalement</a> 
-                            <a class="float-right btn text-white btn-danger" href="index.php?action=reportComment&commentid=<?= $commentId ?>&postid=<?= $postnumber ?>"> <i class="fa fa-bell"></i> Signaler</a>
-
-
+                        if(in_array($commentId,$reportList,true)){
+                        ?>
+                        <a class="float-right btn text-white btn-success" href="index.php?action=removeReport&commentid=<?= $commentId ?>&postid=<?= $postnumber ?>"> <i class="fa fa-bell-slash"></i> Retirer Signalement</a> 
+                        <?php                     
+                        }else{
+                        ?>
+                        <a class="float-right btn text-white btn-danger" href="index.php?action=reportComment&commentid=<?= $commentId ?>&postid=<?= $postnumber ?>"> <i class="fa fa-bell"></i> Signaler</a>
+                            <?php
+                    }                                              
+                         ?> 
                         </p>       
                     </div>
                 </div>

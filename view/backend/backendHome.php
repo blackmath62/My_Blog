@@ -44,7 +44,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-5 center">
-                <a href="index.php?action=commentModeration">
+                <a href="index.php?action=blog">
                 <i class="fa fa-comments fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
@@ -54,7 +54,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-5 center">
-                <a href="index.php?action=commentReport">
+                <a href="index.php?action=blog">
                 <i class="fa fa-bell fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center project-name">

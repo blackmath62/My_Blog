@@ -88,6 +88,9 @@ if (isset($_GET['action'])) {
                 case 'reportComment':
                         getReportComment();
                         break;
+                case 'removeReport':
+                        getRemoveReport();
+                        break;
         }
 } else {
         home();
