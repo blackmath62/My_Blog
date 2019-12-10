@@ -27,15 +27,14 @@
   
 
 </head>
-
 <body id="page-top" class="index">
   <!-- Content Wrapper -->
   <div id="content-wrapper" class="d-flex flex-column">
     <?php include 'Header.php' ?>
+    
     <!-- Main Content -->
     <div id="content">
       <?= $content ?>
-
       <?php include 'Footer.php' ?>
 
       <!-- End of Content Wrapper -->

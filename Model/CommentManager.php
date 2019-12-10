@@ -20,7 +20,7 @@ class CommentManager extends Manager // la classe CommentManager hérite de Mana
     }
     public function numberCommentWait(){
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $numberWait = $db->prepare("SELECT validate_id from comment");
+        $numberWait = $db->prepare("SELECT post_id from comment WHERE validate_id = 1");
         $numberWait->execute(array());
         return $numberWait;
     }
@@ -30,17 +30,23 @@ class CommentManager extends Manager // la classe CommentManager hérite de Mana
         $checkAllreadyReport->execute(array($usersId, $postnumber));
         return $checkAllreadyReport;
     }
+    public function checkAllReport($postnumber){
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $checkAllreadyReport = $db->prepare("SELECT comment_id from report_comment WHERE post_id = ? ORDER BY comment_id");
+        $checkAllreadyReport->execute(array($postnumber));
+        return $checkAllreadyReport;
+    }
     public function removeReport($usersId, $postnumber, $commentId){
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $deleteReport = $db->prepare("DELETE from report_comment WHERE users_id = ? AND post_id = ? AND comment_id = ?");
         $deleteReport->execute(array($usersId, $postnumber, $commentId));
         return $deleteReport;
     }
-    public function searchCommentWaitValidation(){
+    public function searchCommentWaitValidation($postnumber){
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $CommentWaitValidation = $db->prepare("SELECT * from comment WHERE validate_id <> 2 ORDER BY comment_date DESC");
-        $CommentWaitValidation->execute(array());
-        return $CommentWaitValidation;
+        $lastComment = $db->prepare("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? ORDER BY comment_date LIMIT 6");
+        $lastComment->execute(array($postnumber));
+        return $lastComment;
     }
     
 

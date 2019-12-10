@@ -125,7 +125,7 @@ function longPost()
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     $commentConnexionModel = new \memberSpace\Model\CommentManager(); // créer un Objet
     $postnumber = $_GET['id'];
-    $blogmodel = $connexionmodel->getLongPost($postnumber);
+    $blogmodel = $connexionmodel->getLongPost($postnumber); 
     $title = $blogmodel['post_title'];
     $datepost = $blogmodel['post_date'];
     $postmessage = $blogmodel['post_content'];
@@ -133,8 +133,12 @@ function longPost()
     $postuser = $blogmodel['mail'];
     $usersId = $_SESSION['users_id'];
     $modificationDate = $blogmodel['modification_date'];
-    $commentmodel = $connexionmodel->postComment($postnumber);
+    if($_SESSION['law_id'] = 1){
+        $commentmodel = $commentConnexionModel -> searchCommentWaitValidation($postnumber);
+        }else{
+    $commentmodel = $connexionmodel->postComment($postnumber); }
     $checkAllreadyReport = $commentConnexionModel->checkAllreadyReport($usersId, $postnumber);
+    $checkAllReport = $commentConnexionModel->checkAllReport($postnumber);
     require('view/frontend/postView.php');
 }
 function newPost()
@@ -248,9 +252,10 @@ function allPost()
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
     $blogmodel = $connexionmodel->allPost();
+    if($_SESSION['law_id'] == 1){
     $numberComment = $Commentmodel->numberCommentReport();
     $numberWaitComment = $Commentmodel->numberCommentWait();
-
+    }
     require('view/frontend/allPostView.php');
 }
 function getComment()
