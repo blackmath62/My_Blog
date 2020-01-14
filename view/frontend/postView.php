@@ -19,8 +19,11 @@
         </div>
     </section>
     <?php
-    $reportList = $checkAllreadyReport->fetchAll(PDO::FETCH_COLUMN);
-    $adminReportList = $checkAllReport->fetchAll(PDO::FETCH_COLUMN);
+    if($_SESSION['law_id'] == 1){
+        $adminReportList = $checkAllReport->fetchAll(PDO::FETCH_COLUMN);
+    }else{
+    $reportList = $checkAllreadyReport->fetchAll(PDO::FETCH_COLUMN); // Vu utilisateur, pour les commentaires qu'il a signalé
+    }
     while ($listComment = $commentmodel->fetch()) {
         $commentId = $listComment['comment_id'];
         $commentTitle = $listComment['comment_title'];
@@ -43,16 +46,34 @@
                         <!--Pour avoir les sauts de ligne à l'affichage-->
                         <p>
                         <?php
+                        if($_SESSION['law_id'] == 1){
+                             if (!empty($_SESSION)) {
+                                if ($_SESSION['law_id'] == 1) { ?>
+                                <a href="index.php?action=changePost&id=<?= $postnumber ?>" class="table-link">
+                                    <span class="fa-stack ml-2">
+                                        <i class="fa fa-square fa-stack-2x"></i>
+                                        <i class="fa fa-pencil fa-stack-1x fa-inverse btn-warning rounded"></i>
+                                    </span>
+                                </a>
+                                <a href="#delete<?= $postnumber ?>" rel="modal:open" class="table-link danger">
+                                    <span class="fa-stack ml-2">
+                                        <i class="fa fa-square fa-stack-2x"></i>
+                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse btn-danger rounded"></i>
+                                    </span>
+                                </a>
+                        <?php }
+                        else{
                         if(in_array($commentId,$reportList,true)){
                             $numberReportComment = count(array_keys($adminReportList,$commentId,true));  // compter le nombre d'occurence de commentaire signalé pour le post
-                        ?>
+                        }
+                    } ?>
                         <a class="float-right btn text-white btn-success" href="index.php?action=removeReport&commentid=<?= $commentId ?>&postid=<?= $postnumber ?>"> <i class="fa fa-bell-slash"></i> Retirer Signalement</a> 
                         <?php                     
                         }else{
                         ?>
                         <a class="float-right btn text-white btn-danger" href="index.php?action=reportComment&commentid=<?= $commentId ?>&postid=<?= $postnumber ?>"> <i class="fa fa-bell"></i> Signaler</a>
                             <?php
-                    }                                              
+                    }     }                                         
                          ?> 
                         </p>   
                     </div>

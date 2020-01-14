@@ -27,12 +27,11 @@
                                 }
                                 $lawnumber = $allLaw->rowCount(); // compter le nombre de ligne
 
-                                while ($listUsers = $allUsers->fetch()) {
-                                    $usersId = $listUsers['users_id'];
-                                    $usersMail = $listUsers['mail'];
-                                    $usersdate = $listUsers['create_date_users'];
-                                    $userslaw = $listUsers['law_label'];
-                                    $usersLawId = $listUsers['law_id'];
+                                foreach ($allUsers as $user) {
+                                    $usersId = $user->users_id();
+                                    $usersMail = $user->mail();
+                                    $usersdate = $user->create_date_users();
+                                    $usersLawId = $user->law_id();
                                     ?>
                                     <tr>
                                         <td class="text-center">

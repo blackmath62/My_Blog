@@ -24,13 +24,13 @@ class CommentManager extends Manager // la classe CommentManager hérite de Mana
         $numberWait->execute(array());
         return $numberWait;
     }
-    public function checkAllreadyReport($usersId, $postnumber){
+    public function checkAllreadyReport($usersId, $postnumber){ // Vu utilisateur, pour les commentaires qu'il a signalé
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $checkAllreadyReport = $db->prepare("SELECT comment_id from report_comment WHERE users_id = ? AND post_id = ? ORDER BY comment_id");
         $checkAllreadyReport->execute(array($usersId, $postnumber));
         return $checkAllreadyReport;
     }
-    public function checkAllReport($postnumber){
+    public function checkAllReport($postnumber){ // Liste de tous les signalements de commentaires
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $checkAllreadyReport = $db->prepare("SELECT comment_id from report_comment WHERE post_id = ? ORDER BY comment_id");
         $checkAllreadyReport->execute(array($postnumber));
@@ -44,7 +44,7 @@ class CommentManager extends Manager // la classe CommentManager hérite de Mana
     }
     public function searchCommentWaitValidation($postnumber){
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $lastComment = $db->prepare("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? ORDER BY comment_date LIMIT 6");
+        $lastComment = $db->prepare("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? ORDER BY comment_date");
         $lastComment->execute(array($postnumber));
         return $lastComment;
     }

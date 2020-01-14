@@ -9,7 +9,7 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
     public function check_exist($mailconnect)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $check_profil = $db->prepare("SELECT * FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
+        $check_profil = $db->prepare("SELECT users.mail, law.law_id FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
         $check_profil->execute(array($mailconnect));
 
         return $check_profil;
@@ -17,8 +17,17 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
     public function check_id($idconnect)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $check_id = $db->prepare("SELECT * FROM users WHERE users.users_id = ? ");
+        $check_id = $db->prepare("SELECT users_id FROM users WHERE users_id = ? ");
         $check_id->execute(array($idconnect));
+
+        return $check_id;
+    }
+    // todo contrôler checkid doublon
+    public function checkid($idconnect, $controltoken)
+    {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $check_id = $db->prepare("SELECT mail, users_id, token FROM users WHERE users_id = ? AND token = ? ");
+        $check_id->execute(array($idconnect, $controltoken));
 
         return $check_id;
     }
@@ -58,19 +67,15 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
         $addtoken = $changepasstoken->execute(array('checkid' => $idconnect, 'newpass' => $hashnewpass, 'cleartoken' => $cleartoken)); // On insere dans la BDD 
         return $addtoken;
     }
-    public function checkid($idconnect, $controltoken)
-    {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $check_id = $db->prepare("SELECT * FROM users WHERE users_id = ? AND token = ? ");
-        $check_id->execute(array($idconnect, $controltoken));
 
-        return $check_id;
-    }
+//  todo revoir les requêtes qui contiennent des * pour les optimiser
+
     public function getUsersList()
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $checkUsersList = $db->query("SELECT * FROM law INNER JOIN users ON users.law_id = law.law_id");
-        return $checkUsersList;
+        $checkUsersList = $db->query("SELECT users.users_id, users.mail, users.law_id, users.create_date_users FROM law INNER JOIN users ON users.law_id = law.law_id");
+        $getUsersList = $checkUsersList->fetchAll(\PDO::FETCH_CLASS,'Member');
+        return $getUsersList;
     }
     public function getLawList()
     {

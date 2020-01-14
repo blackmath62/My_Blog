@@ -3,6 +3,7 @@
 require_once('Model/MemberManager.php');
 require_once('Model/BlogManager.php');
 require_once('Model/CommentManager.php');
+require('entity/memberEntity.php');
 // connexion function
 
 function pageNoFound()
@@ -25,6 +26,8 @@ function connexion()
 }
 function kill_connexion()
 {
+    session_start();
+    session_unset();
     session_destroy();
     header('Location: index.php');
 }
@@ -134,13 +137,15 @@ function longPost()
     $usersId = $_SESSION['users_id'];
     $modificationDate = $blogmodel['modification_date'];
     if($_SESSION['law_id'] = 1){
-        $commentmodel = $commentConnexionModel -> searchCommentWaitValidation($postnumber);
-        }else{
-    $commentmodel = $connexionmodel->postComment($postnumber); }
-    $checkAllreadyReport = $commentConnexionModel->checkAllreadyReport($usersId, $postnumber);
-    $checkAllReport = $commentConnexionModel->checkAllReport($postnumber);
-    require('view/frontend/postView.php');
+        $commentmodel = $commentConnexionModel -> searchCommentWaitValidation($postnumber); // Liste des commentaires en attente de validation
+        $checkAllReport = $commentConnexionModel->checkAllReport($postnumber); // Liste de tous les signalements de commentaires    
+    }else{
+    $commentmodel = $connexionmodel->postComment($postnumber); // affichage pour l'utilisateur des commentaires validés
+    $checkAllreadyReport = $commentConnexionModel->checkAllreadyReport($usersId, $postnumber); // Vu utilisateur, pour les commentaires qu'il a signalé
 }
+    
+    require('view/frontend/postView.php');
+    }
 function newPost()
 {
     if (!empty($_POST['subject']) and !empty($_POST['message'])) {
@@ -184,6 +189,10 @@ function usersList()
     $UsersLawmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
     $allLaw = $UsersLawmodel->getLawList();
     $allUsers = $UsersLawmodel->getUsersList();
+    /*echo '<pre>';
+    var_dump($allUsers);
+    echo '</pre>';
+    die();*/
     require('view/backend/usersList.php');
 }
 

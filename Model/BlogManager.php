@@ -4,14 +4,14 @@ namespace memberSpace\Model;
 
 require_once("Model/Manager.php");
 class BlogManager extends Manager // la classe CommentManager hérite de Manager
-{
+{   
     public function lastPost()
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $lastPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");
         return $lastPostResult;
     }
-    public function postComment($postnumber)
+    public function postComment($postnumber) // affichage pour l'utilisateur des commentaires validés
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $lastComment = $db->prepare("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? AND validate_id = 2  ORDER BY comment_date LIMIT 6");
