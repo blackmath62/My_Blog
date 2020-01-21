@@ -6,13 +6,22 @@ require_once("Model/Manager.php");
 class MemberManager extends Manager // la classe CommentManager hérite de Manager
 {
 
-    public function check_exist($mailconnect)
+    public function checkMailExist($mailconnect)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $check_profil = $db->prepare("SELECT users.mail, law.law_id FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
-        $check_profil->execute(array($mailconnect));
-
-        return $check_profil;
+        $checkMail = $db->prepare("SELECT users.mail, law.law_id 
+        FROM law 
+        INNER JOIN users ON users.law_id = law.law_id 
+        WHERE (users.mail = ?) ");
+        $checkMail->execute(array($mailconnect));
+        return $checkMail;
+    }
+    public function checkPseudoExist($pseudo)
+    {
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $checkPseudo = $db->prepare("SELECT Pseudo FROM users WHERE Pseudo = ?");
+        $checkPseudo->execute(array($pseudo));
+        return $checkPseudo;
     }
     public function check_id($idconnect)
     {
@@ -41,13 +50,14 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
         return $userconnect;
     }
 
-    public function addRegister($mailconnect, $mdpconnect)
+    public function addRegister($mailconnect, $pseudo, $mdpconnect)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant        
-        $req = $db->prepare('INSERT INTO users(mail, mdp ) VALUES(:mail, :mdp)');
+        $req = $db->prepare('INSERT INTO users(mail, pseudo, mdp ) VALUES(:mail, :pseudo, :mdp)');
         $addregister = $req->execute(array(
             'mail' => $mailconnect,
             'mdp' => $mdpconnect,
+            'pseudo' => $pseudo,
 
         ));
         return $addregister;

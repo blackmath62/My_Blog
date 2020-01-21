@@ -9,13 +9,14 @@
                 $nbCommentWait = $numberWaitComment->fetchAll(PDO::FETCH_COLUMN);
             }
         }
-        while ($postblog = $blogmodel->fetch()) {
-            $title = $postblog['post_title'];
-            $datepost = $postblog['post_date'];
-            $postmessage = $postblog['post_content'];
-            $postnumber = $postblog['post_id'];
-            $postuser = $postblog['mail'];
-            $modificationDate = $postblog['modification_date'];
+        // todo voir pour récupérer le mail au lieu de l'ID = $postuser = $chapoPostList->users_id()
+        foreach ($allPostChapo as $chapoPostList) {
+            $title = $chapoPostList->post_title();
+            $datepost = $chapoPostList->post_date();
+            $postmessage = $chapoPostList->post_content();
+            $postnumber = $chapoPostList->post_id();
+            $postuser = $chapoPostList->users_id();
+            $modificationDate = $chapoPostList->modification_date();
         ?>
             <div class="text-center border m-2" id="<?= $postnumber ?>">
                 <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->

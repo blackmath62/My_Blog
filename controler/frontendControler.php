@@ -4,13 +4,14 @@ require_once('Model/MemberManager.php');
 require_once('Model/BlogManager.php');
 require_once('Model/CommentManager.php');
 require('entity/memberEntity.php');
-// connexion function
+require('entity/commentEntity.php');
+require('entity/blogEntity.php');
 
 function pageNoFound()
 {
     require('view/frontend/pageNoFound.php');
 }
-
+// connexion function
 function connexion()
 {
     if (isset($_SESSION['mail'])) {
@@ -18,26 +19,19 @@ function connexion()
         $usersId = $_SESSION['users_id'];
         // Suppression des variables de session et de la session
         $connexionmodel = new \memberSpace\Model\MemberManager();
-        //$majIp = $connexionmodel->listConnect($ip, $mailconnect);
+        session_start();
+        session_unset();
+        session_destroy();
     }
-    $_SESSION = array();
-    session_destroy();
     require('view/frontend/connect/loginview.php');
 }
 function kill_connexion()
 {
-    session_start();
-    session_unset();
-    session_destroy();
+    session_start(); // Démarre une nouvelle session ou reprend une session existante
+    session_unset(); // Détruit toutes les variables d'une session
+    session_destroy(); // Détruit une session
     header('Location: index.php');
 }
-
-function getAdmin()
-{
-
-    require('view/backend/backendHome.php');
-}
-
 function check_connexion() // la fonction   la partie connexion est bonne ne plus toucher
 {
     // Instanciation d'un objet dans un namespace
@@ -48,10 +42,10 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
     if (isset($_POST['identifiant']) and isset($_POST['mdpconnect'])) {
         $mailconnect = htmlspecialchars($_POST['identifiant']);
         $mdpconnect = password_hash($_POST['mdpconnect'], PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
-        $check_connect = $connexionmodel->check_exist($mailconnect);
-        $userexist = $check_connect->rowCount(); // compter le nombre de ligne  
+        $check_connect = $connexionmodel->checkMailExist($mailconnect);
+        $mailExist = $check_connect->rowCount(); // compter le nombre de ligne  
 
-        if ($userexist == 1) {
+        if ($mailExist == 1) {
 
             $connect = $connexionmodel->getconnect($mailconnect);
             while ($profil = $connect->fetch()) { // on boucle sur le MemberManager/connect
@@ -69,7 +63,7 @@ function check_connexion() // la fonction   la partie connexion est bonne ne plu
                 }
             }
         }
-        if ($userexist == 0 and !empty($mailconnect)) {
+        if ($mailExist == 0 and !empty($mailconnect)) {
             $error = "Mail inconnu, veuillez créer un compte dans inscription.";
         }
     } else {
@@ -84,26 +78,30 @@ function register()
     require('view/frontend//connect/registerview.php');
 }
 
-
 function check_register() // la fonction
 {
     $connexionmodel = new \memberSpace\Model\MemberManager(); // on créé un nouvelle objet
     if (isset($_POST['identifiant']) and isset($_POST['mdpconnect']) and isset($_POST['mdp_register_verif'])) // on contrôle si l'id et les 2 mots de passe sont renseignés
     {
         $mailconnect = htmlspecialchars($_POST['identifiant']);  //on déclare les variables
+        $pseudo = htmlspecialchars($_POST['pseudo']);  //on déclare les variables
         $mdpconnect = password_hash($_POST['mdpconnect'], PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
-        $check_connect = $connexionmodel->check_exist($mailconnect); // on vérifie si le compte n'existe pas déjà
-        $userexist = $check_connect->rowCount(); // compter le nombre de ligne 
-        if ($userexist == 1) {
-
+        $check_connect = $connexionmodel->checkMailExist($mailconnect); // on vérifie si le compte n'existe pas déjà
+        $mailExist = $check_connect->rowCount(); // compter le nombre de ligne 
+        $check_pseudo = $connexionmodel->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
+        $pseudoExist = $check_pseudo->rowCount(); // compter le nombre de ligne
+        if ($mailExist == 1) {
             $error = "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
-        } elseif ($userexist == 0) {
-            if ($_POST['mdpconnect'] == $_POST['mdp_register_verif']) //si les 2 mots de passes sont identiques
-            {
-
-                $register = $connexionmodel->addRegister($mailconnect, $mdpconnect);
-
-                $error = " Nous avons créé votre compte " . $mailconnect . " ! L'administrateur va débloquer votre compte pour que vous puissiez consulter le site intranet" . '</br';
+        } elseif ($mailExist == 0) {
+            
+            if ($pseudoExist == 1) {
+                $error = "Le pseudo est déjà utilisé, veuillez choisir un autre pseudo ou vous connecter.";
+            } elseif ($pseudoExist == 0) {
+                if ($_POST['mdpconnect'] == $_POST['mdp_register_verif']) //si les 2 mots de passes sont identiques
+                {
+                    $register = $connexionmodel->addRegister($mailconnect, $pseudo, $mdpconnect);
+                    $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
+                }
             }
         }
     }
@@ -115,170 +113,6 @@ function passforget()
     $colorcontent = 'bg-gradient-warning';
     require('view/frontend/connect/forgot-password.php');
 }
-
-function home()
-{
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $blogmodel = $connexionmodel->lastPost();
-
-    require('view/frontend/templateFrontend.php');
-}
-function longPost()
-{
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $commentConnexionModel = new \memberSpace\Model\CommentManager(); // créer un Objet
-    $postnumber = $_GET['id'];
-    $blogmodel = $connexionmodel->getLongPost($postnumber); 
-    $title = $blogmodel['post_title'];
-    $datepost = $blogmodel['post_date'];
-    $postmessage = $blogmodel['post_content'];
-    $postnumber = $blogmodel['post_id'];
-    $postuser = $blogmodel['mail'];
-    $usersId = $_SESSION['users_id'];
-    $modificationDate = $blogmodel['modification_date'];
-    if($_SESSION['law_id'] = 1){
-        $commentmodel = $commentConnexionModel -> searchCommentWaitValidation($postnumber); // Liste des commentaires en attente de validation
-        $checkAllReport = $commentConnexionModel->checkAllReport($postnumber); // Liste de tous les signalements de commentaires    
-    }else{
-    $commentmodel = $connexionmodel->postComment($postnumber); // affichage pour l'utilisateur des commentaires validés
-    $checkAllreadyReport = $commentConnexionModel->checkAllreadyReport($usersId, $postnumber); // Vu utilisateur, pour les commentaires qu'il a signalé
-}
-    
-    require('view/frontend/postView.php');
-    }
-function newPost()
-{
-    if (!empty($_POST['subject']) and !empty($_POST['message'])) {
-        $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-        $title = $_POST['subject'];
-        $content = $_POST['message'];
-        $usersId = $_SESSION['users_id'];
-        $newPost = $connexionmodel->newPost($title, $content, $usersId);
-    }
-    require('view/backend/newPost.php');
-}
-function changePost()
-{
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $postnumber = $_GET['id'];
-    $changePost = $connexionmodel->getChangePost($postnumber);
-    $title = $changePost['post_title'];
-    $message = $changePost['post_content'];
-    require('view/backend/changePost.php');
-}
-function updatePost()
-{
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $postnumber = $_GET['id'];
-    $title = $_POST['subject'];
-    $message = $_POST['message'];
-    $updatePost = $connexionmodel->updatePostNow($title, $message, $postnumber);
-    header('refresh:3; url= index.php?action=admin');
-    require('view/backend/updatePost.php');
-}
-function deletePost()
-{
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $postnumber = $_GET['id'];
-    $GetdeletePost = $connexionmodel->deletePostNow($postnumber);
-    header('refresh:3; url= index.php?action=admin');
-    require('view/backend/deletePost.php');
-}
-function usersList()
-{
-    $UsersLawmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
-    $allLaw = $UsersLawmodel->getLawList();
-    $allUsers = $UsersLawmodel->getUsersList();
-    /*echo '<pre>';
-    var_dump($allUsers);
-    echo '</pre>';
-    die();*/
-    require('view/backend/usersList.php');
-}
-
-function commentModeration()
-{
-    $CommentModel = new \memberSpace\Model\CommentManager(); // créer un Objet
-
-    $commentModeration = $CommentModel -> searchCommentWaitValidation();
-
-    require('view/backend/commentModeration.php');
-}
-function getReportComment()
-{
-    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
-    $usersId = $_SESSION['users_id'];
-    $postnumber = $_GET['postid'];
-    $commentId = $_GET['commentid'];
-    $commentModeration = $Commentmodel -> commentReport($usersId, $postnumber, $commentId);
-    header('Location:index.php?action=longPost&id='.$_GET['postid']);
-    /*$error = "Votre signalement a bien été enregistré";*/
-    require('view/frontend/reportComment.php');
-}
-function getRemoveReport()
-{
-    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
-    $usersId = $_SESSION['users_id'];
-    $postnumber = $_GET['postid'];
-    $commentId = $_GET['commentid'];
-    $RemoveReportNow = $Commentmodel -> removeReport($usersId, $postnumber, $commentId);
-    header('Location:index.php?action=longPost&id='.$_GET['postid']);
-    /*$error = "Votre signalement a bien été enregistré";*/
-    require('view/frontend/removeReportView.php');
-}
-
-
-
-function ChangeLawUser()
-{
-    $changeLawModel = new \memberSpace\Model\MemberManager(); // créer un Objet
-    $idLaw = $_GET['id'];
-    $idUser = $_GET['userid'];
-    $changelaw = $changeLawModel->getChangeLawUser($idLaw, $idUser);
-    header('Location: index.php?action=usersList');
-    require('view/backend/changeLawView.php');
-}
-
-function deleteUser()
-{
-    $deleteUserModel = new \memberSpace\Model\MemberManager(); // créer un Objet
-    $idUser = $_GET['userid'];
-    $getDeleteUser = $deleteUserModel->deleteUser($idUser);
-    header('Location: index.php?action=usersList');
-    require('view/backend/deleteUserView.php');
-}
-
-function commentReport()
-{
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-
-    //$commentReport = $connexionmodel -> commentReport();
-
-    require('view/backend/commentReport.php');
-}
-function allPost()
-{
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
-    $blogmodel = $connexionmodel->allPost();
-    if($_SESSION['law_id'] == 1){
-    $numberComment = $Commentmodel->numberCommentReport();
-    $numberWaitComment = $Commentmodel->numberCommentWait();
-    }
-    require('view/frontend/allPostView.php');
-}
-function getComment()
-{
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $title = $_POST['subject'];
-    $content = $_POST['message'];
-    $postId = $_GET["id"];
-    $usersId = $_SESSION['users_id'];
-    $blogmodel = $connexionmodel->addComment($title, $content, $postId, $usersId);
-    require('view/frontend/postComment.php');
-}
-
-// fonction qui envoie le mail à l'utilisateur
 function get_passforget()
 {
     $connexionmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
@@ -367,3 +201,164 @@ function get_passchange()
     }
     require('view/frontend/connect/change-forgot-password.php');
 }
+//  end connexion function
+
+//  administration function
+function getAdmin()
+{
+    require('view/backend/backendHome.php');
+}
+
+function newPost()
+{
+    if (!empty($_POST['subject']) and !empty($_POST['message'])) {
+        $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+        $title = $_POST['subject'];
+        $content = $_POST['message'];
+        $usersId = $_SESSION['users_id'];
+        $newPost = $connexionmodel->newPost($title, $content, $usersId);
+    }
+    require('view/backend/newPost.php');
+}
+function changePost()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $postnumber = $_GET['id'];
+    $changePost = $connexionmodel->getChangePost($postnumber);
+    $title = $changePost['post_title'];
+    $message = $changePost['post_content'];
+    require('view/backend/changePost.php');
+}
+function updatePost()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $postnumber = $_GET['id'];
+    $title = $_POST['subject'];
+    $message = $_POST['message'];
+    $updatePost = $connexionmodel->updatePostNow($title, $message, $postnumber);
+    header('refresh:3; url= index.php?action=admin');
+    require('view/backend/updatePost.php');
+}
+function deletePost()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $postnumber = $_GET['id'];
+    $GetdeletePost = $connexionmodel->deletePostNow($postnumber);
+    header('refresh:3; url= index.php?action=admin');
+    require('view/backend/deletePost.php');
+}
+function usersList()
+{
+    $UsersLawmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $allLaw = $UsersLawmodel->getLawList();
+    $allUsers = $UsersLawmodel->getUsersList();
+    /*echo '<pre>';
+    var_dump($allUsers);
+    echo '</pre>';
+    die();*/
+    require('view/backend/usersList.php');
+}
+
+function getReportComment()
+{
+    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
+    $usersId = $_SESSION['users_id'];
+    $postnumber = $_GET['postid'];
+    $commentId = $_GET['commentid'];
+    $commentModeration = $Commentmodel->commentReport($usersId, $postnumber, $commentId);
+    header('Location:index.php?action=longPost&id=' . $_GET['postid']);
+    /*$error = "Votre signalement a bien été enregistré";*/
+    require('view/frontend/reportComment.php');
+}
+function getRemoveReport()
+{
+    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
+    $usersId = $_SESSION['users_id'];
+    $postnumber = $_GET['postid'];
+    $commentId = $_GET['commentid'];
+    $RemoveReportNow = $Commentmodel->removeReport($usersId, $postnumber, $commentId);
+    header('Location:index.php?action=longPost&id=' . $_GET['postid']);
+    /*$error = "Votre signalement a bien été enregistré";*/
+    require('view/frontend/removeReportView.php');
+}
+
+function ChangeLawUser()
+{
+    $changeLawModel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $idLaw = $_GET['id'];
+    $idUser = $_GET['userid'];
+    $changelaw = $changeLawModel->getChangeLawUser($idLaw, $idUser);
+    header('Location: index.php?action=usersList');
+    require('view/backend/changeLawView.php');
+}
+
+function deleteUser()
+{
+    $deleteUserModel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $idUser = $_GET['userid'];
+    $getDeleteUser = $deleteUserModel->deleteUser($idUser);
+    header('Location: index.php?action=usersList');
+    require('view/backend/deleteUserView.php');
+}
+
+function commentReport()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+
+    //$commentReport = $connexionmodel -> commentReport();
+
+    require('view/backend/commentReport.php');
+}
+
+//  end administration function
+
+// site page function
+function allPost() // Chapo post list
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
+    $allPostChapo = $connexionmodel->allPost();
+    if ($_SESSION['law_id'] == 1) {
+        $numberComment = $Commentmodel->numberCommentReport();
+        $numberWaitComment = $Commentmodel->numberCommentWait();
+    }
+    require('view/frontend/allPostView.php');
+}
+function getComment()
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $title = $_POST['subject'];
+    $content = $_POST['message'];
+    $postId = $_GET["id"];
+    $usersId = $_SESSION['users_id'];
+    $blogmodel = $connexionmodel->addComment($title, $content, $postId, $usersId);
+    require('view/frontend/postComment.php');
+}
+
+function home() // home page 3 last chapo post
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $homePage = $connexionmodel->lastPost();
+
+    require('view/frontend/templateFrontend.php');
+}
+function longPost() // Long Post view
+{
+    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $postnumber = $_GET['id'];
+    $GetLongPost = $connexionmodel->getLongPost($postnumber);
+    $postnumber = $GetLongPost->post_id();
+    $commentConnexionModel = new \memberSpace\Model\CommentManager(); // créer un Objets
+    // On affiche les status des commentaires et le nombre de signalement des commentaires validés
+    if ($_SESSION['law_id'] = 1) {
+        $allComment = $commentConnexionModel->commentInfo($postnumber); // Liste des commentaires en attente de validation et des commentaires signalés    
+    } else {
+        $commentmodel = $connexionmodel->postComment($postnumber); // affichage pour l'utilisateur des commentaires validés
+        if (isset($_SESSION['users_id'])) {
+            $usersId = $_SESSION['users_id'];
+            $checkAllreadyReport = $commentConnexionModel->checkAllreadyReport($usersId, $postnumber); // Vu utilisateur, pour les commentaires qu'il a signalé
+        }
+    }
+    require('view/frontend/postView.php');
+}
+// end site page function

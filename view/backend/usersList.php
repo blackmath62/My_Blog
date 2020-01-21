@@ -17,7 +17,6 @@
                             </thead>
                             <tbody>
                                 <?php
-                                /*$lawvaleur = array('lawIdValue','lawLabelValue' );*/
                                 // On récupére la liste des droits dans un tableau
                                 $j = 1;
                                 while ($listLaw = $allLaw->fetch()) {

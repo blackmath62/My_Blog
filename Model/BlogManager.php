@@ -9,7 +9,8 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $lastPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");
-        return $lastPostResult;
+        $getlastPostResult = $lastPostResult->fetchAll(\PDO::FETCH_CLASS,'Blog');
+        return $getlastPostResult;
     }
     public function postComment($postnumber) // affichage pour l'utilisateur des commentaires validés
     {
@@ -31,15 +32,16 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $longPostResult = $db->prepare("SELECT post_id, post_title, post_date, post_content, users_id, users.mail, modification_date FROM users INNER JOIN post_list USING(users_id) WHERE post_id = ?");
         $longPostResult->execute(array($postnumber));
-        $PostResult = $longPostResult->fetch();
-        return $PostResult;
+        $postResult = $longPostResult->fetchObject('Blog');
+        return $postResult;
     }
 
     public function allPost()
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
         $allPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail, modification_date FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC");
-        return $allPostResult;
+        $getAllPostResult = $allPostResult->fetchAll(\PDO::FETCH_CLASS,'Blog');
+        return $getAllPostResult;
     }
 
     public function addComment($title, $content, $postId, $usersId)

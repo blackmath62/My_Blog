@@ -12,15 +12,20 @@
                 <h1 class="h4 text-gray-900 mb-4">Inscription !</h1>
               </div>
               <form class="user" action='index.php?action=check_register' method='POST'>
-                <div class="form-group">
-                  <input type="email" name="identifiant" class="form-control form-control-user" id="exampleInputEmail" placeholder="Mail">
+                <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">  
+                <input type="email" name="identifiant" class="form-control form-control-user" id="exampleInputEmail" placeholder="Mail" required>
                 </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                <input type="text" name="pseudo" class="form-control form-control-user" id="pseudo" placeholder="Pseudo" required>
+                </div>  
+              </div>
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="password" name="mdpconnect" class="form-control form-control-user" id="exampleInputPassword" placeholder="Mot de passe">
+                    <input type="password" name="mdpconnect" class="form-control form-control-user" id="exampleInputPassword" placeholder="Mot de passe" required>
                   </div>
                   <div class="col-sm-6">
-                    <input type="password" name="mdp_register_verif" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Resaisir le mot de passe">
+                    <input type="password" name="mdp_register_verif" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Resaisir le mot de passe" required>
                   </div>
                 </div>
                 <p><input type="submit" name="Valider" value='Créer le compte' class="btn btn-primary btn-user btn-block"></p>

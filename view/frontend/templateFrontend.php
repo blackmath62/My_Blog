@@ -37,13 +37,13 @@
         <hr class="divider my-4">
         <div class="d-lg-flex d-xl-flex d-md-flex">
         <?php
-
-        while ($postblog = $blogmodel->fetch()) {
-            $title = $postblog['post_title'];
-            $datepost = $postblog['post_date'];
-            $chapo = $postblog['post_content'];
-            $postuser = $postblog['mail'];
-            $postnumber = $postblog['post_id'];
+        // todo voir pour récupérer le mail au lieu de l'ID = $postuser = $chapoHomePage->users_id() 
+        foreach ($homePage as $chapoHomePage) {
+            $title = $chapoHomePage->post_title();
+            $datepost = $chapoHomePage->post_date();
+            $chapo = $chapoHomePage->post_content();
+            $postuser = $chapoHomePage->users_id();
+            $postnumber = $chapoHomePage->post_id();
             ?>
             <div class="text-center" id="<?=$postnumber?>">
                 <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->

@@ -42,11 +42,22 @@ class CommentManager extends Manager // la classe CommentManager hérite de Mana
         $deleteReport->execute(array($usersId, $postnumber, $commentId));
         return $deleteReport;
     }
-    public function searchCommentWaitValidation($postnumber){
+    
+    // todo voir si cette fonction est utile
+    public function commentInfo($postnumber){
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $lastComment = $db->prepare("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? ORDER BY comment_date");
-        $lastComment->execute(array($postnumber));
-        return $lastComment;
+        $allComment = $db->prepare("SELECT comment.comment_id, comment.comment_title, comment.comment_date, 
+        comment.comment_content, comment.users_id, users.mail, comment.validate_id, 
+        comment_validation.validation_label ,COUNT(report_comment.comment_id) 
+                FROM users 
+                INNER JOIN COMMENT USING(users_id)
+                INNER JOIN report_comment USING(comment_id)
+                INNER JOIN comment_validation USING(validate_id)
+                where comment.post_id = ?
+                ORDER BY comment_date");
+        $allComment->execute(array($postnumber));
+        $getAllComment = $allComment->fetchAll(\PDO::FETCH_CLASS,'Comment');
+        return $getAllComment;
     }
     
 
