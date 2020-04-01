@@ -8,7 +8,7 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     public function lastPost()
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $lastPostResult = $db->query("SELECT post_id, post_title, post_date, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");
+        $lastPostResult = $db->query("SELECT post_id, post_title, post_date,post_chapo, post_content, users_id, users.mail FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");
         $getlastPostResult = $lastPostResult->fetchAll(\PDO::FETCH_CLASS,'Blog');
         return $getlastPostResult;
     }

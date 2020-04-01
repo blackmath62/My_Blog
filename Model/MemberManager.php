@@ -5,16 +5,16 @@ namespace memberSpace\Model;
 require_once("Model/Manager.php");
 class MemberManager extends Manager // la classe CommentManager hérite de Manager
 {
-
     public function checkMailExist($mailconnect)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $checkMail = $db->prepare("SELECT users.mail, law.law_id 
+        $checkMail = $db->prepare("SELECT users.mail, law.law_id, users.mdp 
         FROM law 
         INNER JOIN users ON users.law_id = law.law_id 
         WHERE (users.mail = ?) ");
         $checkMail->execute(array($mailconnect));
-        return $checkMail;
+        $exec = $checkMail->fetch();
+        return $exec;
     }
     public function checkPseudoExist($pseudo)
     {
@@ -77,8 +77,6 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
         $addtoken = $changepasstoken->execute(array('checkid' => $idconnect, 'newpass' => $hashnewpass, 'cleartoken' => $cleartoken)); // On insere dans la BDD 
         return $addtoken;
     }
-
-//  todo revoir les requêtes qui contiennent des * pour les optimiser
 
     public function getUsersList()
     {

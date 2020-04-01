@@ -15,7 +15,7 @@ if (isset($_GET['action'])) {
                         connexion();
                         break;
                 case 'check_connexion':
-                        check_connexion();
+                        check_connexion_2();
                         break;
                 case 'kill_connexion':
                         kill_connexion();
@@ -42,9 +42,6 @@ if (isset($_GET['action'])) {
                         break;
                 case 'get_passchange':
                         get_passchange();
-                        break;
-                case 'send':
-                        sendContact();
                         break;
                 case 'blog':
                         allPost();
@@ -73,23 +70,14 @@ if (isset($_GET['action'])) {
                 case 'usersList':
                         usersList();
                         break;
-                case 'commentReport':
-                        commentReport();
-                        break;
-                case 'commentModeration':
-                        commentModeration();
-                        break;
                 case 'changeLawUser':
                         ChangeLawUser();
                         break;
                 case 'deleteUser':
                         deleteUser();
                         break;
-                case 'reportComment':
-                        getReportComment();
-                        break;
-                case 'removeReport':
-                        getRemoveReport();
+                case 'mail':
+                        contact_me();
                         break;
         }
 } else {

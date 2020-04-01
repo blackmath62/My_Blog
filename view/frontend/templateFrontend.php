@@ -35,38 +35,42 @@
         <!-- Blog Post -->
         <a class="h1 font-weight-bold">blog</a>
         <hr class="divider my-4">
-        <div class="d-lg-flex d-xl-flex d-md-flex">
-        <?php
-        // todo voir pour récupérer le mail au lieu de l'ID = $postuser = $chapoHomePage->users_id() 
-        foreach ($homePage as $chapoHomePage) {
-            $title = $chapoHomePage->post_title();
-            $datepost = $chapoHomePage->post_date();
-            $chapo = $chapoHomePage->post_content();
-            $postuser = $chapoHomePage->users_id();
-            $postnumber = $chapoHomePage->post_id();
+        <div class="row row-cols-1 row-cols-md-3 card-group">
+            <?php
+            // todo voir pour récupérer le mail au lieu de l'ID = $postuser = $chapoHomePage->users_id() 
+            foreach ($homePageChapo as $chapoHomePage) {
+                $title = $chapoHomePage->post_title();
+                $datepost = $chapoHomePage->post_date();
+                $chapo = $chapoHomePage->post_chapo();
+                $postuser = $chapoHomePage->users_id();
+                $postnumber = $chapoHomePage->post_id();
             ?>
-            <div class="text-center" id="<?=$postnumber?>">
-                <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
-                <div class="card-body">
-                    <h2 class="card-title"><?= substr($title, 0, 25).'...' ?></h2>
-                    <p class="card-text"><?= substr($chapo, 0, 200).'...' ?></p>
-                    <a href="index.php?action=longPost&id=<?=$postnumber ?>" class="btn btn-primary">Lire plus ! &rarr;</a>
-                </div>
-                <div class="card-footer text-muted">
-                    Posté le <?= $datepost ?> par <?= $postuser ?>
-                </div>
-            </div>
-        <?php } ?>
-    </div>
-    <a class="btn btn-primary js-scroll-trigger text-center m-4 btn-xl" href="index.php?action=blog">Consulter tous mes posts</a>
+
+                    <div class="col mb-4 card m-2 border rounded p-0" id="<?= $postnumber ?>">
+                        <div class="card-body">
+                            <h2 class="card-title"><?= substr($title, 0, 25) . '...' ?></h2>
+                            <p class="card-text"><?= $chapo . '...' ?></p>
+                        </div>
+                        <div>
+                            <a href="index.php?action=longPost&id=<?= $postnumber ?>" class="btn btn-primary m-3">Lire plus ! &rarr;</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Posté le <?= $datepost ?> par <?= $postuser ?></small>
+                        </div>
+                    </div>
+               
+
+            <?php } ?>
+        </div>
+        <a class="btn btn-primary js-scroll-trigger text-center m-4 btn-xl" href="index.php?action=blog">Consulter tous mes posts</a>
     </div>
 </section>
 
 <!-- Portfolio Section -->
 <section id="portfolio">
     <div class="container-fluid p-0">
-        <div class="row no-gutters">
-            <div class="col-lg-4 col-sm-6">
+        <div class="row no-gutters justify-content-center">
+            <div class="">
                 <a class="portfolio-box" href="public/img/portfolio/html5.png">
                     <img class="img-fluid " src="public/img/portfolio/html5.png" alt="">
                     <div class="portfolio-box-caption">
@@ -93,7 +97,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4 col-sm-6">
+            <div class="">
                 <a class="portfolio-box" href="public/img/portfolio/css3.png">
                     <img class="img-fluid" src="public/img/portfolio/css3.png" alt="">
                     <div class="portfolio-box-caption">
@@ -120,7 +124,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4 col-sm-6">
+            <div class="">
                 <a class="portfolio-box" href="public/img/portfolio/php.png">
                     <img class="img-fluid" src="public/img/portfolio/php.png" alt="">
                     <div class="portfolio-box-caption">
@@ -147,7 +151,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4 col-sm-6">
+            <div class="">
                 <a class="portfolio-box" href="public/img/portfolio/wordpress.png">
                     <img class="img-fluid" src="public/img/portfolio/wordpress.png" alt="">
                     <div class="portfolio-box-caption">
@@ -174,7 +178,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4 col-sm-6">
+            <div class="">
                 <a class="portfolio-box" href="public/img/portfolio/boostraps.png">
                     <img class="img-fluid" src="public/img/portfolio/boostraps.png" alt="">
                     <div class="portfolio-box-caption p-3">
@@ -201,7 +205,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4 col-sm-6">
+            <div class="">
                 <a class="portfolio-box" href="public/img/portfolio/sql.png">
                     <img class="img-fluid" src="public/img/portfolio/sql.png" alt="">
                     <div class="portfolio-box-caption p-3">
@@ -242,22 +246,22 @@
     <div class="row">
         <!--Grid column-->
         <div class="col-md-9 mx-auto border rounded p-3">
-            <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+            <form id="contact-form" name="contact-form" action="index.php?action=mail" method="POST">
                 <!--Grid row-->
                 <div class="row">
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                        <label for="name">Votre nom</label>
-                            <input type="text" id="name" name="name" class="form-control">
+                            <label for="name">Votre nom</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
                         </div>
                     </div>
                     <!--Grid column-->
                     <!--Grid column-->
                     <div class="col-md-6">
                         <div class="md-form mb-0">
-                        <label for="email" class="">Votre mail</label>
-                            <input type="text" id="email" name="email" class="form-control">
+                            <label for="email" class="">Votre mail</label>
+                            <input type="text" id="email" name="email" class="form-control" required>
                         </div>
                     </div>
                     <!--Grid column-->
@@ -267,8 +271,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="md-form mb-0">
-                        <label for="subject" class="pt-3">Objet</label>
-                            <input type="text" id="subject" name="subject" class="form-control">
+                            <label for="subject" class="pt-3">Objet</label>
+                            <input type="text" id="subject" name="subject" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -279,17 +283,18 @@
                     <div class="col-md-12">
 
                         <div class="md-form center">
-                        <label for="message" class="pt-3">Message</label>
-                            <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
+                            <label for="message" class="pt-3">Message</label>
+                            <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea>
                         </div>
 
                     </div>
                 </div>
                 <!--Grid row-->
-            </form>
-            <div class="text-center m-3">
-                <a class="btn btn-xl js-scroll-trigger btn-primary text-white" onclick="document.getElementById('contact-form').submit();">Envoyer</a>
+                <div class="text-center m-3">
+                <button class="btn btn-xl js-scroll-trigger btn-primary text-white">Envoyer</button>
             </div>
+            </form>
+            
             <div class="status"></div>
         </div>
     </div>

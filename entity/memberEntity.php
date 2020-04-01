@@ -1,5 +1,8 @@
 <?php
-class Member
+
+use memberSpace\Model\MemberManager;
+
+class Member extends MemberManager
 {
   /*Propriétés de ma classe member */
   private $users_id;
@@ -13,7 +16,9 @@ class Member
   private $token;
   private $create_date_users;
 
-// …
+// todo voir avec antoine pour ramener les objets sur le memberManager via l'hydratation
+// permet d'eviter de les remplir manuellement
+/*
 public function hydrate(array $donnees)
 {
   foreach ($donnees as $key => $value)
@@ -29,7 +34,7 @@ public function hydrate(array $donnees)
     }
   }
 }
-
+*/
   /*getters
     Method de récupération des valeurs de la classe
     */

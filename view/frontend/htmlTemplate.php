@@ -30,8 +30,7 @@
 <body id="page-top" class="index">
   <!-- Content Wrapper -->
   <div id="content-wrapper" class="d-flex flex-column">
-    <?php include 'Header.php' ?>
-    
+    <?php include 'Header.php';?>
     <!-- Main Content -->
     <div id="content">
       <?= $content ?>

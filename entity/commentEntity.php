@@ -1,5 +1,8 @@
 <?php
-class Comment
+
+use memberSpace\Model\CommentManager;
+
+class Comment extends CommentManager
 {
   /*Propriétés de ma classe member */
   private $comment_id;

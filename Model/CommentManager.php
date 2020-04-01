@@ -24,17 +24,17 @@ class CommentManager extends Manager // la classe CommentManager hérite de Mana
         $numberWait->execute(array());
         return $numberWait;
     }
-    public function checkAllreadyReport($usersId, $postnumber){ // Vu utilisateur, pour les commentaires qu'il a signalé
+    public function checkUserReport($usersId, $postnumber){ // Vu utilisateur, pour les commentaires qu'il a signalé
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $checkAllreadyReport = $db->prepare("SELECT comment_id from report_comment WHERE users_id = ? AND post_id = ? ORDER BY comment_id");
-        $checkAllreadyReport->execute(array($usersId, $postnumber));
-        return $checkAllreadyReport;
+        $checkUserReport = $db->prepare("SELECT comment_id from report_comment WHERE users_id = ? AND post_id = ? ORDER BY comment_id");
+        $checkUserReport->execute(array($usersId, $postnumber));
+        return $checkUserReport;
     }
     public function checkAllReport($postnumber){ // Liste de tous les signalements de commentaires
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $checkAllreadyReport = $db->prepare("SELECT comment_id from report_comment WHERE post_id = ? ORDER BY comment_id");
-        $checkAllreadyReport->execute(array($postnumber));
-        return $checkAllreadyReport;
+        $checkAllReport = $db->prepare("SELECT comment_id from report_comment WHERE post_id = ? ORDER BY comment_id");
+        $checkAllReport->execute(array($postnumber));
+        return $checkAllReport;
     }
     public function removeReport($usersId, $postnumber, $commentId){
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
@@ -46,15 +46,17 @@ class CommentManager extends Manager // la classe CommentManager hérite de Mana
     // todo voir si cette fonction est utile
     public function commentInfo($postnumber){
         $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $allComment = $db->prepare("SELECT comment.comment_id, comment.comment_title, comment.comment_date, 
-        comment.comment_content, comment.users_id, users.mail, comment.validate_id, 
-        comment_validation.validation_label ,COUNT(report_comment.comment_id) 
-                FROM users 
-                INNER JOIN COMMENT USING(users_id)
-                INNER JOIN report_comment USING(comment_id)
-                INNER JOIN comment_validation USING(validate_id)
-                where comment.post_id = ?
-                ORDER BY comment_date");
+        $allComment = $db->prepare("SELECT comment.comment_id, comment.comment_title, comment.comment_date, comment.comment_content,
+        comment.post_id, comment.users_id, comment.validate_id, comment.treatment_date,
+        CASE 
+        WHEN comment.comment_id = report_comment.comment_id THEN COUNT(report_comment.comment_id)
+        END AS numberReport
+        FROM comment
+        INNER JOIN report_comment ON report_comment.post_id = comment.post_id
+        WHERE comment.post_id = ?
+        GROUP BY comment.comment_id, comment.comment_title, comment.comment_date, comment.comment_content,
+        comment.post_id, comment.users_id, comment.validate_id, comment.treatment_date
+        ORDER BY comment_date");
         $allComment->execute(array($postnumber));
         $getAllComment = $allComment->fetchAll(\PDO::FETCH_CLASS,'Comment');
         return $getAllComment;

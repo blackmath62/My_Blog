@@ -26,14 +26,15 @@
                             <div class="md-form center">
                                 <label for="message">Post</label>
                                 <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea>
+                                <?php ?>
                             </div>
 
                         </div>
                     </div>
                     <div class="text-center m-5">
-                    <button class="btn btn-primary btn-xl js-scroll-trigger text-white">Déposer le post</button>
-                </div>
-                <div class="status"></div>
+                        <button  class="btn btn-primary btn-xl js-scroll-trigger text-white">Déposer le post</button>
+                    </div>
+                    <div class="status"></div>
                 </form>
             </div>
         </div>
@@ -43,15 +44,15 @@
 <script type="text/javascript" src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=bo070cj0cufoos572vlo44q1qz8r433p93zx0dftzsgkdr5h"></script>
 <script>
     tinymce.init({
-        selector:'textarea',
-        height:500,
-        menubar:false,
-        plugins:[
+        selector: 'textarea',
+        height: 500,
+        menubar: false,
+        plugins: [
             'advlist autolink link lists image charmap print preview anchor textcolor',
             'searchreplace visualblocks code fullscreen',
             'insertdatetime media table contextmenu paste code help'
         ],
-        toolbar:'insert | undo redo | styleselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+        toolbar: 'insert | undo redo | styleselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
     });
 </script>
 <?php

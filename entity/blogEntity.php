@@ -6,6 +6,7 @@ class Blog
   private $post_title;
   private $users_id;
   private $post_date;
+  private $post_chapo;
   private $post_content;
   private $modification_date;
   
@@ -16,6 +17,7 @@ class Blog
   public function post_title(){return $this->post_title;}
   public function users_id(){return $this->users_id;}
   public function post_date(){return $this->post_date;}
+  public function post_chapo(){return $this->post_chapo;}
   public function post_content(){return $this->post_content;}
   public function modification_date(){return $this->modification_date;}
   
@@ -32,6 +34,9 @@ class Blog
 
   public function setPostDate($postDate)
   {$this->post_date = $postDate;}
+
+  public function setPostChapo($post_chapo) // On vérifie qu'il s'agit bien d'une chaîne de caractères.
+  {if (is_string($post_chapo)) {$this->post_chapo = $post_chapo;}}
 
   public function setPostContent($post_content) // On vérifie qu'il s'agit bien d'une chaîne de caractères.
   {if (is_string($post_content)) {$this->post_content = $post_content;}}
