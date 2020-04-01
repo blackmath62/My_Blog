@@ -27,11 +27,13 @@
                     <div class="form-group">
                       <input type="submit" value='Changer le mot de passe' class="btn btn-primary btn-user btn-block">
                     </div>
+                    <div class="center">
                     <?php
                     if (isset($error)) {
                       echo $error;
                     }
                     ?>
+                    </div>
                   </form>
                   <hr>
                   <div class="text-center">

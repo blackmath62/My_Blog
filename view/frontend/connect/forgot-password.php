@@ -18,14 +18,16 @@
                   </div>
                   <form class="user" action='index.php?action=get_passforget' method='POST' name='controlmail'>
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" name="identifiant" aria-describedby="emailHelp" placeholder="Veuillez saisir votre adresse mail...">
+                      <input type="email" class="form-control form-control-user" id="identifiant" name="identifiant" aria-describedby="emailHelp" placeholder="Veuillez saisir votre adresse mail..." required>
                     </div>
                     <input type="submit" value='Réinitialiser le mot de passe par mail' class="btn btn-primary btn-user btn-block">
+                    <div class="center">
                     <?php
                     if (isset($error)) {
                       echo $error;
                     }
                     ?>
+                    </div>
                   </form>
                   <hr>
                   <div class="text-center">
