@@ -29,12 +29,13 @@
                   </div>
                 </div>
                 <p><input type="submit" name="Valider" value='Créer le compte' class="btn btn-primary btn-user btn-block"></p>
+                <div class="center">
                 <?php
                 if (isset($error)) {
                   echo $error;
-                  header('refresh:3; url= index.php?action=connexion');
                 }
                 ?>
+                </div>
                 <hr>
               </form>
               <hr>

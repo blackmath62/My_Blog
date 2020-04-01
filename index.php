@@ -15,7 +15,7 @@ if (isset($_GET['action'])) {
                         connexion();
                         break;
                 case 'check_connexion':
-                        check_connexion_2();
+                        check_connexion();
                         break;
                 case 'kill_connexion':
                         kill_connexion();

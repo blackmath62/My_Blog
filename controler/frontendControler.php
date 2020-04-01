@@ -29,43 +29,8 @@ function kill_connexion()
     session_destroy(); // Détruit une session
     header('Location: index.php');
 }
+
 function check_connexion() // la fonction   la partie connexion est bonne ne plus toucher
-{
-    // Instanciation d'un objet dans un namespace
-    // L'objet se trouve dans le model membermanager
-    $connexionmodel = new \memberSpace\Model\MemberManager();
-    if (isset($_POST['identifiant']) and isset($_POST['mdpconnect'])) {
-        $mailconnect = htmlspecialchars($_POST['identifiant']);
-        $mdpconnect = password_hash($_POST['mdpconnect'], PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
-        $check_connect = $connexionmodel->checkMailExist($mailconnect);
-        $mailExist = $check_connect->rowCount(); // compter le nombre de ligne  
-        if ($mailExist == 1) {
-            $connect = $connexionmodel->getconnect($mailconnect);
-            while ($profil = $connect->fetch()) { // on boucle sur le MemberManager/connect
-                $isPasswordCorrect = password_verify($_POST['mdpconnect'], $profil['mdp']); // Comparaison du pass envoyé via le formulaire avec la base    
-                if ($isPasswordCorrect)  // si c'est égale à 1  et le mot de passe est correct
-                { // Comparaison du pass envoyé via le formulaire avec la base
-                    session_start();
-                    $_SESSION['mail'] = $profil['mail'];
-                    $_SESSION['users_id'] = $profil['users_id'];
-                    $_SESSION['law_label'] = $profil['law_label'];
-                    $mailconnect = $_SESSION['mail'];
-                    $_SESSION['law_id'] = $profil['law_id'];
-                    header('Location: index.php');
-                } elseif (isset($mailconnect)) {
-                    $error = "Mail ou mot de passe incorrect !";
-                }
-            }
-        }
-        if ($mailExist == 0 and !empty($mailconnect)) {
-            $error = "Mail inconnu, veuillez créer un compte dans inscription.";
-        }
-    } else {
-        $error = "Veuillez renseigner votre mail et mdp ";
-    }
-    require('view/frontend/connect/loginview.php');
-}
-function check_connexion_2() // la fonction   la partie connexion est bonne ne plus toucher
 {
     $memberManager = new \memberSpace\Model\MemberManager();
 
@@ -107,43 +72,36 @@ function register()
     require('view/frontend//connect/registerview.php');
 }
 
-function check_register() // la fonction
+function check_register() // la fonction pour contrôler si l'utilisateur peut être créé et le créer
 {
-    $connexionmodel = new \memberSpace\Model\MemberManager(); // on créé un nouvelle objet
+    $register = new \memberSpace\Model\MemberManager(); // on créé un nouvelle objet
     if (isset($_POST['identifiant']) and isset($_POST['mdpconnect']) and isset($_POST['mdp_register_verif'])) // on contrôle si l'id et les 2 mots de passe sont renseignés
     {
         $mailconnect = htmlspecialchars($_POST['identifiant']);  //on déclare les variables
         $pseudo = htmlspecialchars($_POST['pseudo']);  //on déclare les variables
         $mdpconnect = password_hash($_POST['mdpconnect'], PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
-        $check_connect = $connexionmodel->checkMailExist($mailconnect); // on vérifie si le compte n'existe pas déjà
-        $mailExist = $check_connect->rowCount(); // compter le nombre de ligne 
-        $check_pseudo = $connexionmodel->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
+        $check_connect = $register->checkMailExist($mailconnect); // on vérifie si le compte n'existe pas déjà
+        //$mailExist = $check_connect->rowCount(); // compter le nombre de ligne 
+        $check_pseudo = $register->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
         $pseudoExist = $check_pseudo->rowCount(); // compter le nombre de ligne
-        if ($mailExist == 1) {
+        if ($check_connect) {
             $error = "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
-        } elseif ($mailExist == 0) {
+        } elseif (!$check_connect) {
 
-            if ($pseudoExist == 1) {
+            if ($pseudoExist) {
                 $error = "Le pseudo est déjà utilisé, veuillez choisir un autre pseudo ou vous connecter.";
-            } elseif ($pseudoExist == 0) {
+            } elseif (!$pseudoExist) {
                 if ($_POST['mdpconnect'] == $_POST['mdp_register_verif']) //si les 2 mots de passes sont identiques
                 {
-                    $register = $connexionmodel->addRegister($mailconnect, $pseudo, $mdpconnect);
+                    $register = $register->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
                     $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
+                    header('refresh:3; url= index.php?action=connexion');
+                }else{
+                    $error = "Vos 2 mots de passe ne sont pas identiques";
                 }
             }
         }
     }
-    require('view/frontend/connect/registerview.php');
-}
-
-function check_register_2() // la fonction
-{
-    $connexionmodel = new \memberSpace\Model\MemberManager(); // on créé un nouvelle objet
-    $mailconnect = htmlspecialchars($_POST['identifiant']);  //on déclare les variables
-    $pseudo = htmlspecialchars($_POST['pseudo']);  //on déclare les variables
-    $mdpconnect = password_hash($_POST['mdpconnect'], PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
-    
     require('view/frontend/connect/registerview.php');
 }
 
@@ -162,52 +120,53 @@ function get_passforget()
         $user = new Member; // création d'un objet user
         $user->setMail($mail); // modification des valeurs de l'objet
         $controlUser = $user->checkMailExist($user->mail()); // l'objet étant une extension du member manager, il est possible d'appeler directement les fonctions
-        $user->setUsersId($usersId);
-            if (!$controlUser) // si l'user = 1 c'est qu'il existe
-            {
-                header('Location: index.php?action=send_Mail_Password');
-                $receivetoken = $connexionmodel->getTokenpassforget($mail); // appel du model qui prépare l'injection du Token
-                $Token = $user->setMail($mail) . $user->setMail($mail); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
-                $hash_Token = password_hash($Token, PASSWORD_DEFAULT); // On hash le token
-                $addtoken = $receivetoken->execute(array($hash_Token, $mail)); // On insere dans la BDD
-                // Envoyer un mail avec le Token à l'utilisateur concerné
-                $header = "MIME-Version: 1.0\r\n";
-                $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
-                $header .= 'Content-Type:text/html; charset="utf-8"' . "\n";
-                $header .= 'Content-Transfer-Encoding: 8bit';
+        $controlUserId = $user->checkMailExist($user->users_Id());
+        /*$user->setUsersId($usersId);*/
+        if (!$controlUser) // si l'user est trouvé c'est qu'il existe
+        {
+            header('Location: index.php?action=send_Mail_Password');
+            $receivetoken = $connexionmodel->getTokenpassforget($mail); // appel du model qui prépare l'injection du Token
+            $Token = $user->setMail($mail) . $user->setMail($mail); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
+            $hash_Token = password_hash($Token, PASSWORD_DEFAULT); // On hash le token
+            $addtoken = $receivetoken->execute(array($hash_Token, $mail)); // On insere dans la BDD
+            // Envoyer un mail avec le Token à l'utilisateur concerné
+            $header = "MIME-Version: 1.0\r\n";
+            $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
+            $header .= 'Content-Type:text/html; charset="utf-8"' . "\n";
+            $header .= 'Content-Transfer-Encoding: 8bit';
 
-                $message = 'Bonjour, ' . '</br>' . '</br>' .
-                    'Veuillez sur le lien ci dessous pour changer votre mot de passe : ' . '</br>' . '</br>'
-                    . "<a href='http://localhost/my_blog/index.php?action=passchange&id=" . $user->setUsersId($usersid) . "&token=" . $hash_Token . "'>Changer de mot de passe</a>"
+            $message = 'Bonjour, ' . '</br>' . '</br>' .
+                'Veuillez sur le lien ci dessous pour changer votre mot de passe : ' . '</br>' . '</br>'
+                . "<a href='http://localhost/my_blog/index.php?action=passchange&id=" . $controlUserId . "&token=" . $hash_Token . "'>Changer de mot de passe</a>"
 
-                    . '</br>' . '</br>' . 'Cdt,';
+                . '</br>' . '</br>' . 'Cdt,';
 
-                mail("$mail", "Mot de passe oublié", $message, $header);
-            } elseif (isset($mail)) {
-                $error = "Adresse mail inconnu";
-            } else {
-                $error = "Veuillez saisir un mail";
-            }
+            mail("$mail", "Mot de passe oublié", $message, $header);
+        } elseif (isset($mail)) {
+            $error = "Adresse mail inconnu";
+        } else {
+            $error = "Veuillez saisir un mail";
         }
+    }
     require('view/frontend/connect/change-forgot-password.php');
 }
 
 function contact_me()
 {
-    
-                $name = $_POST['name'];
-                $mail = $_POST['email'];
-                $subject = $_POST['subject'];
-                $message = $_POST['message'];
 
-                // Envoyer un mail
-                $header = "MIME-Version: 1.0\r\n";
-                $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
-                $header .= 'Content-Type:text/html; charset="utf-8"' . "\n";
-                $header .= 'Content-Transfer-Encoding: 8bit';
+    $name = $_POST['name'];
+    $mail = $_POST['email'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
 
-                mail("jpochet@lhermitte.fr", "Vous avez reçu un nouveau message en provenance du Blog","Objet:" . $subject . "</br>". "</br>". "Envoyé par: " . $name . "</br>". "</br>". "Adresse mail: " . $mail . "</br>". "</br>" . "Message: " . "</br>" . nl2br($message), $header);
-                header('refresh:3; url= index.php');
+    // Envoyer un mail
+    $header = "MIME-Version: 1.0\r\n";
+    $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
+    $header .= 'Content-Type:text/html; charset="utf-8"' . "\n";
+    $header .= 'Content-Transfer-Encoding: 8bit';
+
+    mail("jpochet@lhermitte.fr", "Vous avez reçu un nouveau message en provenance du Blog", "Objet:" . $subject . "</br>" . "</br>" . "Envoyé par: " . $name . "</br>" . "</br>" . "Adresse mail: " . $mail . "</br>" . "</br>" . "Message: " . "</br>" . nl2br($message), $header);
+    header('refresh:3; url= index.php');
     require('view/frontend/mail.php');
 }
 
@@ -307,36 +266,9 @@ function usersList()
     $UsersLawmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
     $allLaw = $UsersLawmodel->getLawList();
     $allUsers = $UsersLawmodel->getUsersList();
-    /*echo '<pre>';
-    var_dump($allUsers);
-    echo '</pre>';
-    die();*/
     require('view/backend/usersList.php');
 }
 
-/*function getReportComment()
-{
-    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
-    $usersId = $_SESSION['users_id'];
-    $postnumber = $_GET['postid'];
-    $commentId = $_GET['commentid'];
-    $commentModeration = $Commentmodel->commentReport($usersId, $postnumber, $commentId);
-    header('Location:index.php?action=longPost&id=' . $_GET['postid']);
-    /*$error = "Votre signalement a bien été enregistré";
-    require('view/frontend/reportComment.php');
-}
-function getRemoveReport()
-{
-    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
-    $usersId = $_SESSION['users_id'];
-    $postnumber = $_GET['postid'];
-    $commentId = $_GET['commentid'];
-    $RemoveReportNow = $Commentmodel->removeReport($usersId, $postnumber, $commentId);
-    header('Location:index.php?action=longPost&id=' . $_GET['postid']);
-    /*$error = "Votre signalement a bien été enregistré";
-    require('view/frontend/removeReportView.php');
-}
-*/
 function ChangeLawUser()
 {
     $changeLawModel = new \memberSpace\Model\MemberManager(); // créer un Objet
@@ -356,15 +288,6 @@ function deleteUser()
     require('view/backend/deleteUserView.php');
 }
 
-/*function commentReport()
-{
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-
-    //$commentReport = $connexionmodel -> commentReport();
-
-    require('view/backend/commentReport.php');
-}*/
-
 //  end administration function
 
 // site page function
@@ -373,10 +296,6 @@ function allPost() // Chapo post list
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
     $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
     $allPostChapo = $connexionmodel->allPost();
-    /*if ($_SESSION['law_id'] == 1) {
-        $numberComment = $Commentmodel->numberCommentReport();
-        $numberWaitComment = $Commentmodel->numberCommentWait();
-    }*/
     require('view/frontend/allPostView.php');
 }
 function getComment()
@@ -403,12 +322,10 @@ function longPost() // Long Post view
     $postnumber = $_GET['id'];
     $GetLongPost = $blogModel->getLongPost($postnumber);
     $postnumber = $GetLongPost->post_id();
- 
-        $allComment = $blogModel->postComment($postnumber); // affichage pour l'utilisateur des commentaires validés
-        $getComment = $allComment->fetchAll(\PDO::FETCH_CLASS,'Comment');
-        /*var_dump($getComment);
-        die();*/
-        $usersId = $_SESSION['users_id'];
+
+    $allComment = $blogModel->postComment($postnumber); // affichage pour l'utilisateur des commentaires validés
+    $getComment = $allComment->fetchAll(\PDO::FETCH_CLASS, 'Comment');
+    $usersId = $_SESSION['users_id'];
     require('view/frontend/postView.php');
 }
 // end site page function
