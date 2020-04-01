@@ -3,17 +3,12 @@
     <section class="page-section">
         <!-- Blog Post -->
         <?php
-        if (isset($_SESSION['law_id'])) {
-            if ($_SESSION['law_id'] == 1) {
-                $nbReport = $numberComment->fetchAll(PDO::FETCH_COLUMN);
-                $nbCommentWait = $numberWaitComment->fetchAll(PDO::FETCH_COLUMN);
-            }
-        }
         // todo voir pour récupérer le mail au lieu de l'ID = $postuser = $chapoPostList->users_id()
         foreach ($allPostChapo as $chapoPostList) {
             $title = $chapoPostList->post_title();
             $datepost = $chapoPostList->post_date();
             $postmessage = $chapoPostList->post_content();
+            $chapo = $chapoPostList->post_chapo();
             $postnumber = $chapoPostList->post_id();
             $postuser = $chapoPostList->users_id();
             $modificationDate = $chapoPostList->modification_date();
@@ -25,44 +20,7 @@
 
                     <div>
                         <div class="d-flex align-center justify-content-around">
-                            <p class="card-text"><?= substr($postmessage, 0, 200) . '...' ?></p>
-
-                            <?php if (!empty($_SESSION)) { // n'afficher que si l'utilisateur est administrateur
-                                if ($_SESSION['law_id'] == 1) { ?>
-                                    <?php
-                                    if (in_array($postnumber, $nbReport, true)) { // n'afficher que s'il y a des commentaires signalés  
-                                        $numberCommentReport = count(array_keys($nbReport, $postnumber, true));  // compter le nombre d'occurence de commentaire signalé pour le post
-                                    ?>
-
-                                        <div>
-                                            <div class="d-flex">
-                                                <a class="table-link">
-                                                    <i class="fa fa-bell fa-3x fa-fw text-warning"></i>
-                                                </a>
-                                                <p class="h1 pl-2 pr-2"><?= $numberCommentReport ?></p>
-                                            </div>
-
-                                <?php
-                                    }
-                                }
-                            }  ?>
-                                <?php
-                                if (isset($_SESSION['law_id'])) {
-                                    if ($_SESSION['law_id'] == 1) {
-                                        if (in_array($postnumber, $nbCommentWait, true)) { // n'afficher que s'il y a des commentaires signalés  
-                                            $numberWaitComment = count(array_keys($nbCommentWait, $postnumber, true));  // compter le nombre d'occurence de commentaire signalé pour le post
-                                ?>
-                                            <div class="d-flex">
-                                                <a class="table-link">
-                                                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-                                                </a>
-                                                <p class="h1 pl-2 pr-2"><?= $numberWaitComment ?></p>
-                                            </div>
-                                        </div>
-                            <?php }
-                                    }
-                                } ?>
-
+                            <p class="card-text"><?= $chapo . '...' ?></p>
                         </div>
                         <div>
                             <a href="index.php?action=longPost&id=<?= $postnumber ?>" class="btn btn-primary">Lire plus ! &rarr;</a>
@@ -76,22 +34,7 @@
                     <?php if (isset($modificationDate)) { ?>
                         <p class="d-flex mr-right p-2">Modifié le <?= $modificationDate ?> par <?= $postuser ?></p>
                     <?php } ?>
-                    <?php if (!empty($_SESSION)) {
-                        if ($_SESSION['law_id'] == 1) { ?>
-                            <a href="index.php?action=changePost&id=<?= $postnumber ?>" class="table-link">
-                                <span class="fa-stack ml-2">
-                                    <i class="fa fa-square fa-stack-2x"></i>
-                                    <i class="fa fa-pencil fa-stack-1x fa-inverse btn-warning rounded"></i>
-                                </span>
-                            </a>
-                            <a href="#delete<?= $postnumber ?>" rel="modal:open" class="table-link danger">
-                                <span class="fa-stack ml-2">
-                                    <i class="fa fa-square fa-stack-2x"></i>
-                                    <i class="fa fa-trash-o fa-stack-1x fa-inverse btn-danger rounded"></i>
-                                </span>
-                            </a>
-                    <?php }
-                    } ?>
+
                     <!-- Modal HTML embedded directly into document -->
                     <div id="delete<?= $postnumber ?>" class="modal visible h-25 text-center">
                         <p class="p-2">Veuillez confirmer la suppression</p>

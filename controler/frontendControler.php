@@ -12,25 +12,16 @@ function pageNoFound()
     require('view/frontend/pageNoFound.php');
 }
 // connexion function
-function connexion()
+function connexion() // affichage page connexion avec suppression variable de session
 {
-    if (isset($_SESSION['mail'])) {
         // Suppression des variables de session et de la session
         session_start();
         session_unset();
         session_destroy();
-    }
     require('view/frontend/connect/loginview.php');
 }
-function kill_connexion()
-{
-    session_start(); // Démarre une nouvelle session ou reprend une session existante
-    session_unset(); // Détruit toutes les variables d'une session
-    session_destroy(); // Détruit une session
-    header('Location: index.php');
-}
 
-function check_connexion() // Contrôler id et mdp et connecter
+function check_connexion() // Contrôler id et mdp et se connecter
 {
     $memberManager = new \memberSpace\Model\MemberManager();
 
@@ -168,9 +159,9 @@ function get_passchange() // Changement du mot de passe utilisateur
 {
     $idconnect = $_SESSION['users_id'];
     $controltoken = $_SESSION['token'];
-    $connexionmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $changepassword = new \memberSpace\Model\MemberManager(); // créer un Objet
     if (isset($idconnect) and isset($controltoken)) {
-        $check_id = $connexionmodel->check_id($idconnect,$controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
+        $check_id = $changepassword->check_id($idconnect,$controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
         while ($profil = $check_id->fetch()) // on boucle pour récupérer les infos sur l'user
         {
             if ($profil['token'] == $controltoken) {;
@@ -180,7 +171,7 @@ function get_passchange() // Changement du mot de passe utilisateur
                     $hashnewpass =  password_hash($newpassword, PASSWORD_DEFAULT); // On hash le token
                     $cleartoken = '';
                     $error = 'vous avez bien changé de mot de passe';
-                    $link = $connexionmodel->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
+                    $link = $changepassword->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
                     header('refresh:3; url= index.php?action=connexion');
                 } else {
                     $error = 'Les mots de passes ne sont pas identiques';
@@ -290,9 +281,8 @@ function contact_me() // Formulaire de contact
 }
 function allPost() // Chapo post list
 {
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $Commentmodel = new \memberSpace\Model\CommentManager(); // créer un Objet
-    $allPostChapo = $connexionmodel->allPost();
+    $chapoList = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $allPostChapo = $chapoList->allPost();
     require('view/frontend/allPostView.php');
 }
 function getComment()

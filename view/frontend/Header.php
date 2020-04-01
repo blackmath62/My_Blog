@@ -32,7 +32,7 @@
                                  <?php }
                                         } ?>
                                  <div class="dropdown-divider"></div>
-                                 <a class="dropdown-item" href="index.php?action=kill_connexion">Se déconnecter</a>
+                                 <a class="dropdown-item" href="index.php?action=connexion">Se déconnecter</a>
                              </div>
                              </a>
                          <?php } else { ?>

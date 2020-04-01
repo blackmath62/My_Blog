@@ -17,9 +17,6 @@ if (isset($_GET['action'])) {
                 case 'check_connexion':
                         check_connexion();
                         break;
-                case 'kill_connexion':
-                        kill_connexion();
-                        break;
                 case 'inscription':
                         register();
                         break;
