@@ -25,8 +25,7 @@
 
                             <div class="md-form center">
                                 <label for="message">Post</label>
-                                <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea>
-                                <?php ?>
+                                <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
                             </div>
 
                         </div>

@@ -34,15 +34,6 @@
                     <?php if (isset($modificationDate)) { ?>
                         <p class="d-flex mr-right p-2">Modifié le <?= $modificationDate ?> par <?= $postuser ?></p>
                     <?php } ?>
-
-                    <!-- Modal HTML embedded directly into document -->
-                    <div id="delete<?= $postnumber ?>" class="modal visible h-25 text-center">
-                        <p class="p-2">Veuillez confirmer la suppression</p>
-                        <div class="d-flex justify-content-center flex-column">
-                            <a href="#" class="btn btn-xl btn-success m-2" rel="modal:close">Non ! je ne veux pas supprimer ce post !</a>
-                            <a href="index.php?action=deletePost&id=<?= $postnumber ?>" class="btn btn-xl btn-danger m-2" rel="">Je suis sûr de vouloir le supprimer</a>
-                        </div>
-                    </div>
                 </div>
             </div>
 

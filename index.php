@@ -55,6 +55,9 @@ if (isset($_GET['action'])) {
                 case 'newPost':
                         newPost();
                         break;
+                case 'changeOrCancelPost':
+                        changeOrCancelPost();
+                        break;
                 case 'deletePost':
                         deletePost();
                         break;

@@ -51,7 +51,7 @@
     <?php }
     $postId = $_GET["id"]; ?>
     <?php // Comment Form
-    if (isset($_SESSION['users_id'])) { ?>
+    if (isset($_SESSION['mail'])) { ?>
         <!--Commentaires-->
         <section class="mb-4 center bg-primary pt-4 rounded" id="contact">
             <!--Section heading-->

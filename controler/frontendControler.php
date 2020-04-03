@@ -24,7 +24,6 @@ function connexion() // affichage page connexion avec suppression variable de se
 function check_connexion() // Contrôler id et mdp et se connecter
 {
     $memberManager = new \memberSpace\Model\MemberManager();
-
     // récupérer les valeurs saisies dans le formulaire
     $mail = htmlspecialchars($_POST['identifiant']);
     $mdp = htmlspecialchars($_POST['mdpconnect']);
@@ -33,7 +32,7 @@ function check_connexion() // Contrôler id et mdp et se connecter
     $user->setMail($mail); // modification des valeurs de l'objet
     $user->setMdp($mdp);
     $controlUser = $user->checkMailExist($user->mail()); // l'objet étant une extension du member manager, il est possible d'appeler directement les fonctions
-
+    $user->setUsersId($controlUser['users_id']);
     // contrôler que le mail existe dans la BDD
     if (!$controlUser) {
         $error = "le mail n'existe pas ";
@@ -204,6 +203,14 @@ function newPost()
     }
     require('view/backend/newPost.php');
 }
+
+function changeOrCancelPost()
+{
+    $chapoList = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $allPostChapo = $chapoList->allPost();
+    require('view/backend/changeOrCancelPost.php');
+}
+
 function changePost()
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
@@ -312,7 +319,6 @@ function longPost() // Long Post view
 
     $allComment = $blogModel->postComment($postnumber); // affichage pour l'utilisateur des commentaires validés
     $getComment = $allComment->fetchAll(\PDO::FETCH_CLASS, 'Comment');
-    $usersId = $_SESSION['users_id'];
     require('view/frontend/postView.php');
 }
 // end site page function
