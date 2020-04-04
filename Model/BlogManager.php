@@ -60,10 +60,11 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     public function newPost($title, $content, $usersId)
     {
         $db = $this->dbConnect(); // la base de donnée de l'objet courant        
-        $req = $db->prepare('INSERT INTO post_list(post_title, post_content, users_id ) VALUES(:title, :content, :users)');
+        $req = $db->prepare('INSERT INTO post_list(post_title, post_content, post_chapo, users_id ) VALUES(:title, :content, :chapo, :users)');
         $newPost = $req->execute(array(
             'title' => $title,
             'content' => $content,
+            'chapo' => substr($content,0,200),
             'users' => $usersId    // C'EST L'ID UTILISATEUR QUI BLOQUE L'INTEGRATION
         ));
         return $newPost;
@@ -77,9 +78,10 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     }
     public function updatePostNow($subject, $message, $postnumber)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant     
-        $req = $db->prepare('UPDATE post_list SET post_title = :title ,post_content = :post, modification_date = :changeDate WHERE post_id= :id');
-        $updatePost = $req->execute(array('title' => $subject, 'post' => $message, 'id' => $postnumber, 'changeDate' => date("Y-m-d H:i:s")));
+        $db = $this->dbConnect(); // la base de donnée de l'objet courant   
+        $chapo = substr($message,0,200);
+        $req = $db->prepare('UPDATE post_list SET post_title = :title ,post_content = :post, post_chapo = :chapo , modification_date = :changeDate WHERE post_id= :id');
+        $updatePost = $req->execute(array('title' => $subject,'chapo' => $chapo, 'post' => $message, 'id' => $postnumber, 'changeDate' => date("Y-m-d H:i:s")));
         return $updatePost;
     }
 

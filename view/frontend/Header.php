@@ -19,6 +19,14 @@
                      <li class="nav-item">
                          <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact</a>
                      </li>
+                     <?php
+                     if (!empty($_SESSION)) {
+                                            if ($_SESSION['law_id'] == 1) { ?>
+                     <li class="nav-item">
+                         <a class="nav-link js-scroll-trigger" href="index.php?action=admin">Administration</a>
+                     </li>
+                     <?php }
+                                        } ?>
                      <li class="nav-item dropdown">
                          <?php if (isset($_SESSION['mail'])) { ?>
                              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
