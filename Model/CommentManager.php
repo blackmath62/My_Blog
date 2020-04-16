@@ -7,10 +7,10 @@ class CommentManager extends Manager // la classe CommentManager hérite de Mana
 {
     public function commentReport()
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
         $commentId = $_GET['id'];
         $validateId = $_GET['modification'];
-        $changeStatusComment = $db->prepare('UPDATE comment SET validate_id = :validateId WHERE comment_id = :commentId'); // on prépare l'insertion dans la BDD
+        $changeStatusComment = $bdd->prepare('UPDATE comment SET validate_id = :validateId WHERE comment_id = :commentId'); // on prépare l'insertion dans la BDD
         $changeStatus = $changeStatusComment->execute(array('validateId' => $validateId, 'commentId' => $commentId)); // On insere dans la BDD 
         return $changeStatus;
     }

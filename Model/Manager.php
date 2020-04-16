@@ -6,12 +6,12 @@ namespace memberSpace\Model;
 
 class Manager // Déclaration de la classe Manager
 {
-    protected function dbConnect()
+    protected function bddConnect()
     {
         try{ // php execute le code dans try
         
-        $db = new \PDO('mysql:host=localhost;dbname=my_blog;charset=utf8', 'root', ''); // on appel à la BDD
-        return $db;
+        $bdd = new \PDO('mysql:host=localhost;bddname=my_blog;charset=utf8', 'root', ''); // on appel à la BDD
+        return $bdd;
         }
             // en cas d'erreur il execute le code contenu dans catch voir cours orienté objet
             catch(Exception $e){

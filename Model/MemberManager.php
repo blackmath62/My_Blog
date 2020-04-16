@@ -7,8 +7,8 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
 {
     public function checkMailExist($mailconnect)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $checkMail = $db->prepare("SELECT users.mail,users.users_id, law.law_id, users.mdp 
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
+        $checkMail = $bdd->prepare("SELECT users.mail,users.users_id, law.law_id, users.mdp 
         FROM law 
         INNER JOIN users ON users.law_id = law.law_id 
         WHERE (users.mail = ?) ");
@@ -18,15 +18,15 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
     }
     public function checkPseudoExist($pseudo)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $checkPseudo = $db->prepare("SELECT Pseudo FROM users WHERE Pseudo = ?");
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
+        $checkPseudo = $bdd->prepare("SELECT Pseudo FROM users WHERE Pseudo = ?");
         $checkPseudo->execute(array($pseudo));
         return $checkPseudo;
     }
     /*public function check_id($idconnect)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $check_id = $db->prepare("SELECT users_id FROM users WHERE users_id = ? ");
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
+        $check_id = $bdd->prepare("SELECT users_id FROM users WHERE users_id = ? ");
         $check_id->execute(array($idconnect));
 
         return $check_id;
@@ -34,8 +34,8 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
     // todo contrôler checkid doublon
     public function check_id($idconnect, $controltoken)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $check_id = $db->prepare("SELECT mail, users_id, token FROM users WHERE users_id = ? AND token = ? ");
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
+        $check_id = $bdd->prepare("SELECT mail, users_id, token FROM users WHERE users_id = ? AND token = ? ");
         $check_id->execute(array($idconnect, $controltoken));
 
         return $check_id;
@@ -43,8 +43,8 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
 
     public function getconnect($mailconnect)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $userconnect = $db->prepare("SELECT users_id, mail,mdp,users.law_id FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
+        $userconnect = $bdd->prepare("SELECT users_id, mail,mdp,users.law_id FROM law INNER JOIN users ON users.law_id = law.law_id WHERE users.mail = ? ");
         $userconnect->execute(array($mailconnect));
 
         return $userconnect;
@@ -52,8 +52,8 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
 
     public function addRegister($mailconnect, $pseudo, $mdpconnect)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant        
-        $req = $db->prepare('INSERT INTO users(mail, pseudo, mdp ) VALUES(:mail, :pseudo, :mdp)');
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant        
+        $req = $bdd->prepare('INSERT INTO users(mail, pseudo, mdp ) VALUES(:mail, :pseudo, :mdp)');
         $addregister = $req->execute(array(
             'mail' => $mailconnect,
             'mdp' => $mdpconnect,
@@ -65,43 +65,43 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
 
     public function getTokenpassforget($mailconnect)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant        
-        $addtoken = $db->prepare('UPDATE users SET token = ? WHERE mail = ?'); // on prépare l'insertion dans la BDD
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant        
+        $addtoken = $bdd->prepare('UPDATE users SET token = ? WHERE mail = ?'); // on prépare l'insertion dans la BDD
 
         return $addtoken;
     }
     public function changepass($idconnect, $hashnewpass, $cleartoken)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant        
-        $changepasstoken = $db->prepare('UPDATE users SET mdp = :newpass , token = :cleartoken WHERE users_id = :checkid'); // on prépare l'insertion dans la BDD
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant        
+        $changepasstoken = $bdd->prepare('UPDATE users SET mdp = :newpass , token = :cleartoken WHERE users_id = :checkid'); // on prépare l'insertion dans la BDD
         $addtoken = $changepasstoken->execute(array('checkid' => $idconnect, 'newpass' => $hashnewpass, 'cleartoken' => $cleartoken)); // On insere dans la BDD 
         return $addtoken;
     }
 
     public function getUsersList()
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $checkUsersList = $db->query("SELECT users.users_id, users.mail, users.law_id, users.create_date_users FROM law INNER JOIN users ON users.law_id = law.law_id");
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
+        $checkUsersList = $bdd->query("SELECT users.users_id, users.mail, users.law_id, users.create_date_users FROM law INNER JOIN users ON users.law_id = law.law_id");
         $getUsersList = $checkUsersList->fetchAll(\PDO::FETCH_CLASS,'Member');
         return $getUsersList;
     }
     public function getLawList()
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant
-        $lawList = $db->query("SELECT * FROM law");
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
+        $lawList = $bdd->query("SELECT * FROM law");
         return $lawList;
     }
     public function getChangeLawUser($idLaw, $idUser)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant        
-        $changeLawUser = $db->prepare('UPDATE users SET law_id = :law WHERE users_id = :user'); // on prépare l'insertion dans la BDD
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant        
+        $changeLawUser = $bdd->prepare('UPDATE users SET law_id = :law WHERE users_id = :user'); // on prépare l'insertion dans la BDD
         $getChangeLawUser = $changeLawUser->execute(array('law' => $idLaw, 'user' => $idUser)); // On insere dans la BDD 
         return $getChangeLawUser;
     }
     public function deleteUser($idUser)
     {
-        $db = $this->dbConnect(); // la base de donnée de l'objet courant     
-        $req = $db->prepare('DELETE FROM users WHERE users_id = ?');
+        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant     
+        $req = $bdd->prepare('DELETE FROM users WHERE users_id = ?');
         $deleteUser = $req->execute(array($idUser));
         return $deleteUser;
     }
