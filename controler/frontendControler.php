@@ -204,11 +204,17 @@ function newPost()
     require('view/backend/newPost.php');
 }
 
-function changeOrCancelPost()
+function frontendListingPost()
 {
-    $chapoList = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $allPostChapo = $chapoList->allPost();
-    require('view/backend/changeOrCancelPost.php');
+    $postList = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $frontendListPost = $postList->allPost();
+    require('view/backend/listingPost.php');
+}
+function frontendListingComment()
+{
+    $commentList = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $allComment = $commentList->allComment();
+    require('view/backend/listingComment.php');
 }
 
 function changePost()
@@ -312,13 +318,18 @@ function home() // home page 3 last chapo post
 }
 function longPost() // Long Post view
 {
-    $blogModel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $getPostAndComment = new \memberSpace\Model\BlogManager(); // créer un Objet
     $postnumber = $_GET['id'];
-    $GetLongPost = $blogModel->getLongPost($postnumber);
-    $postnumber = $GetLongPost->post_id();
-
-    $allComment = $blogModel->postComment($postnumber); // affichage pour l'utilisateur des commentaires validés
-    $getComment = $allComment->fetchAll(\PDO::FETCH_CLASS, 'Comment');
+    $GetLongPost = $getPostAndComment->getLongPost($postnumber); // affichage du post entier
+    $listCommentToPost = $getPostAndComment->postComment($postnumber); // affichage des commentaires validés
     require('view/frontend/postView.php');
 }
+function changeStatusComment() // Long Post view
+{
+    $changeStatus = new \memberSpace\Model\CommentManager(); // créer un Objet
+    $status = $changeStatus->commentReport(); // affichage du post entier
+    header('Location: index.php?action=listingComment');
+    require('view/backend/changeStatusComment.php');
+}
+
 // end site page function

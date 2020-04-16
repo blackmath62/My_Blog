@@ -40,6 +40,9 @@ if (isset($_GET['action'])) {
                 case 'get_passchange':
                         get_passchange();
                         break;
+                case 'listingComment':
+                        frontendListingComment();
+                        break;
                 case 'blog':
                         allPost();
                         break;
@@ -55,8 +58,8 @@ if (isset($_GET['action'])) {
                 case 'newPost':
                         newPost();
                         break;
-                case 'changeOrCancelPost':
-                        changeOrCancelPost();
+                case 'listingPost':
+                        frontendListingPost();
                         break;
                 case 'deletePost':
                         deletePost();
@@ -78,6 +81,9 @@ if (isset($_GET['action'])) {
                         break;
                 case 'mail':
                         contact_me();
+                        break;
+                case 'changeStatusComment':
+                        changeStatusComment();
                         break;
         }
 } else {

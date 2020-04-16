@@ -5,13 +5,14 @@
         <?php
         // todo voir pour récupérer le mail au lieu de l'ID = $postuser = $chapoPostList->users_id()
         foreach ($allPostChapo as $chapoPostList) {
-            $title = $chapoPostList->post_title();
-            $datepost = $chapoPostList->post_date();
-            $postmessage = $chapoPostList->post_content();
-            $chapo = $chapoPostList->post_chapo();
-            $postnumber = $chapoPostList->post_id();
-            $postuser = $chapoPostList->users_id();
-            $modificationDate = $chapoPostList->modification_date();
+            $title = $chapoPostList->post_title;
+            $datepost = $chapoPostList->post_date;
+            $postmessage = $chapoPostList->post_content;
+            $chapo = $chapoPostList->post_chapo;
+            $postnumber = $chapoPostList->post_id;
+            $postuser = $chapoPostList->users_id;
+            $modificationDate = $chapoPostList->modification_date;
+            $pseudo = $chapoPostList->Pseudo;
         ?>
             <div class="text-center border m-2" id="<?= $postnumber ?>">
                 <!-- <img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
@@ -30,9 +31,9 @@
 
                 </div>
                 <div class="card-footer text-muted d-flex ">
-                    <p class="d-flex mr-auto p-2">Posté le <?= $datepost ?> par <?= $postuser ?></p>
+                    <p class="d-flex mr-auto p-2">Posté le <?= $datepost ?> par <?= $pseudo ?></p>
                     <?php if (isset($modificationDate)) { ?>
-                        <p class="d-flex mr-right p-2">Modifié le <?= $modificationDate ?> par <?= $postuser ?></p>
+                        <p class="d-flex mr-right p-2">Modifié le <?= $modificationDate ?> par <?= $pseudo ?></p>
                     <?php } ?>
                 </div>
             </div>
