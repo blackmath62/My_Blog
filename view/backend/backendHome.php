@@ -14,7 +14,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-5 center">
-                <a href="index.php?action=changeOrCancelPost">
+                <a href="index.php?action=listingPost">
                 <i class="fa fa-pencil fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
@@ -24,7 +24,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-5 center">
-                <a href="index.php?action=changeOrCancelPost">
+                <a href="index.php?action=listingPost">
                 <i class="fa fa-trash fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
@@ -44,7 +44,7 @@
                 </a>
             </div>
             <div class="col-lg-4 col-sm-5 center">
-                <a href="index.php?action=blog">
+                <a href="index.php?action=listingComment">
                 <i class="fa fa-comments fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
@@ -53,7 +53,7 @@
 
                 </a>
             </div>
-            <div class="col-lg-4 col-sm-5 center">
+            <div class="col-lg-4 col-sm-5 center d-none">
                 <a href="index.php?action=blog">
                 <i class="fa fa-bell fa-5x p-4" alt=""></i>
 
