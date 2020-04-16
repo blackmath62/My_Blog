@@ -39,11 +39,11 @@
             <?php
             // todo voir pour récupérer le mail au lieu de l'ID = $postuser = $chapoHomePage->users_id() 
             foreach ($homePageChapo as $chapoHomePage) {
-                $title = $chapoHomePage->post_title();
-                $datepost = $chapoHomePage->post_date();
-                $chapo = $chapoHomePage->post_chapo();
-                $postuser = $chapoHomePage->users_id();
-                $postnumber = $chapoHomePage->post_id();
+                $title = $chapoHomePage->post_title;
+                $datepost = $chapoHomePage->post_date;
+                $chapo = $chapoHomePage->post_chapo;
+                $postuser = $chapoHomePage->Pseudo;
+                $postnumber = $chapoHomePage->post_id;
             ?>
 
                     <div class="col mb-4 card m-2 border rounded p-0" id="<?= $postnumber ?>">
