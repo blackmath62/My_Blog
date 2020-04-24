@@ -44,7 +44,7 @@
                                         <td class="phone text-center"><?= $dateComment ?></td>
                                         <td class="text-center d-flex">
                                         <div class="d-flex flex-column">
-                                        <p class="phone text-center"><?= $status . $treatmentDate ?></p>
+                                        <p class="phone text-center"><?= $status . "</br> le " . $treatmentDate ?></p>
                                         <div class="d-flex flex-row">    
                                         <a href="index.php?action=changeStatusComment&id=<?= $commentNumber ?>&modification=2" class="table-link">
                                                 <span class="fa-stack ml-2 m-1">

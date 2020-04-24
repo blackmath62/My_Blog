@@ -23,15 +23,7 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
         $checkPseudo->execute(array($pseudo));
         return $checkPseudo;
     }
-    /*public function check_id($idconnect)
-    {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $check_id = $bdd->prepare("SELECT users_id FROM users WHERE users_id = ? ");
-        $check_id->execute(array($idconnect));
 
-        return $check_id;
-    }*/
-    // todo contrôler checkid doublon
     public function check_id($idconnect, $controltoken)
     {
         $bdd = $this->bddConnect(); // la base de donnée de l'objet courant

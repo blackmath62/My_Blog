@@ -51,6 +51,5 @@ html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project
 	.phone-special {
 	  display:flex;
 	  flex-direction: column;
-	  width: 300 px !important;
 	}
   }
