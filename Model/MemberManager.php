@@ -73,7 +73,7 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
     public function getUsersList()
     {
         $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $checkUsersList = $bdd->query("SELECT users.users_id, users.mail, users.law_id, users.create_date_users FROM law INNER JOIN users ON users.law_id = law.law_id");
+        $checkUsersList = $bdd->query("SELECT users.users_id, users.mail, users.Pseudo, users.law_id, users.create_date_users FROM law INNER JOIN users ON users.law_id = law.law_id");
         $getUsersList = $checkUsersList->fetchAll(\PDO::FETCH_CLASS,'Member');
         return $getUsersList;
     }

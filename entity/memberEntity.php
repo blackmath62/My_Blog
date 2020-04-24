@@ -7,7 +7,7 @@ class Member extends MemberManager
   /*Propriétés de ma classe member */
   private $users_id;
   private $mail;
-  private $pseudo;
+  private $Pseudo;
   private $users_name;
   private $users_last_name;
   private $mdp;
@@ -40,7 +40,7 @@ public function hydrate(array $donnees)
     */
   public function users_id(){return $this->users_id;}
   public function mail(){return htmlspecialchars($this->mail);}
-  public function pseudo(){return htmlspecialchars($this->pseudo);}
+  public function pseudo(){return htmlspecialchars($this->Pseudo);}
   public function users_name(){return htmlspecialchars($this->users_name);}
   public function users_last_name(){return htmlspecialchars($this->users_last_name);}
   public function mdp(){return $this->mdp;}

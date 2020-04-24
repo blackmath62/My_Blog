@@ -1,13 +1,16 @@
 <?php ob_start(); ?>
-<section class="page-section">
-    <h1 class="text-center w-responsive mx-auto mb-5">Liste des utilisateurs </h1>
-    <div class="container">
+<div class="container">
+    <section class="page-section">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="main-box clearfix">
-                    <div class="table-responsive">
-                        <table class="table user-list">
-                            <thead class="border rounded bg-primary text-white">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-center">Liste des utilisateurs</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
                                 <tr>
                                     <th class="text-center"><span>Utilisateur</span></th>
                                     <th class="text-center"><span>date création</span></th>
@@ -16,7 +19,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
+                            <?php
                                 // On récupére la liste des droits dans un tableau
                                 $j = 1;
                                 while ($listLaw = $allLaw->fetch()) {
@@ -29,12 +32,13 @@
                                 foreach ($allUsers as $user) {
                                     $usersId = $user->users_id();
                                     $usersMail = $user->mail();
+                                    $pseudo = $user->pseudo();
                                     $usersdate = $user->create_date_users();
                                     $usersLawId = $user->law_id();
                                     ?>
                                     <tr>
                                         <td class="text-center">
-                                            <a class="text-center"><?= $usersMail ?></a>
+                                            <a class="text-center"><?= $pseudo ?></a>
                                         </td>
                                         <td class="text-center">
                                             <?= $usersdate ?>
@@ -74,24 +78,22 @@
                                     </tr>
 
                                 <?php } ?>
-                                
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-center"><span>Utilisateur</span></th>
+                                    <th class="text-center"><span>date création</span></th>
+                                    <th class="text-center"><span>droit</span></th>
+                                    <th class="text-center"><span>Action</span></th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
-                    <ul class="pagination pull-right">
-                        <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-                    </ul>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+
+</div>
+<!-- /.card-body -->
 <?php
 $content = ob_get_clean();
 require('view/frontend/htmlTemplate.php');
