@@ -80,5 +80,11 @@ public function hydrate(array $donnees)
 
   public function setLawId($lawId) // On vérifie qu'il s'agit bien d'un entier.
   {$lawId = (int) $lawId;if($lawId > 0 ){$this->law_id = $lawId;}}
+  
+  
+  // todo avec Antoine pour voir si je m'y prends bien
+  public function deleteUser($users_id){
+
+  }
 
 }

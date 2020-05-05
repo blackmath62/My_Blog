@@ -262,10 +262,9 @@ function ChangeLawUser()
     require('view/backend/changeLawView.php');
 }
 
-function deleteUser()
+function deleteUser($idUser)
 {
     $deleteUserModel = new \memberSpace\Model\MemberManager(); // créer un Objet
-    $idUser = $_GET['userid'];
     $getDeleteUser = $deleteUserModel->deleteUser($idUser);
     header('Location: index.php?action=usersList');
     require('view/backend/deleteUserView.php');
@@ -275,13 +274,9 @@ function deleteUser()
 
 // site page function
 
-function contact_me() // Formulaire de contact
+function contact_me($name,$mail,$subject,$message) // Formulaire de contact
 {
-    $name = $_POST['name'];
-    $mail = $_POST['email'];
-    $subject = $_POST['subject'];
-    $message = $_POST['message'];
-
+    
     // Envoyer un mail
     $header = "MIME-Version: 1.0\r\n";
     $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";

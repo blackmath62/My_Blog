@@ -15,20 +15,10 @@
             </div>
             <div class="col-lg-4 col-sm-5 center">
                 <a href="index.php?action=listingPost">
-                <i class="fa fa-pencil fa-5x p-4" alt=""></i>
+                <i class="fa fa-pencil fa-5x p-4" alt=""></i>/<i class="fa fa-trash fa-5x p-4" alt=""></i>
 
                     <div class="project-category text-center">
-                        <h4>Modifier un post</h4>
-                    </div>
-
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-5 center">
-                <a href="index.php?action=listingPost">
-                <i class="fa fa-trash fa-5x p-4" alt=""></i>
-
-                    <div class="project-category text-center">
-                        <h4>Supprimer un post</h4>
+                        <h4>Modifier / Supprimer un post</h4>
                     </div>
 
                 </a>

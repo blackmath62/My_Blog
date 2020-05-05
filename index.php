@@ -8,9 +8,14 @@ ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise e
 // a le même effet qu'include, c'est à dire pour ramener une page mais à l'avantage de ne rien renvoyer en cas d'erreur
 
 require('controler/frontendControler.php');
+require('config/Request.php');
 
-if (isset($_GET['action'])) {
-        switch ($_GET['action']) {
+$request = new Request();
+
+$action = $request->getGet()["action"];
+
+if (isset($action)) {
+        switch ($action) {
                 case 'connexion':
                         connexion();
                         break;
@@ -30,9 +35,7 @@ if (isset($_GET['action'])) {
                         get_passforget();
                         break;
                 case 'passchange':
-                        $idconnect = $_GET['id'];
-                        $controltoken = $_GET['token'];
-                        passchange($idconnect, $controltoken);
+                        passchange($request->getGet()['id'], $request->getGet()['token']);
                         break;
                 case 'send_Mail_Password':
                         send_Mail_Password();
@@ -77,10 +80,14 @@ if (isset($_GET['action'])) {
                         ChangeLawUser();
                         break;
                 case 'deleteUser':
-                        deleteUser();
+                        deleteUser($request->getGet()['userid']);
                         break;
                 case 'mail':
-                        contact_me();
+                        $name = $request->getPost()['name'];
+                        $mail = $request->getPost()['email'];
+                        $subject = $request->getPost()['subject'];
+                        $message = $request->getPost()['message'];
+                        contact_me($name,$mail,$subject,$message);
                         break;
                 case 'changeStatusComment':
                         changeStatusComment();
