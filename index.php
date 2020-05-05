@@ -20,7 +20,9 @@ if (isset($action)) {
                         connexion();
                         break;
                 case 'check_connexion':
-                        check_connexion();
+                        $mail = $request->getPost()['identifiant'];
+                        $mdp = $request->getPost()['mdpconnect'];
+                        check_connexion($mail,$mdp);
                         break;
                 case 'inscription':
                         register();
@@ -50,34 +52,53 @@ if (isset($action)) {
                         allPost();
                         break;
                 case 'longPost':
-                        longPost();
+                        $postnumber = $request->getGet()['id'];
+                        longPost($postnumber);
                         break;
                 case 'admin':
                         getAdmin();
                         break;
                 case 'commentaire':
-                        getComment();
+                        $title = $request->getPost()['subject'];
+                        $content = $request->getPost()['message'];
+                        $postId = $request->getGet()["id"];
+                        $usersId = $request->getSession()['users_id'];
+                        getComment($title,$content, $postId, $usersId);
                         break;
                 case 'newPost':
-                        newPost();
+                        if(!empty($request->getPost()['subject'])){
+                        $title = $request->getPost()['subject'];
+                        $content = $request->getPost()['message'];
+                        $usersId = $request->getSession()['users_id'];
+                        newPost($title, $content, $usersId);
+                        } else {
+                        viewNewPost();
+                        }
                         break;
                 case 'listingPost':
                         frontendListingPost();
                         break;
                 case 'deletePost':
-                        deletePost();
+                        $postnumber = $request->getGet()['id'];
+                        deletePost($postnumber);
                         break;
                 case 'changePost':
-                        changePost();
+                        $postnumber = $request->getGet()['id'];
+                        changePost($postnumber);
                         break;
                 case 'updatePost':
-                        updatePost();
+                        $postnumber = $request->getGet()['id'];
+                        $subject = $request->getPost()['subject'];
+                        $message = $request->getPost()['message'];
+                        updatePost($postnumber, $subject, $message);
                         break;
                 case 'usersList':
                         usersList();
                         break;
                 case 'changeLawUser':
-                        ChangeLawUser();
+                        $idLaw = $request->getGet()['id'];
+                        $idUser = $request->getGet()['userid'];
+                        ChangeLawUser($idLaw, $idUser);
                         break;
                 case 'deleteUser':
                         deleteUser($request->getGet()['userid']);
@@ -90,7 +111,9 @@ if (isset($action)) {
                         contact_me($name,$mail,$subject,$message);
                         break;
                 case 'changeStatusComment':
-                        changeStatusComment();
+                        $commentId = $request->getGet()['id'];
+                        $validateId = $request->getGet()['modification'];
+                        changeStatusComment($commentId,$validateId);
                         break;
         }
 } else {

@@ -9,9 +9,9 @@ class Request
 
     public function __construct()
     {
-        $this->get = htmlspecialchars($_GET);
-        $this->post = htmlspecialchars($_POST);
-        $this->session = htmlspecialchars($_SESSION);
+        $this->get = $_GET;
+        $this->post = $_POST;
+        $this->session = $_SESSION;
     }
 
     /**

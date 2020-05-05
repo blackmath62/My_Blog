@@ -53,7 +53,16 @@
                                                     <i class="fa fa-square fa-stack-2x"></i>
                                                     <i class="fa fa-trash-o fa-stack-1x fa-inverse btn-danger rounded"></i>
                                                 </span>
-                                            </a></td>
+                                            </a>
+                                        </td>
+                                        <!-- Modal HTML embedded directly into document -->
+                                        <div id="delete<?= $postnumber ?>" class="modal visible h-25 text-center">
+                                            <p class="p-2">Veuillez confirmer la suppression</p>
+                                            <div class="d-flex justify-content-center flex-column">
+                                                <a href="#" class="btn btn-xl btn-success m-2" rel="modal:close">Non ! je ne veux pas supprimer ce post !</a>
+                                                <a href="index.php?action=deletePost&id=<?= $postnumber ?>" class="btn btn-xl btn-danger m-2" rel="">Je suis sûr de vouloir le supprimer</a>
+                                            </div>
+                                        </div>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -70,14 +79,6 @@
                     </div>
                 </div>
     </section>
-    <!-- Modal HTML embedded directly into document -->
-    <div id="delete<?= $postnumber ?>" class="modal visible h-25 text-center">
-        <p class="p-2">Veuillez confirmer la suppression</p>
-        <div class="d-flex justify-content-center flex-column">
-            <a href="#" class="btn btn-xl btn-success m-2" rel="modal:close">Non ! je ne veux pas supprimer ce post !</a>
-            <a href="index.php?action=deletePost&id=<?= $postnumber ?>" class="btn btn-xl btn-danger m-2" rel="">Je suis sûr de vouloir le supprimer</a>
-        </div>
-    </div>
 
 </div>
 <!-- /.card-body -->

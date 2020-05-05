@@ -21,12 +21,10 @@ function connexion() // affichage page connexion avec suppression variable de se
     require('view/frontend/connect/loginview.php');
 }
 
-function check_connexion() // Contrôler id et mdp et se connecter
+function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
 {
     $memberManager = new \memberSpace\Model\MemberManager();
     // récupérer les valeurs saisies dans le formulaire
-    $mail = htmlspecialchars($_POST['identifiant']);
-    $mdp = htmlspecialchars($_POST['mdpconnect']);
     // créer une instance d'object class member
     $user = new Member; // création d'un objet user
     $user->setMail($mail); // modification des valeurs de l'objet
@@ -192,17 +190,18 @@ function getAdmin()
     require('view/backend/backendHome.php');
 }
 
-function newPost()
+function newPost($title, $content, $usersId)
 {
-    if (!empty($_POST['subject']) and !empty($_POST['message'])) {
         $getNewPost = new \memberSpace\Model\BlogManager(); // créer un Objet
-        $title = $_POST['subject'];
-        $content = $_POST['message'];
-        $usersId = $_SESSION['users_id'];
         $newPost = $getNewPost->newPost($title, $content, $usersId);
-    }
-    require('view/backend/newPost.php');
+        header('refresh:1; url= index.php?action=admin');
+        require('view/backend/newPost.php');
 }
+function viewNewPost()
+{
+        require('view/backend/newPost.php');
+}
+
 
 function frontendListingPost()
 {
@@ -217,31 +216,26 @@ function frontendListingComment()
     require('view/backend/listingComment.php');
 }
 
-function changePost()
+function changePost($postnumber)
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $postnumber = $_GET['id'];
     $changePost = $connexionmodel->getChangePost($postnumber);
     $title = $changePost['post_title'];
     $message = $changePost['post_content'];
     require('view/backend/changePost.php');
 }
-function updatePost()
+function updatePost($postnumber, $subject, $message)
 {
     $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $postnumber = $_GET['id'];
-    $title = $_POST['subject'];
-    $message = $_POST['message'];
-    $updatePost = $connexionmodel->updatePostNow($title, $message, $postnumber);
-    header('refresh:3; url= index.php?action=admin');
+    $updatePost = $connexionmodel->updatePostNow($postnumber, $subject, $message);
+    header('refresh:1; url= index.php?action=listingPost');
     require('view/backend/updatePost.php');
 }
-function deletePost()
+function deletePost($postnumber)
 {
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $postnumber = $_GET['id'];
-    $GetdeletePost = $connexionmodel->deletePostNow($postnumber);
-    header('refresh:3; url= index.php?action=admin');
+    $deleteThisPost = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $GetdeletePost = $deleteThisPost->deletePostNow($postnumber);
+    header('refresh:1; url= index.php?action=listingPost');
     require('view/backend/deletePost.php');
 }
 function usersList()
@@ -252,11 +246,9 @@ function usersList()
     require('view/backend/usersList.php');
 }
 
-function ChangeLawUser()
+function ChangeLawUser($idLaw, $idUser)
 {
     $changeLawModel = new \memberSpace\Model\MemberManager(); // créer un Objet
-    $idLaw = $_GET['id'];
-    $idUser = $_GET['userid'];
     $changelaw = $changeLawModel->getChangeLawUser($idLaw, $idUser);
     header('Location: index.php?action=usersList');
     require('view/backend/changeLawView.php');
@@ -293,14 +285,10 @@ function allPost() // Chapo post list
     $allPostChapo = $chapoList->allPost();
     require('view/frontend/allPostView.php');
 }
-function getComment()
+function getComment($title,$content, $postId, $usersId)
 {
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $title = $_POST['subject'];
-    $content = $_POST['message'];
-    $postId = $_GET["id"];
-    $usersId = $_SESSION['users_id'];
-    $blogmodel = $connexionmodel->addComment($title, $content, $postId, $usersId);
+    $GetAddComment = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $blogmodel = $GetAddComment->addComment($title, $content, $postId, $usersId);
     require('view/frontend/postComment.php');
 }
 
@@ -311,18 +299,17 @@ function home() // home page 3 last chapo post
 
     require('view/frontend/templateFrontend.php');
 }
-function longPost() // Long Post view
+function longPost($postnumber) // Long Post view
 {
     $getPostAndComment = new \memberSpace\Model\BlogManager(); // créer un Objet
-    $postnumber = $_GET['id'];
     $GetLongPost = $getPostAndComment->getLongPost($postnumber); // affichage du post entier
     $listCommentToPost = $getPostAndComment->postComment($postnumber); // affichage des commentaires validés
     require('view/frontend/postView.php');
 }
-function changeStatusComment() // Long Post view
+function changeStatusComment($commentId,$validateId) // Long Post view
 {
     $changeStatus = new \memberSpace\Model\CommentManager(); // créer un Objet
-    $status = $changeStatus->commentReport(); // affichage du post entier
+    $status = $changeStatus->commentReport($commentId,$validateId); // affichage du post entier
     header('Location: index.php?action=listingComment');
     require('view/backend/changeStatusComment.php');
 }

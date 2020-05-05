@@ -57,7 +57,7 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         return $postResult;
     }
 
-    public function addComment($title, $content, $postId, $usersId)
+    public function addComment($title,$content, $postId, $usersId)
     {
         $bdd = $this->bddConnect(); // la base de donnée de l'objet courant        
         $req = $bdd->prepare('INSERT INTO comment(comment_title, comment_content, post_id, users_id ) VALUES(:title, :content, :id, :users)');
@@ -88,7 +88,7 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         $deletePost = $req->execute(array($postnumber));
         return $deletePost;
     }
-    public function updatePostNow($subject, $message, $postnumber)
+    public function updatePostNow($postnumber, $subject, $message)
     {
         $bdd = $this->bddConnect(); // la base de donnée de l'objet courant   
         $chapo = substr($message,0,200);

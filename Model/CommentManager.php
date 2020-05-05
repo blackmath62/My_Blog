@@ -5,11 +5,9 @@ namespace memberSpace\Model;
 require_once("Model/Manager.php");
 class CommentManager extends Manager // la classe CommentManager hérite de Manager
 {
-    public function commentReport()
+    public function commentReport($commentId,$validateId)
     {
         $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $commentId = $_GET['id'];
-        $validateId = $_GET['modification'];
         $treatmentDate = date("Y-m-d H:i:s");
         $changeStatusComment = $bdd->prepare('UPDATE comment SET validate_id = :validateId, treatment_date = :treatment_date WHERE comment_id = :commentId'); // on prépare l'insertion dans la BDD
         $changeStatus = $changeStatusComment->execute(array('validateId' => $validateId,'treatment_date'=> $treatmentDate, 'commentId' => $commentId)); // On insere dans la BDD 

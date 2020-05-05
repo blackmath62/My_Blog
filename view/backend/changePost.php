@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="text-center m-5">
-                    <a class="btn btn-primary btn-xl js-scroll-trigger text-white" onclick="document.getElementById('contact-form').submit();">Modifier le post</a>
+                    <button class="btn btn-xl js-scroll-trigger btn-primary text-white">Modifier le post</button>
                 </div>
                 <div class="status"></div>
                 </form>
