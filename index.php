@@ -28,7 +28,12 @@ if (isset($action)) {
                         register();
                         break;
                 case 'check_register':
-                        check_register();
+
+                        $identity = $request->getPost()['identifiant'];
+                        $mdp = $request->getPost()['mdpconnect'];
+                        $mdpcontrol = $request->getPost()['mdp_register_verif'];
+                        $pseudo = $request->getPost()['pseudo'];
+                        check_register($identity,$mdp,$mdpcontrol,$pseudo);
                         break;
                 case 'passforget':
                         passforget();
