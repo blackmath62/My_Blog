@@ -60,14 +60,13 @@ function register() // afficher la vue d'inscription
     require('view/frontend//connect/registerview.php');
 }
 
-function check_register() // la fonction pour contrôler si l'utilisateur peut être créé et le créer
+function check_register($identity,$mdp,$mdpcontrol,$pseudo) // la fonction pour contrôler si l'utilisateur peut être créé et le créer
 {
     $getRegister = new \memberSpace\Model\MemberManager(); // on créé un nouvelle objet
-    if (isset($_POST['identifiant']) and isset($_POST['mdpconnect']) and isset($_POST['mdp_register_verif'])) // on contrôle si l'id et les 2 mots de passe sont renseignés
+    if (isset($identity) and isset($mdp) and isset($mdpcontrol)) // on contrôle si l'id et les 2 mots de passe sont renseignés
     {
-        $mailconnect = htmlspecialchars($_POST['identifiant']);  //on déclare les variables
-        $pseudo = htmlspecialchars($_POST['pseudo']);  //on déclare les variables
-        $mdpconnect = password_hash($_POST['mdpconnect'], PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
+        $mailconnect = htmlspecialchars($identity);  //on déclare les variables
+        $mdpconnect = password_hash($mdp, PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
         $check_connect = $getRegister->checkMailExist($mailconnect); // on vérifie si le compte n'existe pas déjà
         //$mailExist = $check_connect->rowCount(); // compter le nombre de ligne 
         $check_pseudo = $getRegister->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
@@ -79,7 +78,7 @@ function check_register() // la fonction pour contrôler si l'utilisateur peut �
             if ($pseudoExist) {
                 $error = "Le pseudo est déjà utilisé, veuillez choisir un autre pseudo ou vous connecter.";
             } elseif (!$pseudoExist) {
-                if ($_POST['mdpconnect'] == $_POST['mdp_register_verif']) //si les 2 mots de passes sont identiques
+                if ($mdp == $mdpcontrol) //si les 2 mots de passes sont identiques
                 {
                     $register = $getRegister->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
                     $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
