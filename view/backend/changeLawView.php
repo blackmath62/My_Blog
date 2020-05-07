@@ -4,7 +4,7 @@
     <!-- Blog Post -->
     <div class="text-center">
             <div class="card-body">
-                L'Utilisateur <?=$_GET['userid'] ?> a changé de droit !
+                L'Utilisateur a changé de droit !
             </div>
         </div>
 </section>

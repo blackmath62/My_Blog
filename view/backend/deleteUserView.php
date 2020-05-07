@@ -4,7 +4,7 @@
     <!-- Blog Post -->
     <div class="text-center">
             <div class="card-body">
-                L'utilisateur <?=$_GET['userid'] ?> a été supprimé !
+                L'utilisateur a été supprimé !
             </div>
         </div>
 </section>

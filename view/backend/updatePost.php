@@ -4,7 +4,7 @@
     <!-- Blog Post -->
     <div class="text-center">
             <div class="card-body">
-                Le post <?=$postnumber ?> a été modifié !
+                Le post a été modifié !
             </div>
         </div>
 </section>

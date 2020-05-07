@@ -4,7 +4,7 @@
     <!-- Blog Post -->
     <div class="text-center">
             <div class="card-body">
-                Le commentaire <?= $_GET['id'] ?> a été modifié !
+                Le commentaire a été modifié !
             </div>
         </div>
 </section>

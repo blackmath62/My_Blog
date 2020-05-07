@@ -4,7 +4,7 @@
     <!-- Blog Post -->
     <div class="text-center">
             <div class="card-body">
-                Le post <?=$_GET['id'] ?> a été supprimé !
+                Le post a été supprimé !
             </div>
         </div>
 </section>
