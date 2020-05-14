@@ -1,6 +1,7 @@
 <?php
 
-
+namespace App\config;
+require 'Parameter.php';
 class Request
 {
     private $get;
@@ -9,8 +10,8 @@ class Request
 
     public function __construct()
     {
-        $this->get = $_GET;
-        $this->post = $_POST;
+        $this->get = new Parameter($_GET);
+        $this->post = new Parameter($_POST);
         $this->session = $_SESSION;
     }
 
@@ -20,6 +21,12 @@ class Request
     public function getGet()
     {
         return $this->get;
+    }
+    public function get($key){
+        return $this->get->getter($key);
+    }
+    public function post($key){
+        return $this->post->getter($key);
     }
 
     /**

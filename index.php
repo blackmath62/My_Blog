@@ -1,4 +1,5 @@
 <?php
+namespace App\config;
 session_start();
 error_reporting(E_ALL);
 ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise en prod
@@ -12,7 +13,7 @@ require('config/Request.php');
 
 $request = new Request();
 
-$action = $request->getGet()["action"];
+$action = $request->get('action');
 
 if (isset($action)) {
         switch ($action) {
@@ -20,8 +21,8 @@ if (isset($action)) {
                         connexion();
                         break;
                 case 'check_connexion':
-                        $mail = $request->getPost()['identifiant'];
-                        $mdp = $request->getPost()['mdpconnect'];
+                        $mail = $request->post('identifiant');
+                        $mdp = $request->post('mdpconnect');
                         check_connexion($mail,$mdp);
                         break;
                 case 'inscription':
@@ -42,7 +43,7 @@ if (isset($action)) {
                         get_passforget();
                         break;
                 case 'passchange':
-                        passchange($request->getGet()['id'], $request->getGet()['token']);
+                        passchange($request->get('id'), $request->get('token'));
                         break;
                 case 'send_Mail_Password':
                         send_Mail_Password();
@@ -57,7 +58,7 @@ if (isset($action)) {
                         allPost();
                         break;
                 case 'longPost':
-                        $postnumber = $request->getGet()['id'];
+                        $postnumber = $request->get('id');
                         longPost($postnumber);
                         break;
                 case 'admin':
@@ -66,7 +67,7 @@ if (isset($action)) {
                 case 'commentaire':
                         $title = $request->getPost()['subject'];
                         $content = $request->getPost()['message'];
-                        $postId = $request->getGet()["id"];
+                        $postId = $request->getGet("id");
                         $usersId = $request->getSession()['users_id'];
                         getComment($title,$content, $postId, $usersId);
                         break;
@@ -84,15 +85,15 @@ if (isset($action)) {
                         frontendListingPost();
                         break;
                 case 'deletePost':
-                        $postnumber = $request->getGet()['id'];
+                        $postnumber = $request->get('id');
                         deletePost($postnumber);
                         break;
                 case 'changePost':
-                        $postnumber = $request->getGet()['id'];
+                        $postnumber = $request->get('id');
                         changePost($postnumber);
                         break;
                 case 'updatePost':
-                        $postnumber = $request->getGet()['id'];
+                        $postnumber = $request->get(['id']);
                         $subject = $request->getPost()['subject'];
                         $message = $request->getPost()['message'];
                         updatePost($postnumber, $subject, $message);
@@ -101,12 +102,12 @@ if (isset($action)) {
                         usersList();
                         break;
                 case 'changeLawUser':
-                        $idLaw = $request->getGet()['id'];
-                        $idUser = $request->getGet()['userid'];
+                        $idLaw = $request->get('id');
+                        $idUser = $request->get('userid');
                         ChangeLawUser($idLaw, $idUser);
                         break;
                 case 'deleteUser':
-                        deleteUser($request->getGet()['userid']);
+                        deleteUser($request->get('userid'));
                         break;
                 case 'mail':
                         $name = $request->getPost()['name'];
@@ -116,8 +117,8 @@ if (isset($action)) {
                         contact_me($name,$mail,$subject,$message);
                         break;
                 case 'changeStatusComment':
-                        $commentId = $request->getGet()['id'];
-                        $validateId = $request->getGet()['modification'];
+                        $commentId = $request->get('id');
+                        $validateId = $request->get('modification');
                         changeStatusComment($commentId,$validateId);
                         break;
         }
