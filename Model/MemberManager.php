@@ -1,8 +1,7 @@
 <?php
 // La classe sera dans ce namespace, cela permet d'utiliser plusieurs fois le même nom de classe
 namespace App\Model;
-
-require_once("Model/Manager.php");
+use App\Model\Manager;
 class MemberManager extends Manager // la classe CommentManager hérite de Manager
 {
     public function checkMailExist($mailconnect)

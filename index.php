@@ -16,7 +16,6 @@ ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise e
 // a le même effet qu'include, c'est à dire pour ramener une page mais à l'avantage de ne rien renvoyer en cas d'erreur
 
 require('controler/frontendControler.php');
-require('config/Request.php');
 
 $request = new Request();
 
