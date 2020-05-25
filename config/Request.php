@@ -1,7 +1,7 @@
 <?php
 
 namespace App\config;
-require 'Parameter.php';
+use App\config\Parameter;
 class Request
 {
     private $get;
