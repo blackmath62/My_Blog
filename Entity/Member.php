@@ -1,6 +1,6 @@
 <?php
-
-use memberSpace\Model\MemberManager;
+namespace App\Entity;
+use App\Model\MemberManager;
 
 class Member extends MemberManager
 {

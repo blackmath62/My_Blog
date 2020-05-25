@@ -1,6 +1,6 @@
 <?php
 // La classe sera dans ce namespace, cela permet d'utiliser plusieurs fois le même nom de classe
-namespace memberSpace\Model;
+namespace App\Model;
 
 require_once("Model/Manager.php");
 class MemberManager extends Manager // la classe CommentManager hérite de Manager

@@ -22,7 +22,7 @@
                             </thead>
                             <tbody>
                                 <?php
-
+                                $i = 1;
                                 // todo renommer les fonctions
                                 foreach ($frontendListPost as $PostList) {
                                     $title = $PostList->post_title;
@@ -64,7 +64,9 @@
                                             </div>
                                         </div>
                                     </tr>
-                                <?php } ?>
+                                <?php 
+                            $i = $i++;
+                            } ?>
                             </tbody>
                             <tfoot>
                                 <tr>

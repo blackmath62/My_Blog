@@ -1,11 +1,11 @@
 <?php
-
-require_once('Model/MemberManager.php');
-require_once('Model/BlogManager.php');
-require_once('Model/CommentManager.php');
-require('entity/memberEntity.php');
-require('entity/commentEntity.php');
-require('entity/blogEntity.php');
+namespace App;
+use App\Model\MemberManager;
+use App\Model\BlogManager;
+use App\Model\CommentManager;
+use App\Entity\Member;
+use App\Entity\Comment;
+use App\Entity\Blog;
 
 function pageNoFound()
 {
@@ -15,7 +15,7 @@ function pageNoFound()
 function connexion() // affichage page connexion avec suppression variable de session
 {
         // Suppression des variables de session et de la session
-        session_start();
+        /*session_start();*/
         session_unset();
         session_destroy();
     require('view/frontend/connect/loginview.php');
@@ -23,7 +23,7 @@ function connexion() // affichage page connexion avec suppression variable de se
 
 function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
 {
-    $memberManager = new \memberSpace\Model\MemberManager();
+    $memberManager = new MemberManager();
     // récupérer les valeurs saisies dans le formulaire
     // créer une instance d'object class member
     $user = new Member; // création d'un objet user
@@ -43,7 +43,7 @@ function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
             $error = "Connexion réussie ! ";
 
             // créer les variable de session
-            session_start();
+            /*session_start();*/
             $_SESSION['mail'] = $user->mail();
             $_SESSION['law_id'] = $controlUser['law_id'];
             $_SESSION['users_id'] = $user->users_id();
@@ -62,7 +62,7 @@ function register() // afficher la vue d'inscription
 
 function check_register($identity,$mdp,$mdpcontrol,$pseudo) // la fonction pour contrôler si l'utilisateur peut être créé et le créer
 {
-    $getRegister = new \memberSpace\Model\MemberManager(); // on créé un nouvelle objet
+    $getRegister = new MemberManager(); // on créé un nouvelle objet
     if (isset($identity) and isset($mdp) and isset($mdpcontrol)) // on contrôle si l'id et les 2 mots de passe sont renseignés
     {
         $mailconnect = htmlspecialchars($identity);  //on déclare les variables
@@ -101,7 +101,7 @@ function passforget() // afficher la vue de mot de passe oublié
 }
 function get_passforget() // Contrôle et envoi du mail avec le Token
 {
-    $sendTokenMail = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $sendTokenMail = new MemberManager(); // créer un Objet
         $mailconnect = htmlspecialchars($_POST['identifiant']); // déclaration de la variable mail
         $controlUser = $sendTokenMail->checkMailExist($mailconnect); // l'objet étant une extension du member manager, il est possible d'appeler directement les fonctions
         $userId = $controlUser['users_id'];
@@ -144,7 +144,7 @@ function send_Mail_Password() // page pour signaler l'envoi du mail de réinitia
 function passchange($idconnect, $controltoken) // Fonction pour demander la saisie du nouveau mot de passe
 {
     $error = 'Veuillez saisir votre nouveau mot de passe';
-    session_start();
+    /*session_start();*/
     $_SESSION['users_id'] = $idconnect;
     $_SESSION['token'] = $controltoken;
     require('view/frontend/connect/change-forgot-password.php');
@@ -155,7 +155,7 @@ function get_passchange() // Changement du mot de passe utilisateur
 {
     $idconnect = $_SESSION['users_id'];
     $controltoken = $_SESSION['token'];
-    $changepassword = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $changepassword = new MemberManager(); // créer un Objet
     if (isset($idconnect) and isset($controltoken)) {
         $check_id = $changepassword->check_id($idconnect,$controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
         while ($profil = $check_id->fetch()) // on boucle pour récupérer les infos sur l'user
@@ -191,7 +191,7 @@ function getAdmin()
 
 function newPost($title, $content, $usersId)
 {
-        $getNewPost = new \memberSpace\Model\BlogManager(); // créer un Objet
+        $getNewPost = new BlogManager(); // créer un Objet
         $newPost = $getNewPost->newPost($title, $content, $usersId);
         header('refresh:1; url= index.php?action=admin');
         require('view/backend/newPost.php');
@@ -204,20 +204,20 @@ function viewNewPost()
 
 function frontendListingPost()
 {
-    $postList = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $postList = new BlogManager(); // créer un Objet
     $frontendListPost = $postList->allPost();
     require('view/backend/listingPost.php');
 }
 function frontendListingComment()
 {
-    $commentList = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $commentList = new BlogManager(); // créer un Objet
     $allComment = $commentList->allComment();
     require('view/backend/listingComment.php');
 }
 
 function changePost($postnumber)
 {
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $connexionmodel = new BlogManager(); // créer un Objet
     $changePost = $connexionmodel->getChangePost($postnumber);
     $title = $changePost['post_title'];
     $message = $changePost['post_content'];
@@ -225,21 +225,21 @@ function changePost($postnumber)
 }
 function updatePost($postnumber, $subject, $message)
 {
-    $connexionmodel = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $connexionmodel = new BlogManager(); // créer un Objet
     $updatePost = $connexionmodel->updatePostNow($postnumber, $subject, $message);
     header('refresh:1; url= index.php?action=listingPost');
     require('view/backend/updatePost.php');
 }
 function deletePost($postnumber)
 {
-    $deleteThisPost = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $deleteThisPost = new BlogManager(); // créer un Objet
     $GetdeletePost = $deleteThisPost->deletePostNow($postnumber);
     header('refresh:1; url= index.php?action=listingPost');
     require('view/backend/deletePost.php');
 }
 function usersList()
 {
-    $UsersLawmodel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $UsersLawmodel = new MemberManager(); // créer un Objet
     $allLaw = $UsersLawmodel->getLawList();
     $allUsers = $UsersLawmodel->getUsersList();
     require('view/backend/usersList.php');
@@ -247,7 +247,7 @@ function usersList()
 
 function ChangeLawUser($idLaw, $idUser)
 {
-    $changeLawModel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $changeLawModel = new MemberManager(); // créer un Objet
     $changelaw = $changeLawModel->getChangeLawUser($idLaw, $idUser);
     header('Location: index.php?action=usersList');
     require('view/backend/changeLawView.php');
@@ -255,7 +255,7 @@ function ChangeLawUser($idLaw, $idUser)
 
 function deleteUser($idUser)
 {
-    $deleteUserModel = new \memberSpace\Model\MemberManager(); // créer un Objet
+    $deleteUserModel = new MemberManager(); // créer un Objet
     $getDeleteUser = $deleteUserModel->deleteUser($idUser);
     header('Location: index.php?action=usersList');
     require('view/backend/deleteUserView.php');
@@ -280,34 +280,34 @@ function contact_me($name,$mail,$subject,$message) // Formulaire de contact
 }
 function allPost() // Chapo post list
 {
-    $chapoList = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $chapoList = new BlogManager(); // créer un Objet
     $allPostChapo = $chapoList->allPost();
     require('view/frontend/allPostView.php');
 }
 function getComment($title,$content, $postId, $usersId)
 {
-    $GetAddComment = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $GetAddComment = new BlogManager(); // créer un Objet
     $blogmodel = $GetAddComment->addComment($title, $content, $postId, $usersId);
     require('view/frontend/postComment.php');
 }
 
 function home() // home page 3 last chapo post
 {
-    $chapoHomePage = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $chapoHomePage = new BlogManager(); // créer un Objet
     $homePageChapo = $chapoHomePage->lastPost();
 
     require('view/frontend/templateFrontend.php');
 }
 function longPost($postnumber) // Long Post view
 {
-    $getPostAndComment = new \memberSpace\Model\BlogManager(); // créer un Objet
+    $getPostAndComment = new BlogManager(); // créer un Objet
     $GetLongPost = $getPostAndComment->getLongPost($postnumber); // affichage du post entier
     $listCommentToPost = $getPostAndComment->postComment($postnumber); // affichage des commentaires validés
     require('view/frontend/postView.php');
 }
 function changeStatusComment($commentId,$validateId) // Long Post view
 {
-    $changeStatus = new \memberSpace\Model\CommentManager(); // créer un Objet
+    $changeStatus = new CommentManager(); // créer un Objet
     $status = $changeStatus->commentReport($commentId,$validateId); // affichage du post entier
     header('Location: index.php?action=listingComment');
     require('view/backend/changeStatusComment.php');

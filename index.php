@@ -1,5 +1,12 @@
 <?php
-namespace App\config;
+namespace App;
+use App\Entity\Autoloader;
+use App\config\Request;
+
+require('Entity/Autoloader.php');
+
+Autoloader::register();
+/*require __DIR__ . '/vendor/autoload.php';*/
 session_start();
 error_reporting(E_ALL);
 ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise en prod
@@ -30,10 +37,10 @@ if (isset($action)) {
                         break;
                 case 'check_register':
 
-                        $identity = $request->getPost()['identifiant'];
-                        $mdp = $request->getPost()['mdpconnect'];
-                        $mdpcontrol = $request->getPost()['mdp_register_verif'];
-                        $pseudo = $request->getPost()['pseudo'];
+                        $identity = $request->post('identifiant');
+                        $mdp = $request->post('mdpconnect');
+                        $mdpcontrol = $request->post('mdp_register_verif');
+                        $pseudo = $request->post('pseudo');
                         check_register($identity,$mdp,$mdpcontrol,$pseudo);
                         break;
                 case 'passforget':
@@ -65,16 +72,16 @@ if (isset($action)) {
                         getAdmin();
                         break;
                 case 'commentaire':
-                        $title = $request->getPost()['subject'];
-                        $content = $request->getPost()['message'];
-                        $postId = $request->getGet("id");
+                        $title = $request->post('subject');
+                        $content = $request->post('message');
+                        $postId = $request->get("id");
                         $usersId = $request->getSession()['users_id'];
                         getComment($title,$content, $postId, $usersId);
                         break;
                 case 'newPost':
-                        if(!empty($request->getPost()['subject'])){
-                        $title = $request->getPost()['subject'];
-                        $content = $request->getPost()['message'];
+                        if(!empty($request->post('subject'))){
+                        $title = $request->post('subject');
+                        $content = $request->post('message');
                         $usersId = $request->getSession()['users_id'];
                         newPost($title, $content, $usersId);
                         } else {
@@ -94,8 +101,8 @@ if (isset($action)) {
                         break;
                 case 'updatePost':
                         $postnumber = $request->get(['id']);
-                        $subject = $request->getPost()['subject'];
-                        $message = $request->getPost()['message'];
+                        $subject = $request->post('subject');
+                        $message = $request->post('message');
                         updatePost($postnumber, $subject, $message);
                         break;
                 case 'usersList':
@@ -110,10 +117,10 @@ if (isset($action)) {
                         deleteUser($request->get('userid'));
                         break;
                 case 'mail':
-                        $name = $request->getPost()['name'];
-                        $mail = $request->getPost()['email'];
-                        $subject = $request->getPost()['subject'];
-                        $message = $request->getPost()['message'];
+                        $name = $request->post('name');
+                        $mail = $request->post('email');
+                        $subject = $request->post('subject');
+                        $message = $request->post('message');
                         contact_me($name,$mail,$subject,$message);
                         break;
                 case 'changeStatusComment':

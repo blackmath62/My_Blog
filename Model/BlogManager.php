@@ -1,8 +1,8 @@
 <?php
 // La classe sera dans ce namespace, cela permet d'utiliser plusieurs fois le même nom de classe
-namespace memberSpace\Model;
+namespace App\Model;
+use App\Model\Manager;
 
-require_once("Model/Manager.php");
 class BlogManager extends Manager // la classe CommentManager hérite de Manager
 {   
     public function lastPost() // affichage des 3 derniers chapos pour la page d'accueil

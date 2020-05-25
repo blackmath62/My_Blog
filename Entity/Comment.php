@@ -1,7 +1,7 @@
 <?php
 
-use memberSpace\Model\CommentManager;
-
+namespace App\Entity;
+use App\Model\CommentManager;
 class Comment extends CommentManager
 {
   /*Propriétés de ma classe member */

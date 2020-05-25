@@ -1,0 +1,11 @@
+{
+    "name": "jpochet/my_blog",
+    "description": "un blog",
+    "authors": [
+        {
+            "name": "Jérôme POCHET",
+            "email": "blackmath62@gmail.com"
+        }
+    ],
+    "require": {}
+}

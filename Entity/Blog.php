@@ -1,4 +1,5 @@
 <?php
+namespace App\Entity;
 class Blog
 {
   /*Propriétés de ma classe member */
