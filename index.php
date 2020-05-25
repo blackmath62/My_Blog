@@ -46,7 +46,8 @@ if (isset($action)) {
                         passforget();
                         break;
                 case 'get_passforget':
-                        get_passforget();
+                        $mail = $request->post('identifiant');
+                        get_passforget($mail);
                         break;
                 case 'passchange':
                         passchange($request->get('id'), $request->get('token'));

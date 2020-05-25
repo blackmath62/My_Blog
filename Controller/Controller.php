@@ -1,6 +1,20 @@
 <?php
-namespace Core\Controller;
+namespace App\Controller;
 class Controller {
 
+        public function ConnexionController(){
+
+
+        }
+
+        public function AdminController(){
+
+
+        }
+
+        public function PageController(){
+
+
+        }
 
 }
