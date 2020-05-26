@@ -1,5 +1,3 @@
-<?php ob_start(); ?>
-
 <div class="container">
     <!--Section heading-->
     <h2 class="h1-responsive font-weight-bold text-center mt-5 pt-5">Administration</h2>
@@ -55,7 +53,3 @@
         toolbar:'insert | undo redo | styleselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
     });
 </script>
-<?php
-$content = ob_get_clean();
-require('view/frontend/htmlTemplate.php');
-?>

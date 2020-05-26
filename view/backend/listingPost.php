@@ -1,4 +1,3 @@
-<?php ob_start(); ?>
 <div class="container">
     <section class="page-section">
         <div class="row">
@@ -84,7 +83,3 @@
 
 </div>
 <!-- /.card-body -->
-<?php
-$content = ob_get_clean();
-require('view/frontend/htmlTemplate.php');
-?>

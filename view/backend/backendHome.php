@@ -1,4 +1,3 @@
-<?php ob_start(); ?>
 <!-- Portfolio Section -->
 <section class="p-5 m-5">
     <div class="container">
@@ -56,8 +55,3 @@
         </div>
     </div>
 </section>
-
-<?php
-$content = ob_get_clean();
-require('view/frontend/htmlTemplate.php');
-?>
