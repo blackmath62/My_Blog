@@ -24,7 +24,7 @@ ob_start();
 if (isset($action)) {
         switch ($action) {
                 case 'connexion':
-                        connexion();
+                        connexion($request->stopSession());
                         break;
                 case 'check_connexion':
                         $mail = $request->post('identifiant');

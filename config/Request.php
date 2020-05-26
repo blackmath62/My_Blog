@@ -49,4 +49,8 @@ class Request
     public function session($key){
         return $this->session->getter($key);
     }
+    public function stopSession(){
+        return $this->session->remove();
+        return $this->session->stop();
+    }
 }

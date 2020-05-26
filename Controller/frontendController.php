@@ -14,10 +14,6 @@ function pageNoFound()
 // connexion function
 function connexion() // affichage page connexion avec suppression variable de session
 {
-        // Suppression des variables de session et de la session
-        /*session_start();*/
-        session_unset();
-        session_destroy();
     require('view/frontend/connect/loginview.php');
 }
 

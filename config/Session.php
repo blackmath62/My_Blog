@@ -10,12 +10,16 @@ class Session
     {
         $this->session = $session;
     }
-
+    // setters
+    // Method de modification des valeurs de la classe
     public function set($name, $value)
     {
         $_SESSION[$name] = $value;
     }
 
+    /*getters
+    Method de récupération des valeurs de la classe
+    */
     public function getter($name)
     {
         if(isset($_SESSION[$name])) {
@@ -33,9 +37,9 @@ class Session
         }
     }
 
-    public function remove($name)
+    public function remove()
     {
-        unset($_SESSION[$name]);
+        session_unset();
     }
 
     public function stop()
