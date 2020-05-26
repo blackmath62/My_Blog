@@ -6,6 +6,7 @@ use App\Model\CommentManager;
 use App\Entity\Member;
 use App\Entity\Comment;
 use App\Entity\Blog;
+use App\config\Request;
 
 function pageNoFound()
 {
@@ -37,10 +38,10 @@ function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
         $passwordCorrect = password_verify($user->mdp(), $controlUser['mdp']);
         if ($passwordCorrect) {
             $error = "Connexion réussie ! ";
-
-            $_SESSION['mail'] = $user->mail();
-            $_SESSION['law_id'] = $controlUser['law_id'];
-            $_SESSION['users_id'] = $user->users_id();
+            $request = new Request();
+            $request->getSession()->setter('users_id', $user->users_id());
+            $request->getSession()->setter('mail', $user->mail());
+            $request->getSession()->setter('law_id', $controlUser['law_id']);
             home();
         } else {
             $error  = "Mot de passe incorrect !";
@@ -90,7 +91,6 @@ function check_register($identity,$mdp,$mdpcontrol,$pseudo) // la fonction pour 
 // début page mot de passe oublié
 function passforget() // afficher la vue de mot de passe oublié
 {
-    $colorcontent = 'bg-gradient-warning';
     require('view/frontend/connect/forgot-password.php');
 }
 function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Token
@@ -98,7 +98,6 @@ function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Toke
     $sendTokenMail = new MemberManager(); // créer un Objet
         $controlUser = $sendTokenMail->checkMailExist($mailconnect); // l'objet étant une extension du member manager, il est possible d'appeler directement les fonctions
         $userId = $controlUser['users_id'];
-        /*$user->setUsersId($usersId);*/
         if ($controlUser) // si l'user est trouvé c'est qu'il existe
         {
             $error = $mailconnect;
@@ -134,12 +133,10 @@ function send_Mail_Password() // page pour signaler l'envoi du mail de réinitia
     require('view/frontend/pageNoFound.php');
 }
 
-function passchange($idconnect, $controltoken) // Fonction pour demander la saisie du nouveau mot de passe
+function passchange() // Fonction pour demander la saisie du nouveau mot de passe
 {
     $error = 'Veuillez saisir votre nouveau mot de passe';
-    $_SESSION['law_id'] = '';
-    $_SESSION['users_id'] = $idconnect;
-    $_SESSION['token'] = $controltoken;
+    
     require('view/frontend/connect/change-forgot-password.php');
 }
 

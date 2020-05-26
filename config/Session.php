@@ -12,7 +12,7 @@ class Session
     }
     // setters
     // Method de modification des valeurs de la classe
-    public function set($name, $value)
+    public function setter($name, $value)
     {
         $_SESSION[$name] = $value;
     }

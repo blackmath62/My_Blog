@@ -3,6 +3,7 @@
 namespace App\config;
 use App\config\Parameter;
 use App\config\Session;
+
 class Request
 {
     private $get;
@@ -52,5 +53,9 @@ class Request
     public function stopSession(){
         return $this->session->remove();
         return $this->session->stop();
+    }
+    public function setSession($name, $value){
+        $this->session->setter($name, $value);
+        
     }
 }

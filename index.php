@@ -50,13 +50,18 @@ if (isset($action)) {
                         get_passforget($mail);
                         break;
                 case 'passchange':
-                        passchange($request->get('id'), $request->get('token'));
+                        $idconnect = $request->get('id');
+                        $controltoken = $request->get('token');
+                        $request->getSession()->setter('users_id', $idconnect);
+                        $request->getSession()->setter('token', $controltoken);
+                        passchange();
+                        
                         break;
                 case 'send_Mail_Password':
                         send_Mail_Password();
                         break;
                 case 'get_passchange':
-                        get_passchange($request->session(['users_id']), $request->session(['token']));
+                        get_passchange($request->getSession()->getter('users_id'), $request->getSession()->getter('token'));
                         break;
                 case 'listingComment':
                         frontendListingComment();
