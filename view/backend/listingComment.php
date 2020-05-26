@@ -36,7 +36,7 @@
                                 ?>
                                     <tr class="center phone-special p-4" id="<?= $i ?>" data-target="#postId<?= $commentNumber ?>" data-toggle="modal">
                                     <td class="phone text-center"><?= $commentNumber ?></td>    
-                                    <td class="phone text-center"><?= $pseudo ?></td>
+                                    <td class="phone text-center"><?= $commentList->Pseudo ?></td>
                                         <td class="">
                                             <h5 class="text-primary"><?= $title ?></h5>
                                             <p><?= $commentMessage ?></p>
