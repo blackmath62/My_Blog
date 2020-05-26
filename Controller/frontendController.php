@@ -230,7 +230,7 @@ function usersList()
     $UsersLawmodel = new MemberManager(); // créer un Objet
     $allLaw = $UsersLawmodel->getLawList();
     $allUsers = $UsersLawmodel->getUsersList();
-    require('view/backend/usersList.php');
+    require_once('view/backend/usersList.php');
 }
 
 function ChangeLawUser($idLaw, $idUser)

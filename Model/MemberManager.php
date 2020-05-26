@@ -3,6 +3,7 @@
 namespace App\Model;
 use App\Model\Manager;
 
+
 class MemberManager extends Manager // la classe CommentManager hérite de Manager
 {
     public function checkMailExist($mailconnect)
@@ -74,7 +75,7 @@ class MemberManager extends Manager // la classe CommentManager hérite de Manag
     {
         $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
         $checkUsersList = $bdd->query("SELECT users.users_id, users.mail, users.Pseudo, users.law_id, users.create_date_users FROM law INNER JOIN users ON users.law_id = law.law_id");
-        $getUsersList = $checkUsersList->fetchAll(\PDO::FETCH_CLASS,'Member');
+        $getUsersList = $checkUsersList->fetchAll(\PDO::FETCH_OBJ);
         return $getUsersList;
     }
     public function getLawList()
