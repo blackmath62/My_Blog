@@ -56,7 +56,7 @@ if (isset($action)) {
                         send_Mail_Password();
                         break;
                 case 'get_passchange':
-                        get_passchange();
+                        get_passchange($request->session(['users_id']), $request->session(['token']));
                         break;
                 case 'listingComment':
                         frontendListingComment();
@@ -75,14 +75,14 @@ if (isset($action)) {
                         $title = $request->post('subject');
                         $content = $request->post('message');
                         $postId = $request->get("id");
-                        $usersId = $request->getSession()['users_id'];
+                        $usersId = $request->session(['users_id']);
                         getComment($title,$content, $postId, $usersId);
                         break;
                 case 'newPost':
                         if(!empty($request->post('subject'))){
                         $title = $request->post('subject');
                         $content = $request->post('message');
-                        $usersId = $request->getSession()['users_id'];
+                        $usersId = $request->session('users_id');
                         newPost($title, $content, $usersId);
                         } else {
                         viewNewPost();

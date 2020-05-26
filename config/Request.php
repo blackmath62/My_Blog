@@ -2,6 +2,7 @@
 
 namespace App\config;
 use App\config\Parameter;
+use App\config\Session;
 class Request
 {
     private $get;
@@ -12,7 +13,7 @@ class Request
     {
         $this->get = new Parameter($_GET);
         $this->post = new Parameter($_POST);
-        $this->session = $_SESSION;
+        $this->session = new Session($_SESSION);
     }
 
     /**
@@ -25,9 +26,7 @@ class Request
     public function get($key){
         return $this->get->getter($key);
     }
-    public function post($key){
-        return $this->post->getter($key);
-    }
+   
 
     /**
      * @return mixed
@@ -36,6 +35,9 @@ class Request
     {
         return $this->post;
     }
+    public function post($key){
+        return $this->post->getter($key);
+    }
 
     /**
      * @return mixed
@@ -43,5 +45,8 @@ class Request
     public function getSession()
     {
         return $this->session;
+    }
+    public function session($key){
+        return $this->session->getter($key);
     }
 }

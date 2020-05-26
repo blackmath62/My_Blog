@@ -2,7 +2,7 @@
 // La classe sera dans ce namespace, cela permet d'utiliser plusieurs fois le même nom de classe
 namespace App\Model;
 use App\Model\Manager;
-use App\Entity\Member;
+
 class MemberManager extends Manager // la classe CommentManager hérite de Manager
 {
     public function checkMailExist($mailconnect)

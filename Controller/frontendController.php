@@ -42,8 +42,6 @@ function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
         if ($passwordCorrect) {
             $error = "Connexion réussie ! ";
 
-            // créer les variable de session
-            /*session_start();*/
             $_SESSION['mail'] = $user->mail();
             $_SESSION['law_id'] = $controlUser['law_id'];
             $_SESSION['users_id'] = $user->users_id();
@@ -143,7 +141,6 @@ function send_Mail_Password() // page pour signaler l'envoi du mail de réinitia
 function passchange($idconnect, $controltoken) // Fonction pour demander la saisie du nouveau mot de passe
 {
     $error = 'Veuillez saisir votre nouveau mot de passe';
-    /*session_start();*/
     $_SESSION['law_id'] = '';
     $_SESSION['users_id'] = $idconnect;
     $_SESSION['token'] = $controltoken;
@@ -151,10 +148,8 @@ function passchange($idconnect, $controltoken) // Fonction pour demander la sais
 }
 
 // fonction quand l'utilisateur a changé son mot de passe
-function get_passchange() // Changement du mot de passe utilisateur
+function get_passchange($idconnect, $controltoken) // Changement du mot de passe utilisateur
 {
-    $idconnect = $_SESSION['users_id'];
-    $controltoken = $_SESSION['token'];
     $changepassword = new MemberManager(); // créer un Objet
     if (isset($idconnect) and isset($controltoken)) {
         $check_id = $changepassword->check_id($idconnect,$controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
