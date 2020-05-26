@@ -20,7 +20,7 @@ require('Controller/frontendController.php');
 $request = new Request();
 
 $action = $request->get('action');
-
+ob_start();
 if (isset($action)) {
         switch ($action) {
                 case 'connexion':
@@ -132,3 +132,5 @@ if (isset($action)) {
 } else {
         home();
 }
+$content = ob_get_clean();
+require('view/frontend/htmlTemplate.php');

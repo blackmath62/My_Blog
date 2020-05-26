@@ -1,4 +1,3 @@
-<?php ob_start(); ?>
 <!-- Masthead -->
 <header class="masthead">
     <div class="container h-100">
@@ -301,7 +300,3 @@
     <hr class="border-primary p-1 m-4">
 </section>
 <!--Section: Contact v.2-->
-<?php
-$content = ob_get_clean();
-require('view/frontend/htmlTemplate.php');
-?>

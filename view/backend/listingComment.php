@@ -1,4 +1,3 @@
-<?php ob_start(); ?>
 <div class="container">
     <section class="page-section">
         <div class="row">
@@ -21,6 +20,7 @@
                             </thead>
                             <tbody>
                                 <?php
+                                $i = 0;
                                 // todo voir pour récupérer le mail au lieu de l'ID = $commentUser = $chapoPostList->users_id()
                                 foreach ($allComment as $commentList) {
                                     $title = $commentList->comment_title;
@@ -36,7 +36,7 @@
                                 ?>
                                     <tr class="center phone-special p-4" id="<?= $i ?>" data-target="#postId<?= $commentNumber ?>" data-toggle="modal">
                                     <td class="phone text-center"><?= $commentNumber ?></td>    
-                                    <td class="phone text-center"><?= $commentList->Pseudo ?></td>
+                                    <td class="phone text-center"><?= $pseudo ?></td>
                                         <td class="">
                                             <h5 class="text-primary"><?= $title ?></h5>
                                             <p><?= $commentMessage ?></p>
@@ -68,7 +68,7 @@
                                         </div>
                                         </td>
                                     </tr> 
-                                <?php } ?>
+                                <?php $i = $i++; } ?>
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -86,7 +86,3 @@
 
 </div>
 <!-- /.card-body -->
-<?php
-$content = ob_get_clean();
-require('view/frontend/htmlTemplate.php');
-?>
