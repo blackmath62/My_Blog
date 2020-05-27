@@ -4,23 +4,20 @@ use App\Model\MemberManager;
 use App\Model\BlogManager;
 use App\Model\CommentManager;
 use App\Entity\Member;
-use App\Entity\Comment;
-use App\Entity\Blog;
 use App\config\Request;
 
 function pageNoFound()
 {
-    require('view/frontend/pageNoFound.php');
+    require 'view/frontend/pageNoFound.php';
 }
 // connexion function
 function connexion() // affichage page connexion avec suppression variable de session
 {
-    require('view/frontend/connect/loginview.php');
+    require 'view/frontend/connect/loginview.php';
 }
 
 function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
 {
-    $memberManager = new MemberManager();
     // récupérer les valeurs saisies dans le formulaire
     // créer une instance d'object class member
     $user = new Member; // création d'un objet user
@@ -31,7 +28,7 @@ function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
     // contrôler que le mail existe dans la BDD
     if (!$controlUser) {
         $error = "le mail n'existe pas ";
-        require('view/frontend/connect/loginview.php');
+        require 'view/frontend/connect/loginview.php';
     } else {
 
         // le mail a été trouvé une seule fois
@@ -45,14 +42,14 @@ function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
             home();
         } else {
             $error  = "Mot de passe incorrect !";
-            require('view/frontend/connect/loginview.php');
+            require 'view/frontend/connect/loginview.php';
         }
     }
 }
 // début création compte
 function register() // afficher la vue d'inscription
 {
-    require('view/frontend//connect/registerview.php');
+    require 'view/frontend//connect/registerview.php';
 }
 
 function check_register($identity,$mdp,$mdpcontrol,$pseudo) // la fonction pour contrôler si l'utilisateur peut être créé et le créer
@@ -84,14 +81,14 @@ function check_register($identity,$mdp,$mdpcontrol,$pseudo) // la fonction pour 
             }
         }
     }
-    require('view/frontend/connect/registerview.php');
+    require 'view/frontend/connect/registerview.php';
 }
 // fin création compte
 
 // début page mot de passe oublié
 function passforget() // afficher la vue de mot de passe oublié
 {
-    require('view/frontend/connect/forgot-password.php');
+    require 'view/frontend/connect/forgot-password.php';
 }
 function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Token
 {
@@ -123,21 +120,21 @@ function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Toke
         } elseif (!$controlUser) {
             $error = "Adresse mail inconnu";
         }
-    require('view/frontend/connect/change-forgot-password.php');
+    require 'view/frontend/connect/change-forgot-password.php';
 }
 
 function send_Mail_Password() // page pour signaler l'envoi du mail de réinitialisation
 {
     $error = " Nous vous avons envoyé un mail pour réinitialiser votre mot de passe, vous pouvez fermer cette fenêtre" . '</br>' . '</br>';
     header('refresh:3; url= index.php');
-    require('view/frontend/pageNoFound.php');
+    require 'view/frontend/pageNoFound.php';
 }
 
 function passchange() // Fonction pour demander la saisie du nouveau mot de passe
 {
     $error = 'Veuillez saisir votre nouveau mot de passe';
     
-    require('view/frontend/connect/change-forgot-password.php');
+    require 'view/frontend/connect/change-forgot-password.php';
 }
 
 // fonction quand l'utilisateur a changé son mot de passe
@@ -166,7 +163,7 @@ function get_passchange($idconnect, $controltoken) // Changement du mot de passe
             }
         }
     }
-    require('view/frontend/connect/change-forgot-password.php');
+    require 'view/frontend/connect/change-forgot-password.php';
 }
 // fin page mot de passe oublié
 //  end connexion function
@@ -174,7 +171,7 @@ function get_passchange($idconnect, $controltoken) // Changement du mot de passe
 //  administration function
 function getAdmin()
 {
-    require('view/backend/backendHome.php');
+    require 'view/backend/backendHome.php';
 }
 
 function newPost($title, $content, $usersId)
@@ -182,11 +179,11 @@ function newPost($title, $content, $usersId)
         $getNewPost = new BlogManager(); // créer un Objet
         $newPost = $getNewPost->newPost($title, $content, $usersId);
         header('refresh:1; url= index.php?action=admin');
-        require('view/backend/newPost.php');
+        require 'view/backend/newPost.php';
 }
 function viewNewPost()
 {
-        require('view/backend/newPost.php');
+        require 'view/backend/newPost.php';
 }
 
 
@@ -194,13 +191,13 @@ function frontendListingPost()
 {
     $postList = new BlogManager(); // créer un Objet
     $frontendListPost = $postList->allPost();
-    require('view/backend/listingPost.php');
+    require 'view/backend/listingPost.php';
 }
 function frontendListingComment()
 {
     $commentList = new BlogManager(); // créer un Objet
     $allComment = $commentList->allComment();
-    require('view/backend/listingComment.php');
+    require 'view/backend/listingComment.php';
 }
 
 function changePost($postnumber)
@@ -209,28 +206,28 @@ function changePost($postnumber)
     $changePost = $connexionmodel->getChangePost($postnumber);
     $title = $changePost['post_title'];
     $message = $changePost['post_content'];
-    require('view/backend/changePost.php');
+    require 'view/backend/changePost.php';
 }
 function updatePost($postnumber, $subject, $message)
 {
     $connexionmodel = new BlogManager(); // créer un Objet
     $updatePost = $connexionmodel->updatePostNow($postnumber, $subject, $message);
     header('refresh:1; url= index.php?action=listingPost');
-    require('view/backend/updatePost.php');
+    require 'view/backend/updatePost.php';
 }
 function deletePost($postnumber)
 {
     $deleteThisPost = new BlogManager(); // créer un Objet
     $GetdeletePost = $deleteThisPost->deletePostNow($postnumber);
     header('refresh:1; url= index.php?action=listingPost');
-    require('view/backend/deletePost.php');
+    require 'view/backend/deletePost.php';
 }
 function usersList()
 {
     $UsersLawmodel = new MemberManager(); // créer un Objet
     $allLaw = $UsersLawmodel->getLawList();
     $allUsers = $UsersLawmodel->getUsersList();
-    require_once('view/backend/usersList.php');
+    require_once 'view/backend/usersList.php';
 }
 
 function ChangeLawUser($idLaw, $idUser)
@@ -238,7 +235,7 @@ function ChangeLawUser($idLaw, $idUser)
     $changeLawModel = new MemberManager(); // créer un Objet
     $changelaw = $changeLawModel->getChangeLawUser($idLaw, $idUser);
     header('Location: index.php?action=usersList');
-    require('view/backend/changeLawView.php');
+    require 'view/backend/changeLawView.php';
 }
 
 function deleteUser($idUser)
@@ -246,7 +243,7 @@ function deleteUser($idUser)
     $deleteUserModel = new MemberManager(); // créer un Objet
     $getDeleteUser = $deleteUserModel->deleteUser($idUser);
     header('Location: index.php?action=usersList');
-    require('view/backend/deleteUserView.php');
+    require 'view/backend/deleteUserView.php';
 }
 
 //  end administration function
@@ -264,19 +261,19 @@ function contact_me($name,$mail,$subject,$message) // Formulaire de contact
 
     mail("jpochet@lhermitte.fr", "Vous avez reçu un nouveau message en provenance du Blog", "Objet:" . $subject . "</br>" . "</br>" . "Envoyé par: " . $name . "</br>" . "</br>" . "Adresse mail: " . $mail . "</br>" . "</br>" . "Message: " . "</br>" . nl2br($message), $header);
     header('refresh:3; url= index.php');
-    require('view/frontend/mail.php');
+    require 'view/frontend/mail.php';
 }
 function allPost() // Chapo post list
 {
     $chapoList = new BlogManager(); // créer un Objet
     $allPostChapo = $chapoList->allPost();
-    require('view/frontend/allPostView.php');
+    require 'view/frontend/allPostView.php';
 }
 function getComment($title,$content, $postId, $usersId)
 {
     $GetAddComment = new BlogManager(); // créer un Objet
     $blogmodel = $GetAddComment->addComment($title, $content, $postId, $usersId);
-    require('view/frontend/postComment.php');
+    require 'view/frontend/postComment.php';
 }
 
 function home() // home page 3 last chapo post
@@ -284,21 +281,22 @@ function home() // home page 3 last chapo post
     $chapoHomePage = new BlogManager(); // créer un Objet
     $homePageChapo = $chapoHomePage->lastPost();
 
-    require('view/frontend/templateFrontend.php');
+    require 'view/frontend/templateFrontend.php';
 }
 function longPost($postnumber) // Long Post view
 {
     $getPostAndComment = new BlogManager(); // créer un Objet
     $GetLongPost = $getPostAndComment->getLongPost($postnumber); // affichage du post entier
     $listCommentToPost = $getPostAndComment->postComment($postnumber); // affichage des commentaires validés
-    require('view/frontend/postView.php');
+    require 'view/frontend/postView.php';
 }
 function changeStatusComment($commentId,$validateId) // Long Post view
 {
     $changeStatus = new CommentManager(); // créer un Objet
     $status = $changeStatus->commentReport($commentId,$validateId); // affichage du post entier
+    return $status;
     header('Location: index.php?action=listingComment');
-    require('view/backend/changeStatusComment.php');
+    require 'view/backend/changeStatusComment.php';
 }
 
 // end site page function

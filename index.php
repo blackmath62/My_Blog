@@ -15,7 +15,7 @@ ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise e
 // ce fichier renomme correctement la barre d'adresse
 // a le même effet qu'include, c'est à dire pour ramener une page mais à l'avantage de ne rien renvoyer en cas d'erreur
 
-require('Controller/frontendController.php');
+require 'Controller/frontendController.php';
 
 $request = new Request();
 
@@ -138,4 +138,4 @@ if (isset($action)) {
         home();
 }
 $content = ob_get_clean();
-require('view/frontend/htmlTemplate.php');
+require 'view/frontend/htmlTemplate.php';
