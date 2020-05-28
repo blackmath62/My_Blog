@@ -3,7 +3,7 @@ namespace App;
 use App\Entity\Autoloader;
 use App\config\Request;
 
-require('Entity/Autoloader.php');
+require 'Entity/Autoloader.php';
 
 Autoloader::register();
 /*require __DIR__ . '/vendor/autoload.php';*/
@@ -55,7 +55,6 @@ if (isset($action)) {
                         $request->getSession()->setter('users_id', $idconnect);
                         $request->getSession()->setter('token', $controltoken);
                         passchange();
-                        
                         break;
                 case 'send_Mail_Password':
                         send_Mail_Password();

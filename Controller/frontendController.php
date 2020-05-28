@@ -5,6 +5,7 @@ use App\Model\BlogManager;
 use App\Model\CommentManager;
 use App\Entity\Member;
 use App\config\Request;
+use App\Entity\Autoloader;
 
 function pageNoFound()
 {
