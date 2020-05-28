@@ -2,7 +2,7 @@
 namespace App\Entity;
 class Autoloader{
 
-    static function register(){
+    static function registerAutoload(){
         spl_autoload_register(array(__CLASS__, 'autoload'));
     }
     static function autoload($class){

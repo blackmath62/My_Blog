@@ -5,7 +5,7 @@ use App\config\Request;
 
 require 'Entity/Autoloader.php';
 
-Autoloader::register();
+Autoloader::registerAutoload();
 /*require __DIR__ . '/vendor/autoload.php';*/
 session_start();
 error_reporting(E_ALL);
@@ -32,7 +32,7 @@ if (isset($action)) {
                         check_connexion($mail,$mdp);
                         break;
                 case 'inscription':
-                        register();
+                        registerPage();
                         break;
                 case 'check_register':
 

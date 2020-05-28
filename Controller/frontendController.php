@@ -48,7 +48,7 @@ function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
     }
 }
 // début création compte
-function register() // afficher la vue d'inscription
+function registerPage() // afficher la vue d'inscription
 {
     require 'view/frontend//connect/registerview.php';
 }
@@ -73,7 +73,7 @@ function check_register($identity,$mdp,$mdpcontrol,$pseudo) // la fonction pour 
             } elseif (!$pseudoExist) {
                 if ($mdp == $mdpcontrol) //si les 2 mots de passes sont identiques
                 {
-                    $register = $getRegister->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
+                    $registerAdd = $getRegister->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
                     $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
                     header('refresh:3; url= index.php?action=connexion');
                 }else{
