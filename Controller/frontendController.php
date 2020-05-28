@@ -158,7 +158,7 @@ function get_passchange($idconnect, $controltoken) // Changement du mot de passe
                 } else {
                     $error = 'Les mots de passes ne sont pas identiques';
                 }
-            } else {
+            }else{
                 $error = 'Vous avez déjà changé votre mot de passe, rendez vous à la page de connexion';
                 header('refresh:3; url= index.php');
             }

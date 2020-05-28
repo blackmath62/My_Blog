@@ -27,7 +27,7 @@
                             <h3 class="m-4">à propos</h3>
                             <p>C'est avec plaisir que nous discuterons de votre projet : <a href=mailto:jpochet@lhermitte.fr>jpochet@jpochet.fr</a>.</p>
                             <?php 
-                            if(!empty($_SESSION)){
+                            if(!empty($_SESSION) AND (!empty($_SESSION['law_id']))) {
                             if($_SESSION['law_id'] == 1){ ?>
                             <a href="index.php?action=admin">Administration</a>
                             <?php }
