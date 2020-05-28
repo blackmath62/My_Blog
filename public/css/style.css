@@ -3,7 +3,6 @@
 }
 .center{
 text-align: center;
-
 }
 .cadre{
 	border: 2px solid grey;
@@ -21,11 +20,9 @@ text-align: center;
 }
 .align{
 	padding-top: 25%;
-	
 }
 .little{
 	max-height: 60px;
-	
 }
 html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name { font-size : 1rem ; }
 @media (min-width: 300px) { html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-name { font-size : 0.9rem ; } } 
@@ -44,7 +41,6 @@ html, #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project
 @media screen and (max-width: 640px) {
 	.phone {
 	  display:none;
-	  
 	}
   }
   @media screen and (max-width: 640px) {
