@@ -154,14 +154,15 @@ function get_passchange($idconnect, $controltoken) // Changement du mot de passe
                     $cleartoken = '';
                     $error = 'vous avez bien changé de mot de passe';
                     $link = $changepassword->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
-                    header('refresh:3; url= index.php?action=connexion');
-                } else {
-                    $error = 'Les mots de passes ne sont pas identiques';
+                    header('refresh:1; url= index.php?action=connexion');
+                    return;
                 }
-            }else{
+                    $error = 'Les mots de passes ne sont pas identiques';
+                    return;
+            }
                 $error = 'Vous avez déjà changé votre mot de passe, rendez vous à la page de connexion';
                 header('refresh:3; url= index.php');
-            }
+                return;
         }
     }
     require 'view/frontend/connect/change-forgot-password.php';
