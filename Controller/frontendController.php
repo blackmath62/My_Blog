@@ -5,7 +5,6 @@ use App\Model\BlogManager;
 use App\Model\CommentManager;
 use App\Entity\Member;
 use App\config\Request;
-use App\Entity\Autoloader;
 
 function pageNoFound()
 {
@@ -146,9 +145,10 @@ function get_passchange($idconnect, $controltoken) // Changement du mot de passe
         $check_id = $changepassword->check_id($idconnect,$controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
         while ($profil = $check_id->fetch()) // on boucle pour récupérer les infos sur l'user
         {
-            if ($profil['token'] == $controltoken) {;
-                $newpassword = $_POST['newmdp'];
-                $controlnewpassword = $_POST['controlnewmdp'];
+            if ($profil['token'] == $controltoken) {
+                $request = new Request();
+                $newpassword = $request->post('newmdp');
+                $controlnewpassword = $request->post('controlnewmdp');
                 if ($newpassword == $controlnewpassword) {
                     $hashnewpass =  password_hash($newpassword, PASSWORD_DEFAULT); // On hash le token
                     $cleartoken = '';
