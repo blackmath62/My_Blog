@@ -27,21 +27,21 @@ function check_connexion($mail,$mdp) // Contrôler id et mdp et se connecter
     $user->setUsersId($controlUser['users_id']);
     // contrôler que le mail existe dans la BDD
     if (!$controlUser) {
-        $error = "le mail n'existe pas ";
+        static $error = "le mail n'existe pas ";
         require 'view/frontend/connect/loginview.php';
     } else {
 
         // le mail a été trouvé une seule fois
         $passwordCorrect = password_verify($user->mdp(), $controlUser['mdp']);
         if ($passwordCorrect) {
-            $error = "Connexion réussie ! ";
+            static $error = "Connexion réussie ! ";
             $request = new Request();
             $request->getSession()->setter('users_id', $user->users_id());
             $request->getSession()->setter('mail', $user->mail());
             $request->getSession()->setter('law_id', $controlUser['law_id']);
             home();
         } else {
-            $error  = "Mot de passe incorrect !";
+            static $error  = "Mot de passe incorrect !";
             require 'view/frontend/connect/loginview.php';
         }
     }
@@ -64,19 +64,19 @@ function check_register($identity,$mdp,$mdpcontrol,$pseudo) // la fonction pour 
         $check_pseudo = $getRegister->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
         $pseudoExist = $check_pseudo->rowCount(); // compter le nombre de ligne
         if ($check_connect) {
-            $error = "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
+           static $error = "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
         } elseif (!$check_connect) {
 
             if ($pseudoExist) {
-                $error = "Le pseudo est déjà utilisé, veuillez choisir un autre pseudo ou vous connecter.";
+               static $error = "Le pseudo est déjà utilisé, veuillez choisir un autre pseudo ou vous connecter.";
             } elseif (!$pseudoExist) {
                 if ($mdp == $mdpcontrol) //si les 2 mots de passes sont identiques
                 {
-                    $registerAdd = $getRegister->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
-                    $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
+                   $registerAdd = $getRegister->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
+                   $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
                     header('refresh:3; url= index.php?action=connexion');
                 }else{
-                    $error = "Vos 2 mots de passe ne sont pas identiques";
+                    static $error = "Vos 2 mots de passe ne sont pas identiques";
                 }
             }
         }
@@ -97,7 +97,6 @@ function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Toke
         $userId = $controlUser['users_id'];
         if ($controlUser) // si l'user est trouvé c'est qu'il existe
         {
-            $error = $mailconnect;
             header('Location: index.php?action=send_Mail_Password');
             $receivetoken = $sendTokenMail->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
             $Token = $controlUser['mail'] . $userId . $controlUser['law_id']; // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
@@ -118,21 +117,21 @@ function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Toke
             mail("$mailconnect", "Réinitialité votre mot de passe", $message, $header);
             header('refresh:1; url= index.php?action=index.php');
         } elseif (!$controlUser) {
-            $error = "Adresse mail inconnu";
+            static $error = "Adresse mail inconnu";
         }
     require 'view/frontend/connect/change-forgot-password.php';
 }
 
 function send_Mail_Password() // page pour signaler l'envoi du mail de réinitialisation
 {
-    $error = " Nous vous avons envoyé un mail pour réinitialiser votre mot de passe, vous pouvez fermer cette fenêtre" . '</br>' . '</br>';
+    static $error = " Nous vous avons envoyé un mail pour réinitialiser votre mot de passe, vous pouvez fermer cette fenêtre" . '</br>' . '</br>';
     header('refresh:3; url= index.php');
     require 'view/frontend/pageNoFound.php';
 }
 
 function passchange() // Fonction pour demander la saisie du nouveau mot de passe
 {
-    $error = 'Veuillez saisir votre nouveau mot de passe';
+    static $error = 'Veuillez saisir votre nouveau mot de passe';
     
     require 'view/frontend/connect/change-forgot-password.php';
 }
@@ -152,15 +151,15 @@ function get_passchange($idconnect, $controltoken) // Changement du mot de passe
                 if ($newpassword == $controlnewpassword) {
                     $hashnewpass =  password_hash($newpassword, PASSWORD_DEFAULT); // On hash le token
                     $cleartoken = '';
-                    $error = 'vous avez bien changé de mot de passe';
+                    static $error = 'vous avez bien changé de mot de passe';
                     $link = $changepassword->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
                     header('refresh:1; url= index.php?action=connexion');
                     return;
                 }
-                    $error = 'Les mots de passes ne sont pas identiques';
+                    static $error = 'Les mots de passes ne sont pas identiques';
                     return;
             }
-                $error = 'Vous avez déjà changé votre mot de passe, rendez vous à la page de connexion';
+                static $error = 'Vous avez déjà changé votre mot de passe, rendez vous à la page de connexion';
                 header('refresh:3; url= index.php');
                 return;
         }
