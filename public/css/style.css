@@ -72,9 +72,6 @@ html,
     .phone {
         display: none;
     }
-}
-
-@media screen and (max-width: 640px) {
     .phone-special {
         display: flex;
         flex-direction: column;
