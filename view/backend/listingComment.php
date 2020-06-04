@@ -23,15 +23,15 @@
                                 $i = 0;
                                 // todo voir pour récupérer le mail au lieu de l'ID = $commentUser = $chapoPostList->users_id()
                                 foreach ($allComment as $commentList) {
-                                    $title = $commentList->comment_title;
-                                    $dateComment = $commentList->comment_date;
-                                    $commentMessage = $commentList->comment_content;
-                                    $commentNumber = $commentList->comment_id;
-                                    $commentUser = $commentList->users_id;
+                                    $title = htmlspecialchars($commentList->comment_title);
+                                    $dateComment = htmlspecialchars($commentList->comment_date);
+                                    $commentMessage = htmlspecialchars($commentList->comment_content);
+                                    $commentNumber = htmlspecialchars($commentList->comment_id);
+                                    $commentUser = htmlspecialchars($commentList->users_id);
                                     $treatmentDate = htmlspecialchars($commentList->treatment_date);
-                                    $status = $commentList->validation_label;
-                                    $statusId = $commentList->validate_id;
-                                    $pseudo = $commentList->Pseudo;
+                                    $status = htmlspecialchars($commentList->validation_label);
+                                    $statusId = htmlspecialchars($commentList->validate_id);
+                                    $pseudo = htmlspecialchars($commentList->Pseudo);
 
                                 ?>
                                     <tr class="center phone-special p-4" id="<?= $i ?>" data-target="#postId<?= $commentNumber ?>" data-toggle="modal">
