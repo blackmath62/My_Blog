@@ -49,10 +49,13 @@
                 </div>
             </div>
         </div>
-    <?php }
-    $postId = $_GET["id"]; ?>
+    <?php } ?>
     <?php // Comment Form
-    if (session_status() !== PHP_SESSION_ACTIVE) { ?>
+    var_dump($_SESSION);
+    var_dump(session_id());
+    var_dump(session_status());
+    if (session_status() == PHP_SESSION_ACTIVE) { 
+        ?>
         <!--Commentaires-->
         <section class="mb-4 center bg-primary pt-4 rounded" id="contact">
             <!--Section heading-->
@@ -60,7 +63,7 @@
             <div class="row">
                 <!--Grid column-->
                 <div class="col-md-9 mb-md-0 mb-5 mx-auto">
-                    <form id="contact-form" name="contact-form" action="index.php?action=commentaire&id=<?= $postId ?>" method="POST">
+                    <form id="contact-form" name="contact-form" action="index.php?action=commentaire&id=<?= $getLongPost->post_id ?>" method="POST">
                         <!--Grid row-->
                         <div class="row">
                             <div class="col-md-12">

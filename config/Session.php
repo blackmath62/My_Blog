@@ -45,6 +45,7 @@ class Session
     public function stop()
     {
         session_destroy();
+        session_start();
     }
 
 }

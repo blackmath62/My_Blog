@@ -81,7 +81,7 @@ if (isset($action)) {
                         $content = $request->post('message');
                         $postId = $request->get("id");
                         $usersId = 
-                        $request->session(['users_id']);
+                        $request->session('users_id');
                         $controllerFront->getComment($title,$content, $postId, $usersId);
                         break;
                 case 'newPost':
