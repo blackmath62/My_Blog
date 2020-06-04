@@ -28,7 +28,7 @@
                                     $commentMessage = $commentList->comment_content;
                                     $commentNumber = $commentList->comment_id;
                                     $commentUser = $commentList->users_id;
-                                    $treatmentDate = $commentList->treatment_date;
+                                    $treatmentDate = htmlspecialchars($commentList->treatment_date);
                                     $status = $commentList->validation_label;
                                     $statusId = $commentList->validate_id;
                                     $pseudo = $commentList->Pseudo;

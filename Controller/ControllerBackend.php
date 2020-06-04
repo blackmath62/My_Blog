@@ -39,8 +39,7 @@ class ControllerBackend
 
     function frontendListingPost()
     {
-        $postList = new BlogManager(); // créer un Objet
-        $frontendListPost = $postList->allPost();
+        $frontendListPost = $this->blogManager->allPost();
         $this->view->render('backend', 'listingPost', ['frontendListPost' => $frontendListPost]);
     }
     function frontendListingComment()
@@ -58,16 +57,14 @@ class ControllerBackend
     }
     function updatePost($postnumber, $subject, $message)
     {
-        $updatePost = $this->blogManager->updatePostNow($postnumber, $subject, $message);
-        header('refresh:1; url= index.php?action=listingPost');
-        $this->view->render('backend', 'updatePost', ['updatePost' => $updatePost]);
+        $this->blogManager->updatePostNow($postnumber, $subject, $message);
+        $this->frontendListingPost();
     }
     function deletePost($postnumber)
     {
-        $deleteThisPost = new BlogManager(); // créer un Objet
-        $GetdeletePost = $deleteThisPost->deletePostNow($postnumber);
-        header('refresh:1; url= index.php?action=listingPost');
-        $this->view->render('backend', 'deletePost', ['GetdeletePost' => $GetdeletePost]);
+        $GetdeletePost = $this->blogManager->deletePostNow($postnumber);
+        $frontendListPost = $this->blogManager->allPost();
+        $this->view->render('backend', 'listingPost', ['frontendListPost' => $frontendListPost]);
     }
     function usersList()
     {
