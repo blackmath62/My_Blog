@@ -19,6 +19,7 @@ class ControllerBackend
         $this->getRegister = new MemberManager();
         $this->user = new Member;
         $this->blogManager = new BlogManager();
+        $this->commentManager = new CommentManager();
     }
 
     function getAdmin()
@@ -28,8 +29,7 @@ class ControllerBackend
 
     function newPost($title, $content, $usersId)
     {
-        $getNewPost = new BlogManager(); // créer un Objet
-        $newPost = $getNewPost->newPost($title, $content, $usersId);
+        $newPost = $this->blogManager->newPost($title, $content, $usersId);
         $this->view->render('backend', 'newPost', ['newPost' => $newPost]);
     }
     function viewNewPost()
@@ -44,15 +44,13 @@ class ControllerBackend
     }
     function frontendListingComment()
     {
-        $commentList = new BlogManager(); // créer un Objet
-        $allComment = $commentList->allComment();
+        $allComment = $this->blogManager->allComment();
         $this->view->render('backend', 'listingComment', ['allComment' => $allComment]);
     }
 
     function changePost($postnumber)
     {
-        $getChangePost = new BlogManager(); // créer un Objet
-        $changePost = $getChangePost->getChangePost($postnumber);
+        $changePost = $this->blogManager->getChangePost($postnumber);
         $this->view->render('backend', 'changePost', ['changePost' => $changePost]);
     }
     function updatePost($postnumber, $subject, $message)
@@ -62,9 +60,8 @@ class ControllerBackend
     }
     function deletePost($postnumber)
     {
-        $GetdeletePost = $this->blogManager->deletePostNow($postnumber);
-        $frontendListPost = $this->blogManager->allPost();
-        $this->view->render('backend', 'listingPost', ['frontendListPost' => $frontendListPost]);
+        $this->blogManager->deletePostNow($postnumber);
+        $this->frontendListingPost();
     }
     function usersList()
     {
@@ -75,28 +72,22 @@ class ControllerBackend
 
     function ChangeLawUser($idLaw, $idUser)
     {
-        $changelaw = $this->getRegister->getChangeLawUser($idLaw, $idUser);
-        $allLaw = $this->getRegister->getLawList();
-        $allUsers = $this->getRegister->getUsersList();
-        header('refresh:2; url=' . $this->view->render('backend', 'usersList', ['allLaw' => $allLaw, 'allUsers' => $allUsers]) . '');        
-        $this->view->render('backend', 'changeLawView', ['changelaw' => $changelaw]);
+        $this->getRegister->getChangeLawUser($idLaw, $idUser);
+        $this->getRegister->getLawList();
+        $this->usersList();
     }
 
     function deleteUser($idUser)
     {
-        $getDeleteUser = $this->getRegister->deleteUser($idUser);
-        $allLaw = $this->getRegister->getLawList();
-        $allUsers = $this->getRegister->getUsersList();
-        header('refresh:2; url=' . $this->view->render('backend', 'usersList', ['allLaw' => $allLaw, 'allUsers' => $allUsers]) . '');     
-        $this->view->render('backend', 'deleteUserView', ['getDeleteUser' => $getDeleteUser]);
+        $this->getRegister->deleteUser($idUser);
+        $this->getRegister->getLawList();
+        $this->usersList();
     }
 
     function changeStatusComment($commentId, $validateId) // Long Post view
     {
-        $changeStatus = new CommentManager(); // créer un Objet
-        $status = $changeStatus->commentReport($commentId, $validateId); // affichage du post entier
-        header('Location: index.php?action=listingComment');
-        $this->view->render('backend', 'changeStatusComment', ['status' => $status]);
+        $this->commentManager->commentReport($commentId, $validateId); // affichage du post entier
+        $this->frontendListingComment();
     }
 
     // end site page function

@@ -15,8 +15,9 @@ class ControllerFrontend
     {
         $this->view = new View();
         $this->request = new Request();
-        $this->getRegister = new MemberManager();
+        $this->memberManager = new MemberManager();
         $this->user = new Member;
+        $this->blogManager = new BlogManager();
     }
 
     function pageNoFound()
@@ -71,9 +72,9 @@ class ControllerFrontend
         {
             $mailconnect = htmlspecialchars($identity);  //on déclare les variables
             $mdpconnect = password_hash($mdp, PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
-            $check_connect = $this->getRegister->checkMailExist($mailconnect); // on vérifie si le compte n'existe pas déjà
+            $check_connect = $this->memberManager->checkMailExist($mailconnect); // on vérifie si le compte n'existe pas déjà
             //$mailExist = $check_connect->rowCount(); // compter le nombre de ligne 
-            $check_pseudo = $this->getRegister->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
+            $check_pseudo = $this->memberManager->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
             $pseudoExist = $check_pseudo->rowCount(); // compter le nombre de ligne
             if ($check_connect) {
                 $error = "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
@@ -84,7 +85,7 @@ class ControllerFrontend
                 } elseif (!$pseudoExist) {
                     if ($mdp == $mdpcontrol) //si les 2 mots de passes sont identiques
                     {
-                        $registerAdd = $this->getRegister->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
+                        $registerAdd = $this->memberManager->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
                         $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
                         header('refresh:3; url= index.php?action=connexion');
                     } else {
@@ -104,13 +105,13 @@ class ControllerFrontend
     }
     function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Token
     {
-        $controlUser = $this->getRegister->checkMailExist($mailconnect); // l'objet étant une extension du member manager, il est possible d'appeler directement les fonctions
+        $controlUser = $this->memberManager->checkMailExist($mailconnect); // l'objet étant une extension du member manager, il est possible d'appeler directement les fonctions
         $userId = $controlUser['users_id'];
         if ($controlUser) // si l'user est trouvé c'est qu'il existe
         {
             $error = $mailconnect;
             header('Location: index.php?action=send_Mail_Password');
-            $receivetoken = $this->getRegister->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
+            $receivetoken = $this->memberManager->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
             $Token = $controlUser['mail'] . $userId . $controlUser['law_id']; // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
             $hash_Token = password_hash($Token, PASSWORD_DEFAULT); // On hash le token
             $addtoken = $receivetoken->execute(array($hash_Token, $mailconnect)); // On insere dans la BDD
@@ -137,7 +138,7 @@ class ControllerFrontend
     function send_Mail_Password() // page pour signaler l'envoi du mail de réinitialisation
     {
         $error = " Nous vous avons envoyé un mail pour réinitialiser votre mot de passe, vous pouvez fermer cette fenêtre" . '</br>' . '</br>';
-        header('refresh:3; url= index.php');
+        $this->home();
         $this->view->render('frontend', 'pageNoFound', []);
     }
 
@@ -151,7 +152,7 @@ class ControllerFrontend
     function get_passchange($idconnect, $controltoken) // Changement du mot de passe utilisateur
     {
         if (isset($idconnect) and isset($controltoken)) {
-            $check_id = $this->getRegister->check_id($idconnect, $controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
+            $check_id = $this->memberManager->check_id($idconnect, $controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
             while ($profil = $check_id->fetch()) // on boucle pour récupérer les infos sur l'user
             {
                 if ($profil['token'] == $controltoken) {
@@ -161,15 +162,15 @@ class ControllerFrontend
                         $hashnewpass =  password_hash($newpassword, PASSWORD_DEFAULT); // On hash le token
                         $cleartoken = '';
                         $error = 'vous avez bien changé de mot de passe';
-                        $link = $this->getRegister->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
-                        header('refresh:1; url= index.php?action=connexion');
+                        $this->memberManager->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
+                        $this->view->render('frontend/connect', 'loginview', []);
                         return;
                     }
                     $error = 'Les mots de passes ne sont pas identiques';
                     return;
                 }
                 $error = 'Vous avez déjà changé votre mot de passe, rendez vous à la page de connexion';
-                header('refresh:3; url= index.php');
+                $this->view->render('frontend/connect', 'loginview', []);
                 return;
             }
         }
@@ -192,33 +193,29 @@ class ControllerFrontend
         $header .= 'Content-Transfer-Encoding: 8bit';
 
         mail("jpochet@lhermitte.fr", "Vous avez reçu un nouveau message en provenance du Blog", "Objet:" . $subject . "</br>" . "</br>" . "Envoyé par: " . $name . "</br>" . "</br>" . "Adresse mail: " . $mail . "</br>" . "</br>" . "Message: " . "</br>" . nl2br($message), $header);
-        header('refresh:3; url= index.php');
-        require 'view/frontend/mail.php';
+        $this->home();
+        /*require 'view/frontend/mail.php';*/
     }
     function allPost() // Chapo post list
     {
-        $chapoList = new BlogManager(); // créer un Objet
-        $allPostChapo = $chapoList->allPost();
+        $allPostChapo = $this->blogManager->allPost();
         $this->view->render('frontend', 'allPostView', ['allPostChapo' => $allPostChapo]);
     }
     function getComment($title, $content, $postId, $usersId)
     {
-        $GetAddComment = new BlogManager(); // créer un Objet
-        $blogmodel = $GetAddComment->addComment($title, $content, $postId, $usersId);
+        $blogmodel = $this->blogManager->addComment($title, $content, $postId, $usersId);
         $this->view->render('frontend', 'postComment', ['blogmodel' => $blogmodel]);
     }
 
     function home() // home page 3 last chapo post
     {
-        $chapoHomePage = new BlogManager(); // créer un Objet
-        $homePageChapo = $chapoHomePage->lastPost();
+        $homePageChapo = $this->blogManager->lastPost();
         $this->view->render('frontend', 'templateFrontend', ['homePageChapo' => $homePageChapo]);
     }
     function longPost($postnumber) // Long Post view
     {
-        $getPostAndComment = new BlogManager(); // créer un Objet
-        $GetLongPost = $getPostAndComment->getLongPost($postnumber); // affichage du post entier
-        $listCommentToPost = $getPostAndComment->postComment($postnumber); // affichage des commentaires validés
+        $GetLongPost = $this->blogManager->getLongPost($postnumber); // affichage du post entier
+        $listCommentToPost = $this->blogManager->postComment($postnumber); // affichage des commentaires validés
         $this->view->render('frontend', 'postView', ['getLongPost' => $GetLongPost, 'listCommentToPost' =>$listCommentToPost ]);
     }
     // end site page function
