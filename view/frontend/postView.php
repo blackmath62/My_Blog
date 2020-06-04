@@ -1,18 +1,19 @@
+
 <div class="container ">
     <section class="page-section">
         <!-- Blog Post -->
-        <div class="text-center border" id="<?= $GetLongPost->post_id ?>">
-             <!--<img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
-            <h2 class="card-title btn-primary rounded p-2"><?= $GetLongPost->post_title ?></h2>
+        <div class="text-center border" id="<?= $getLongPost->post_id ?>">
+            <!--<img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
+            <h2 class="card-title btn-primary rounded p-2"><?= $getLongPost->post_title ?></h2>
             <div class="card-body">
-                <p class="card-text"><?= nl2br($GetLongPost->post_content) ?></p>
+                <p class="card-text"><?= nl2br($getLongPost->post_content) ?></p>
             </div>
             <div class="text-muted card-footer d-flex">
-                <p class="mr-auto p-2">Posté le <?= $GetLongPost->post_date ?> par <?= $GetLongPost->Pseudo ?></p>
+                <p class="mr-auto p-2">Posté le <?= $getLongPost->post_date ?> par <?= $getLongPost->Pseudo ?></p>
                 <?php
-                if(!empty($GetLongPost->modification_date)){
+                if(!empty($getLongPost->modification_date)){
                      ?>
-                    <p class="mr-right p-2">Modifié le <?= $GetLongPost->modification_date ?> par <?= $GetLongPost->users_id ?></p>
+                    <p class="mr-right p-2">Modifié le <?= $getLongPost->modification_date ?> par <?= $getLongPost->users_id ?></p>
                 <?php } ?>
             </div>
         </div>
@@ -51,7 +52,7 @@
     <?php }
     $postId = $_GET["id"]; ?>
     <?php // Comment Form
-    if (isset($_SESSION['mail'])) { ?>
+    if (session_status() !== PHP_SESSION_ACTIVE) { ?>
         <!--Commentaires-->
         <section class="mb-4 center bg-primary pt-4 rounded" id="contact">
             <!--Section heading-->

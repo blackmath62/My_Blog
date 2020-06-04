@@ -7,12 +7,12 @@
         <div class="row">
             <!--Grid column-->
             <div class="col-md-9 mb-md-0 mb-5 mx-auto">
-                <form id="contact-form" name="contact-form" action="index.php?action=updatePost&id=<?=$postnumber?>" method="POST">
+                <form id="contact-form" name="contact-form" action="index.php?action=updatePost&id=<?= $changePost['post_id'] ?>" method="POST">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="md-form mb-0">
                                 <label for="subject" class="">Titre</label>
-                                <input type="text" id="subject" name="subject" class="form-control" value="<?=$title ?>">
+                                <input type="text" id="subject" name="subject" class="form-control" value="<?=$changePost['post_title'] ?>">
                             </div>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
 
                             <div class="md-form center">
                                 <label for="message">Post</label>
-                                <textarea type="text" id="message" name="message" rows="6" class="form-control md-textarea"><?=$message ?></textarea>
+                                <textarea type="text" id="message" name="message" rows="6" class="form-control md-textarea"><?=$changePost['post_content'] ?></textarea>
                             </div>
 
                         </div>

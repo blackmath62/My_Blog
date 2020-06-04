@@ -43,7 +43,7 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     public function getChangePost($postnumber)
     {
         $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $ChangePost = $bdd->prepare("SELECT post_title, post_content FROM post_list where post_id = ?");
+        $ChangePost = $bdd->prepare("SELECT post_id, post_title, post_content FROM post_list where post_id = ?");
         $ChangePost->execute(array($postnumber));
         $getChangePost = $ChangePost->fetch();
         return $getChangePost;

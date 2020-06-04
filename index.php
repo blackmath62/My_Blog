@@ -2,12 +2,17 @@
 namespace App;
 use App\Entity\Autoloader;
 use App\config\Request;
+use App\Controller\ControllerBackend;
+use App\Controller\ControllerFrontend;
 
 require 'Entity/Autoloader.php';
 
 Autoloader::registerAutoload();
-/*require __DIR__ . '/vendor/autoload.php';*/
 session_start();
+$request = new Request();
+$controllerFront = new ControllerFrontend();
+$controllerBackend = new ControllerBackend();  
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise en prod
 
@@ -15,126 +20,122 @@ ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise e
 // ce fichier renomme correctement la barre d'adresse
 // a le même effet qu'include, c'est à dire pour ramener une page mais à l'avantage de ne rien renvoyer en cas d'erreur
 
-require 'Controller/frontendController.php';
-
-$request = new Request();
+/*require 'Controller/frontendController.php';*/
 
 $action = $request->get('action');
-ob_start();
 if (isset($action)) {
         switch ($action) {
                 case 'connexion':
-                        connexion($request->stopSession());
+                        $controllerFront->connexion($request->stopSession());
                         break;
                 case 'check_connexion':
                         $mail = $request->post('identifiant');
                         $mdp = $request->post('mdpconnect');
-                        check_connexion($mail,$mdp);
+                        $controllerFront->check_connexion($mail,$mdp);
                         break;
                 case 'inscription':
-                        registerPage();
+                        $controllerFront->registerPage();
                         break;
                 case 'check_register':
-
                         $identity = $request->post('identifiant');
                         $mdp = $request->post('mdpconnect');
                         $mdpcontrol = $request->post('mdp_register_verif');
                         $pseudo = $request->post('pseudo');
-                        check_register($identity,$mdp,$mdpcontrol,$pseudo);
+                        $controllerFront->check_register($identity,$mdp,$mdpcontrol,$pseudo);
                         break;
                 case 'passforget':
-                        passforget();
+                        $controllerFront->passforget();
                         break;
                 case 'get_passforget':
                         $mail = $request->post('identifiant');
-                        get_passforget($mail);
+                        $controllerFront->get_passforget($mail);
                         break;
                 case 'passchange':
                         $idconnect = $request->get('id');
                         $controltoken = $request->get('token');
                         $request->getSession()->setter('users_id', $idconnect);
                         $request->getSession()->setter('token', $controltoken);
-                        passchange();
+                        $controllerFront->passchange();
                         break;
                 case 'send_Mail_Password':
-                        send_Mail_Password();
+                        $controllerFront->send_Mail_Password();
                         break;
                 case 'get_passchange':
-                        get_passchange($request->getSession()->getter('users_id'), $request->getSession()->getter('token'));
+                        $controllerFront->get_passchange($request->getSession()->getter('users_id'), $request->getSession()->getter('token'));
                         break;
                 case 'listingComment':
-                        frontendListingComment();
+                        $controllerBackend->frontendListingComment();
                         break;
                 case 'blog':
-                        allPost();
+                        $controllerFront->allPost();
                         break;
                 case 'longPost':
                         $postnumber = $request->get('id');
-                        longPost($postnumber);
+                        $controllerFront->longPost($postnumber);
                         break;
                 case 'admin':
-                        getAdmin();
+                        $controllerBackend->getAdmin();
                         break;
                 case 'commentaire':
                         $title = $request->post('subject');
                         $content = $request->post('message');
                         $postId = $request->get("id");
-                        $usersId = $request->session(['users_id']);
-                        getComment($title,$content, $postId, $usersId);
+                        $usersId = 
+                        $request->session(['users_id']);
+                        $controllerFront->getComment($title,$content, $postId, $usersId);
                         break;
                 case 'newPost':
                         if(!empty($request->post('subject'))){
                         $title = $request->post('subject');
                         $content = $request->post('message');
                         $usersId = $request->session('users_id');
-                        newPost($title, $content, $usersId);
+                        $controllerBackend->newPost($title, $content, $usersId);
                         } else {
-                        viewNewPost();
+                        $controllerBackend->viewNewPost();
                         }
                         break;
                 case 'listingPost':
-                        frontendListingPost();
+                        $controllerBackend->frontendListingPost();
                         break;
                 case 'deletePost':
                         $postnumber = $request->get('id');
-                        deletePost($postnumber);
+                        $controllerBackend->deletePost($postnumber);
                         break;
                 case 'changePost':
                         $postnumber = $request->get('id');
-                        changePost($postnumber);
+                        $controllerBackend->changePost($postnumber);
                         break;
                 case 'updatePost':
-                        $postnumber = $request->get(['id']);
+                        $postnumber = $request->get('id');
                         $subject = $request->post('subject');
                         $message = $request->post('message');
-                        updatePost($postnumber, $subject, $message);
+                        $controllerBackend->updatePost($postnumber, $subject, $message);
                         break;
                 case 'usersList':
-                        usersList();
+                        $controllerBackend->usersList();
                         break;
                 case 'changeLawUser':
                         $idLaw = $request->get('id');
                         $idUser = $request->get('userid');
-                        ChangeLawUser($idLaw, $idUser);
+                        $controllerBackend->ChangeLawUser($idLaw, $idUser);
                         break;
                 case 'deleteUser':
-                        deleteUser($request->get('userid'));
+                        $controllerBackend->deleteUser($request->get('userid'));
                         break;
                 case 'mail':
                         $name = $request->post('name');
                         $mail = $request->post('email');
                         $subject = $request->post('subject');
                         $message = $request->post('message');
-                        contact_me($name,$mail,$subject,$message);
+                        $controllerFront->contact_me($name,$mail,$subject,$message);
                         break;
                 case 'changeStatusComment':
                         $commentId = $request->get('id');
                         $validateId = $request->get('modification');
-                        changeStatusComment($commentId,$validateId);
+                        $controllerBackend->changeStatusComment($commentId,$validateId);
                         break;
         }
 } else {
-        home();
+        $controllerFront->home();
 }
-$content = ob_get_clean();
-require 'view/frontend/htmlTemplate.php';
+
