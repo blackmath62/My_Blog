@@ -2,18 +2,18 @@
 <div class="container ">
     <section class="page-section">
         <!-- Blog Post -->
-        <div class="text-center border" id="<?= $getLongPost->post_id ?>">
+        <div class="text-center border" id="<?= htmlspecialchars($getLongPost->post_id) ?>">
             <!--<img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
-            <h2 class="card-title btn-primary rounded p-2"><?= $getLongPost->post_title ?></h2>
+            <h2 class="card-title btn-primary rounded p-2"><?= htmlspecialchars($getLongPost->post_title) ?></h2>
             <div class="card-body">
-                <p class="card-text"><?= nl2br($getLongPost->post_content) ?></p>
+                <p class="card-text"><?= nl2br(htmlspecialchars($getLongPost->post_content)) ?></p>
             </div>
             <div class="text-muted card-footer d-flex">
-                <p class="mr-auto p-2">Posté le <?= $getLongPost->post_date ?> par <?= $getLongPost->Pseudo ?></p>
+                <p class="mr-auto p-2">Posté le <?= htmlspecialchars($getLongPost->post_date) ?> par <?= htmlspecialchars($getLongPost->Pseudo) ?></p>
                 <?php
-                if(!empty($getLongPost->modification_date)){
+                if(!empty(htmlspecialchars($getLongPost->modification_date))){
                      ?>
-                    <p class="mr-right p-2">Modifié le <?= $getLongPost->modification_date ?> par <?= $getLongPost->users_id ?></p>
+                    <p class="mr-right p-2">Modifié le <?= htmlspecialchars($getLongPost->modification_date) ?> par <?= htmlspecialchars($getLongPost->users_id) ?></p>
                 <?php } ?>
             </div>
         </div>
@@ -21,13 +21,13 @@
     <?php
      // todo voir pour récupérer le mail au lieu de l'ID = $commentUser = $comment->users_id();
     foreach ($listCommentToPost as $comment) {
-        $commentId = $comment->comment_id;
-        $commentValidateId = $comment->validate_id;
-        $commentTitle = $comment->comment_title;
-        $dateComment = $comment->comment_date;
-        $commentMessage = $comment->comment_content;
-        $commentUser = $comment->users_id;
-        $commentPseudo = $comment->Pseudo;
+        $commentId = htmlspecialchars($comment->comment_id);
+        $commentValidateId = htmlspecialchars($comment->validate_id);
+        $commentTitle = htmlspecialchars($comment->comment_title);
+        $dateComment = htmlspecialchars($comment->comment_date);
+        $commentMessage = htmlspecialchars($comment->comment_content);
+        $commentUser = htmlspecialchars($comment->users_id);
+        $commentPseudo = htmlspecialchars($comment->Pseudo);
         ?>
         <div class="card card-inner mb-4">
             <div class="card-body pb-0">
@@ -37,14 +37,14 @@
                     </div>-->
                     <div class="col-md-10">
                         <div class="d-flex flex-column">
-                        <p><a class="text-primary"><strong><?= $commentTitle ?></strong></a></p>
-                        <p><?php echo nl2br($commentMessage) ?></p>
+                        <p><a class="text-primary"><strong><?= htmlspecialchars($commentTitle) ?></strong></a></p>
+                        <p><?php echo nl2br(htmlspecialchars($commentMessage)) ?></p>
                         </div>
                         <!--Pour avoir les sauts de ligne à l'affichage-->
                        
                     </div>
                     <div class="card-footer w-100 center">
-                    <p class="text-secondary text-center">Commentaire du <?= $dateComment ?> par <?= $commentPseudo ?></p>
+                    <p class="text-secondary text-center">Commentaire du <?= htmlspecialchars($dateComment) ?> par <?= htmlspecialchars($commentPseudo) ?></p>
                 </div>
                 </div>
             </div>
@@ -54,6 +54,7 @@
     var_dump($_SESSION);
     var_dump(session_id());
     var_dump(session_status());
+    var_dump(session_name ());
     if (session_status() == PHP_SESSION_ACTIVE) { 
         ?>
         <!--Commentaires-->
@@ -63,7 +64,7 @@
             <div class="row">
                 <!--Grid column-->
                 <div class="col-md-9 mb-md-0 mb-5 mx-auto">
-                    <form id="contact-form" name="contact-form" action="index.php?action=commentaire&id=<?= $getLongPost->post_id ?>" method="POST">
+                    <form id="contact-form" name="contact-form" action="index.php?action=commentaire&id=<?= htmlspecialchars($getLongPost->post_id) ?>" method="POST">
                         <!--Grid row-->
                         <div class="row">
                             <div class="col-md-12">
