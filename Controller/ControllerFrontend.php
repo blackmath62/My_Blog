@@ -85,7 +85,7 @@ class ControllerFrontend
                 } elseif (!$pseudoExist) {
                     if ($mdp == $mdpcontrol) //si les 2 mots de passes sont identiques
                     {
-                        $registerAdd = $this->memberManager->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
+                        $this->memberManager->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
                         $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
                         header('refresh:3; url= index.php?action=connexion');
                     } else {
