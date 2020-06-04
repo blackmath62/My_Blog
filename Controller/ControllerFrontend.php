@@ -87,7 +87,7 @@ class ControllerFrontend
                     {
                         $this->memberManager->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
                         $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
-                        header('refresh:3; url= index.php?action=connexion');
+                        $this->connexion();
                     } else {
                         $error = "Vos 2 mots de passe ne sont pas identiques";
                     }
@@ -110,11 +110,10 @@ class ControllerFrontend
         if ($controlUser) // si l'user est trouvé c'est qu'il existe
         {
             $error = $mailconnect;
-            header('Location: index.php?action=send_Mail_Password');
             $receivetoken = $this->memberManager->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
             $Token = $controlUser['mail'] . $userId . $controlUser['law_id']; // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
             $hash_Token = password_hash($Token, PASSWORD_DEFAULT); // On hash le token
-            $addtoken = $receivetoken->execute(array($hash_Token, $mailconnect)); // On insere dans la BDD
+            $this->$receivetoken->execute(array($hash_Token, $mailconnect)); // On insere dans la BDD
             // Envoyer un mail avec le Token à l'utilisateur concerné
             $header = "MIME-Version: 1.0\r\n";
             $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
@@ -128,7 +127,7 @@ class ControllerFrontend
                 . '</br>' . '</br>' . 'Cdt,';
 
             mail("$mailconnect", "Réinitialité votre mot de passe", $message, $header);
-            header('refresh:1; url= index.php?action=index.php');
+            $this->connexion();
         } elseif (!$controlUser) {
             $error = "Adresse mail inconnu";
         }
