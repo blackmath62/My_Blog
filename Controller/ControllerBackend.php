@@ -54,8 +54,6 @@ class ControllerBackend
     {
         $getChangePost = new BlogManager(); // créer un Objet
         $changePost = $getChangePost->getChangePost($postnumber);
-        $title = $changePost['post_title'];
-        $message = $changePost['post_content'];
         $this->view->render('backend', 'changePost', ['changePost' => $changePost]);
     }
     function updatePost($postnumber, $subject, $message)
