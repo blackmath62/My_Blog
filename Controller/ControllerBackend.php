@@ -16,7 +16,7 @@ class ControllerBackend
     {
         $this->view = new View();
         $this->request = new Request();
-        $this->getRegister = new MemberManager();
+        $this->memberManager = new MemberManager();
         $this->user = new Member;
         $this->blogManager = new BlogManager();
         $this->commentManager = new CommentManager();
@@ -65,22 +65,22 @@ class ControllerBackend
     }
     function usersList()
     {
-        $allLaw = $this->getRegister->getLawList();
-        $allUsers = $this->getRegister->getUsersList();
+        $allLaw = $this->memberManager->getLawList();
+        $allUsers = $this->memberManager->getUsersList();
         $this->view->render('backend', 'usersList', ['allLaw' => $allLaw, 'allUsers' => $allUsers]);
     }
 
     function ChangeLawUser($idLaw, $idUser)
     {
-        $this->getRegister->getChangeLawUser($idLaw, $idUser);
-        $this->getRegister->getLawList();
+        $this->memberManager->getChangeLawUser($idLaw, $idUser);
+        $this->memberManager->getLawList();
         $this->usersList();
     }
 
     function deleteUser($idUser)
     {
-        $this->getRegister->deleteUser($idUser);
-        $this->getRegister->getLawList();
+        $this->memberManager->deleteUser($idUser);
+        $this->memberManager->getLawList();
         $this->usersList();
     }
 
