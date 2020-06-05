@@ -9,9 +9,10 @@ require 'Entity/Autoloader.php';
 
 Autoloader::registerAutoload();
 session_start();
+
 $request = new Request();
 $controllerFront = new ControllerFrontend();
-$controllerBackend = new ControllerBackend();  
+$controllerBackend = new ControllerBackend(); 
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise en prod
@@ -80,8 +81,7 @@ if (isset($action)) {
                         $title = $request->post('subject');
                         $content = $request->post('message');
                         $postId = $request->get("id");
-                        $usersId = 
-                        $request->session('users_id');
+                        $usersId = $request->session('users_id');
                         $controllerFront->getComment($title,$content, $postId, $usersId);
                         break;
                 case 'newPost':
@@ -138,4 +138,5 @@ if (isset($action)) {
 } else {
         $controllerFront->home();
 }
+
 

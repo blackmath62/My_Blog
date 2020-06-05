@@ -11,6 +11,11 @@ use App\Entity\View;
 class ControllerFrontend
 {
     private $view;
+    private $request;
+    private $memberManager;
+    private $user;
+    private $blogManager;
+
     function __construct()
     {
         $this->view = new View();
@@ -215,6 +220,8 @@ class ControllerFrontend
     {
         $GetLongPost = $this->blogManager->getLongPost($postnumber); // affichage du post entier
         $listCommentToPost = $this->blogManager->postComment($postnumber); // affichage des commentaires validés
+        $sessionId = $this->request->session('users_id');
+        var_dump($sessionId);
         $this->view->render('frontend', 'postView', ['getLongPost' => $GetLongPost, 'listCommentToPost' =>$listCommentToPost ]);
     }
     // end site page function

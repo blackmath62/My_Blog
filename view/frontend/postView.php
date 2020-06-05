@@ -1,4 +1,3 @@
-
 <div class="container ">
     <section class="page-section">
         <!-- Blog Post -->
@@ -51,11 +50,7 @@
         </div>
     <?php } ?>
     <?php // Comment Form
-    var_dump($_SESSION);
-    var_dump(session_id());
-    var_dump(session_status());
-    var_dump(session_name ());
-    if (session_status() == PHP_SESSION_ACTIVE) { 
+    if (!empty($_SESSION)) { 
         ?>
         <!--Commentaires-->
         <section class="mb-4 center bg-primary pt-4 rounded" id="contact">
