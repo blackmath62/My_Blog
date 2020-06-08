@@ -34,10 +34,10 @@ class Request
      */
     public function getPost()
     {
-        return htmlentities($this->post);
+        return $this->post;
     }
     public function post($key){
-        return htmlentities($this->post->getter($key));
+        return $this->post->getter($key);
     }
 
     /**

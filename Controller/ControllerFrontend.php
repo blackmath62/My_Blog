@@ -207,8 +207,10 @@ class ControllerFrontend
     }
     function getComment($title, $content, $postId, $usersId)
     {
-        $blogmodel = $this->blogManager->addComment($title, $content, $postId, $usersId);
-        $this->view->render('frontend', 'postComment', ['blogmodel' => $blogmodel]);
+        $this->blogManager->addComment($title, $content, $postId, $usersId);
+        $error = 'Votre commentaire est soumis à validation dn\'un modérateur, nous faisons au plus vite ...';
+        $postnumber = $this->request->get('id');
+        $this->longPost($postnumber);
     }
 
     function home() // home page 3 last chapo post
@@ -220,8 +222,6 @@ class ControllerFrontend
     {
         $GetLongPost = $this->blogManager->getLongPost($postnumber); // affichage du post entier
         $listCommentToPost = $this->blogManager->postComment($postnumber); // affichage des commentaires validés
-        $sessionId = $this->request->session('users_id');
-        var_dump($sessionId);
         $this->view->render('frontend', 'postView', ['getLongPost' => $GetLongPost, 'listCommentToPost' =>$listCommentToPost ]);
     }
     // end site page function

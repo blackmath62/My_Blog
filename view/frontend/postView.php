@@ -10,15 +10,15 @@
             <div class="text-muted card-footer d-flex">
                 <p class="mr-auto p-2">Posté le <?= htmlspecialchars($getLongPost->post_date) ?> par <?= htmlspecialchars($getLongPost->Pseudo) ?></p>
                 <?php
-                if(!empty(htmlspecialchars($getLongPost->modification_date))){
-                     ?>
+                if (!empty(htmlspecialchars($getLongPost->modification_date))) {
+                ?>
                     <p class="mr-right p-2">Modifié le <?= htmlspecialchars($getLongPost->modification_date) ?> par <?= htmlspecialchars($getLongPost->users_id) ?></p>
                 <?php } ?>
             </div>
         </div>
     </section>
     <?php
-     // todo voir pour récupérer le mail au lieu de l'ID = $commentUser = $comment->users_id();
+    // todo voir pour récupérer le mail au lieu de l'ID = $commentUser = $comment->users_id();
     foreach ($listCommentToPost as $comment) {
         $commentId = htmlspecialchars($comment->comment_id);
         $commentValidateId = htmlspecialchars($comment->validate_id);
@@ -27,7 +27,7 @@
         $commentMessage = htmlspecialchars($comment->comment_content);
         $commentUser = htmlspecialchars($comment->users_id);
         $commentPseudo = htmlspecialchars($comment->Pseudo);
-        ?>
+    ?>
         <div class="card card-inner mb-4">
             <div class="card-body pb-0">
                 <div class="row">
@@ -36,22 +36,26 @@
                     </div>-->
                     <div class="col-md-10">
                         <div class="d-flex flex-column">
-                        <p><a class="text-primary"><strong><?= htmlspecialchars($commentTitle) ?></strong></a></p>
-                        <p><?php echo nl2br(htmlspecialchars($commentMessage)) ?></p>
+                            <p><a class="text-primary"><strong><?= htmlspecialchars($commentTitle) ?></strong></a></p>
+                            <p><?php echo nl2br(htmlspecialchars($commentMessage)) ?></p>
                         </div>
                         <!--Pour avoir les sauts de ligne à l'affichage-->
-                       
+
                     </div>
                     <div class="card-footer w-100 center">
-                    <p class="text-secondary text-center">Commentaire du <?= htmlspecialchars($dateComment) ?> par <?= htmlspecialchars($commentPseudo) ?></p>
-                </div>
+                        <p class="text-secondary text-center">Commentaire du <?= htmlspecialchars($dateComment) ?> par <?= htmlspecialchars($commentPseudo) ?></p>
+                    </div>
                 </div>
             </div>
         </div>
     <?php } ?>
     <?php // Comment Form
-    if (!empty($_SESSION)) { 
-        ?>
+    if (!empty($_SESSION)) {   
+        if (!empty($getComment->error)) {
+            echo $getComment->error;
+        }
+
+    ?>
         <!--Commentaires-->
         <section class="mb-4 center bg-primary pt-4 rounded" id="contact">
             <!--Section heading-->
@@ -91,5 +95,5 @@
         </section>
 </div>
 <?php
-}
+    }
 ?>

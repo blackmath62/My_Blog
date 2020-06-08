@@ -5,25 +5,30 @@ use App\Model\Manager;
 
 class BlogManager extends Manager // la classe CommentManager hérite de Manager
 {   
+    private $bdd;
+
+    public function __construct()
+    {
+        $this->bdd =  $this->bddConnect();
+    }
+
+
     public function lastPost() // affichage des 3 derniers chapos pour la page d'accueil
     {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $lastPostResult = $bdd->query("SELECT post_id, post_title, post_date,post_chapo, post_content, users_id,users.Pseudo, users.mail, users.Pseudo FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");
+        $lastPostResult = $this->bdd->query("SELECT post_id, post_title, post_date,post_chapo, post_content, users_id,users.Pseudo, users.mail, users.Pseudo FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");
         $getlastPostResult = $lastPostResult->fetchAll(\PDO::FETCH_OBJ);
         return $getlastPostResult;
     }
 
     public function allPost() // affichage de tous les chapos des posts
     {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $allPostResult = $bdd->query("SELECT post_id, post_title, post_date,post_chapo, post_content, users_id, users.mail, users.Pseudo, modification_date FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC");
+        $allPostResult = $this->bdd->query("SELECT post_id, post_title, post_date,post_chapo, post_content, users_id, users.mail, users.Pseudo, modification_date FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC");
         $getAllPostResult = $allPostResult->fetchAll(\PDO::FETCH_OBJ);
         return $getAllPostResult;
     }
     public function allComment() // affichage de tous les chapos des posts
     {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $allCommentResult = $bdd->query("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.Pseudo, treatment_date,validate_id, validation_label 
+        $allCommentResult = $this->bdd->query("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.Pseudo, treatment_date,validate_id, validation_label 
         FROM users 
         INNER JOIN comment USING(users_id)
         INNER JOIN comment_validation USING(validate_id)
@@ -34,33 +39,29 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
 
     public function postComment($postnumber) // affichage pour l'utilisateur des commentaires validés
     {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $lastComment = $bdd->prepare("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.Pseudo, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? AND validate_id = 2  ORDER BY comment_date LIMIT 6");
+        $lastComment = $this->bdd->prepare("SELECT comment_id, comment_title, comment_date, comment_content, users_id, users.Pseudo, users.mail, validate_id FROM users INNER JOIN COMMENT USING(users_id) where post_id = ? AND validate_id = 2  ORDER BY comment_date LIMIT 6");
         $lastComment->execute(array($postnumber));
         $listComment = $lastComment->fetchAll(\PDO::FETCH_OBJ);
         return $listComment;
     }
     public function getChangePost($postnumber)
     {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $ChangePost = $bdd->prepare("SELECT post_id, post_title, post_content FROM post_list where post_id = ?");
+        $ChangePost = $this->bdd->prepare("SELECT post_id, post_title, post_content FROM post_list where post_id = ?");
         $ChangePost->execute(array($postnumber));
         $getChangePost = $ChangePost->fetch();
         return $getChangePost;
     }
     public function getLongPost($postnumber)
     {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant
-        $longPostResult = $bdd->prepare("SELECT post_id, post_title, post_date,post_chapo,users.Pseudo, post_content, users_id, users.mail, modification_date FROM users INNER JOIN post_list USING(users_id) WHERE post_id = ?");
+        $longPostResult = $this->bdd->prepare("SELECT post_id, post_title, post_date,post_chapo,users.Pseudo, post_content, users_id, users.mail, modification_date FROM users INNER JOIN post_list USING(users_id) WHERE post_id = ?");
         $longPostResult->execute(array($postnumber));
         $postResult = $longPostResult->fetch(\PDO::FETCH_OBJ);
         return $postResult;
     }
 
     public function addComment($title,$content, $postId, $usersId)
-    {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant        
-        $req = $bdd->prepare('INSERT INTO comment(comment_title, comment_content, post_id, users_id ) VALUES(:title, :content, :id, :users)');
+    {   
+        $req = $this->bdd->prepare('INSERT INTO comment(comment_title, comment_content, post_id, users_id ) VALUES(:title, :content, :id, :users)');
         $addcomment = $req->execute(array(
             'title' => $title,
             'content' => $content,
@@ -70,9 +71,8 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         return $addcomment;
     }
     public function newPost($title, $content, $usersId)
-    {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant        
-        $req = $bdd->prepare('INSERT INTO post_list(post_title, post_content, post_chapo, users_id ) VALUES(:title, :content, :chapo, :users)');
+    { 
+        $req = $this->bdd->prepare('INSERT INTO post_list(post_title, post_content, post_chapo, users_id ) VALUES(:title, :content, :chapo, :users)');
         $newPost = $req->execute(array(
             'title' => $title,
             'content' => $content,
@@ -83,24 +83,21 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     }
     public function deletePostNow($postnumber)
     {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant     
-        $req = $bdd->prepare('DELETE FROM post_list WHERE post_id = ?');
+        $req = $this->bdd->prepare('DELETE FROM post_list WHERE post_id = ?');
         $deletePost = $req->execute(array($postnumber));
         return $deletePost;
     }
     public function updatePostNow($postnumber, $subject, $message)
     {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant   
         $chapo = substr($message,0,200);
-        $req = $bdd->prepare('UPDATE post_list SET post_title = :title ,post_content = :post, post_chapo = :chapo , modification_date = :changeDate WHERE post_id= :id');
+        $req = $this->bdd->prepare('UPDATE post_list SET post_title = :title ,post_content = :post, post_chapo = :chapo , modification_date = :changeDate WHERE post_id= :id');
         $updatePost = $req->execute(array('title' => $subject,'chapo' => $chapo, 'post' => $message, 'id' => $postnumber, 'changeDate' => date("Y-m-d H:i:s")));
         return $updatePost;
     }
 
     public function changepass($idconnect, $hashnewpass, $cleartoken)
-    {
-        $bdd = $this->bddConnect(); // la base de donnée de l'objet courant        
-        $changepasstoken = $bdd->prepare('UPDATE users SET mdp = :newpass , token = :cleartoken WHERE users_id = :checkid'); // on prépare l'insertion dans la BDD
+    {       
+        $changepasstoken = $this->bdd->prepare('UPDATE users SET mdp = :newpass , token = :cleartoken WHERE users_id = :checkid'); // on prépare l'insertion dans la BDD
         $addtoken = $changepasstoken->execute(array('checkid' => $idconnect, 'newpass' => $hashnewpass, 'cleartoken' => $cleartoken)); // On insere dans la BDD 
         return $addtoken;
     }
