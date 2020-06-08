@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Model\MemberManager;
 use App\Model\BlogManager;
 use App\Entity\Member;
 use App\config\Request;
 use App\Entity\View;
+use App\Model\ConnexionManager;
 
 class ControllerFrontend
 {
     private $view;
     private $request;
-    private $memberManager;
     private $user;
     private $blogManager;
+    private $connexionManager;
 
     function __construct()
     {
         $this->view = new View();
         $this->request = new Request();
-        $this->memberManager = new MemberManager();
         $this->user = new Member;
         $this->blogManager = new BlogManager();
+        $this->connexionManager = new ConnexionManager();
     }
 
     function pageNoFound()
@@ -77,9 +77,9 @@ class ControllerFrontend
         {
             $mailconnect = htmlspecialchars($identity);  //on déclare les variables
             $mdpconnect = password_hash($mdp, PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
-            $check_connect = $this->memberManager->checkMailExist($mailconnect); // on vérifie si le compte n'existe pas déjà
+            $check_connect = $this->connexionManager->checkMailExist($mailconnect); // on vérifie si le compte n'existe pas déjà
             //$mailExist = $check_connect->rowCount(); // compter le nombre de ligne 
-            $check_pseudo = $this->memberManager->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
+            $check_pseudo = $this->connexionManager->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
             $pseudoExist = $check_pseudo->rowCount(); // compter le nombre de ligne
             if ($check_connect) {
                 $error = "Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.";
@@ -90,7 +90,7 @@ class ControllerFrontend
                 } elseif (!$pseudoExist) {
                     if ($mdp == $mdpcontrol) //si les 2 mots de passes sont identiques
                     {
-                        $this->memberManager->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
+                        $this->connexionManager->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
                         $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
                         $this->connexion();
                     } else {
@@ -110,15 +110,15 @@ class ControllerFrontend
     }
     function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Token
     {
-        $controlUser = $this->memberManager->checkMailExist($mailconnect); // l'objet étant une extension du member manager, il est possible d'appeler directement les fonctions
+        $controlUser = $this->connexionManager->checkMailExist($mailconnect); // l'objet étant une extension du member manager, il est possible d'appeler directement les fonctions
         $userId = $controlUser['users_id'];
         if ($controlUser) // si l'user est trouvé c'est qu'il existe
         {
             $error = $mailconnect;
-            $receivetoken = $this->memberManager->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
+            $receivetoken = $this->connexionManager->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
             $Token = $controlUser['mail'] . $userId . $controlUser['law_id']; // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
             $hash_Token = password_hash($Token, PASSWORD_DEFAULT); // On hash le token
-            $this->$receivetoken->execute(array($hash_Token, $mailconnect)); // On insere dans la BDD
+            $receivetoken->execute(array($hash_Token, $mailconnect)); // On insere dans la BDD
             // Envoyer un mail avec le Token à l'utilisateur concerné
             $header = "MIME-Version: 1.0\r\n";
             $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
@@ -156,7 +156,7 @@ class ControllerFrontend
     function get_passchange($idconnect, $controltoken) // Changement du mot de passe utilisateur
     {
         if (isset($idconnect) and isset($controltoken)) {
-            $check_id = $this->memberManager->check_id($idconnect, $controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
+            $check_id = $this->connexionManager->check_id($idconnect, $controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
             while ($profil = $check_id->fetch()) // on boucle pour récupérer les infos sur l'user
             {
                 if ($profil['token'] == $controltoken) {
@@ -166,7 +166,7 @@ class ControllerFrontend
                         $hashnewpass =  password_hash($newpassword, PASSWORD_DEFAULT); // On hash le token
                         $cleartoken = '';
                         $error = 'vous avez bien changé de mot de passe';
-                        $this->memberManager->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
+                        $this->connexionManager->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
                         $this->view->render('frontend/connect', 'loginview', []);
                         return;
                     }

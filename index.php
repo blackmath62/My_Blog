@@ -65,7 +65,7 @@ if (isset($action)) {
                         $controllerFront->get_passchange($request->getSession()->getter('users_id'), $request->getSession()->getter('token'));
                         break;
                 case 'listingComment':
-                        $controllerBackend->frontendListingComment();
+                        $controllerBackend->listingComment();
                         break;
                 case 'blog':
                         $controllerFront->allPost();
@@ -95,7 +95,7 @@ if (isset($action)) {
                         }
                         break;
                 case 'listingPost':
-                        $controllerBackend->frontendListingPost();
+                        $controllerBackend->listingPost();
                         break;
                 case 'deletePost':
                         $postnumber = $request->get('id');

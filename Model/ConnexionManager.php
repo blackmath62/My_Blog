@@ -4,7 +4,7 @@ namespace App\Model;
 use App\Model\Manager;
 
 
-class MemberManager extends Manager // la classe CommentManager hérite de Manager
+class ConnexionManager extends Manager // la classe CommentManager hérite de Manager
 {
     private $bdd;
 

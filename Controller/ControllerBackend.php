@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
-use App\Model\MemberManager;
+use App\Model\ConnexionManager;
 use App\Model\BlogManager;
 use App\Model\CommentManager;
 use App\Entity\Member;
 use App\config\Request;
 use App\Entity\View;
+use App\Model\AdminManager;
 
 class ControllerBackend
 {
@@ -16,10 +17,11 @@ class ControllerBackend
     {
         $this->view = new View();
         $this->request = new Request();
-        $this->memberManager = new MemberManager();
+        $this->connexionManager = new ConnexionManager();
         $this->user = new Member;
         $this->blogManager = new BlogManager();
         $this->commentManager = new CommentManager();
+        $this->adminManager = new AdminManager();
     }
 
     function getAdmin()
@@ -37,12 +39,12 @@ class ControllerBackend
         $this->view->render('backend', 'newPost', []);
     }
 
-    function frontendListingPost()
+    function listingPost()
     {
-        $frontendListPost = $this->blogManager->allPost();
-        $this->view->render('backend', 'listingPost', ['frontendListPost' => $frontendListPost]);
+        $ListPosts = $this->blogManager->allPost();
+        $this->view->render('backend', 'listingPost', ['ListPosts' => $ListPosts]);
     }
-    function frontendListingComment()
+    function listingComment()
     {
         $allComment = $this->blogManager->allComment();
         $this->view->render('backend', 'listingComment', ['allComment' => $allComment]);
@@ -56,38 +58,38 @@ class ControllerBackend
     function updatePost($postnumber, $subject, $message)
     {
         $this->blogManager->updatePostNow($postnumber, $subject, $message);
-        $this->frontendListingPost();
+        $this->listingPost();
     }
     function deletePost($postnumber)
     {
         $this->blogManager->deletePostNow($postnumber);
-        $this->frontendListingPost();
+        $this->listingPost();
     }
     function usersList()
     {
-        $allLaw = $this->memberManager->getLawList();
-        $allUsers = $this->memberManager->getUsersList();
+        $allLaw = $this->adminManager->getLawList();
+        $allUsers = $this->adminManager->getUsersList();
         $this->view->render('backend', 'usersList', ['allLaw' => $allLaw, 'allUsers' => $allUsers]);
     }
 
     function ChangeLawUser($idLaw, $idUser)
     {
-        $this->memberManager->getChangeLawUser($idLaw, $idUser);
-        $this->memberManager->getLawList();
+        $this->adminManager->getChangeLawUser($idLaw, $idUser);
+        $this->adminManager->getLawList();
         $this->usersList();
     }
 
     function deleteUser($idUser)
     {
-        $this->memberManager->deleteUser($idUser);
-        $this->memberManager->getLawList();
+        $this->adminManager->deleteUser($idUser);
+        $this->adminManager->getLawList();
         $this->usersList();
     }
 
     function changeStatusComment($commentId, $validateId) // Long Post view
     {
         $this->commentManager->commentReport($commentId, $validateId); // affichage du post entier
-        $this->frontendListingComment();
+        $this->listingComment();
     }
 
     // end site page function

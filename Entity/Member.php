@@ -1,8 +1,8 @@
 <?php
 namespace App\Entity;
-use App\Model\MemberManager;
+use App\Model\ConnexionManager;
 
-class Member extends MemberManager
+class Member extends ConnexionManager
 {
   /*Propriétés de ma classe member */
   private $users_id;
