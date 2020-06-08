@@ -44,13 +44,6 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         $listComment = $lastComment->fetchAll(\PDO::FETCH_OBJ);
         return $listComment;
     }
-    public function getChangePost($postnumber)
-    {
-        $ChangePost = $this->bdd->prepare("SELECT post_id, post_title, post_content FROM post_list where post_id = ?");
-        $ChangePost->execute(array($postnumber));
-        $getChangePost = $ChangePost->fetch();
-        return $getChangePost;
-    }
     public function getLongPost($postnumber)
     {
         $longPostResult = $this->bdd->prepare("SELECT post_id, post_title, post_date,post_chapo,users.Pseudo, post_content, users_id, users.mail, modification_date FROM users INNER JOIN post_list USING(users_id) WHERE post_id = ?");
@@ -70,36 +63,4 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
         ));
         return $addcomment;
     }
-    public function newPost($title, $content, $usersId)
-    { 
-        $req = $this->bdd->prepare('INSERT INTO post_list(post_title, post_content, post_chapo, users_id ) VALUES(:title, :content, :chapo, :users)');
-        $newPost = $req->execute(array(
-            'title' => $title,
-            'content' => $content,
-            'chapo' => substr($content,0,200),
-            'users' => $usersId    // C'EST L'ID UTILISATEUR QUI BLOQUE L'INTEGRATION
-        ));
-        return $newPost;
-    }
-    public function deletePostNow($postnumber)
-    {
-        $req = $this->bdd->prepare('DELETE FROM post_list WHERE post_id = ?');
-        $deletePost = $req->execute(array($postnumber));
-        return $deletePost;
-    }
-    public function updatePostNow($postnumber, $subject, $message)
-    {
-        $chapo = substr($message,0,200);
-        $req = $this->bdd->prepare('UPDATE post_list SET post_title = :title ,post_content = :post, post_chapo = :chapo , modification_date = :changeDate WHERE post_id= :id');
-        $updatePost = $req->execute(array('title' => $subject,'chapo' => $chapo, 'post' => $message, 'id' => $postnumber, 'changeDate' => date("Y-m-d H:i:s")));
-        return $updatePost;
-    }
-
-    public function changepass($idconnect, $hashnewpass, $cleartoken)
-    {       
-        $changepasstoken = $this->bdd->prepare('UPDATE users SET mdp = :newpass , token = :cleartoken WHERE users_id = :checkid'); // on prépare l'insertion dans la BDD
-        $addtoken = $changepasstoken->execute(array('checkid' => $idconnect, 'newpass' => $hashnewpass, 'cleartoken' => $cleartoken)); // On insere dans la BDD 
-        return $addtoken;
-    }
-    
 }
