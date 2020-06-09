@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Entity;
-use App\Model\CommentManager;
-class Comment extends CommentManager
+use App\Model\AdminManager;
+class Comment extends AdminManager
 {
   /*Propriétés de ma classe member */
   private $comment_id;

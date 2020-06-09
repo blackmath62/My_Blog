@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Model\BlogManager;
-use App\Model\CommentManager;
 use App\Entity\View;
 use App\Model\AdminManager;
 
@@ -14,7 +13,6 @@ class ControllerBackend
     {
         $this->view = new View();
         $this->blogManager = new BlogManager();
-        $this->commentManager = new CommentManager();
         $this->adminManager = new AdminManager();
     }
 

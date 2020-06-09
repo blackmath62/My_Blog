@@ -37,7 +37,7 @@
                     <div class="col-md-10">
                         <div class="d-flex flex-column">
                             <p><a class="text-primary"><strong><?= htmlspecialchars($commentTitle) ?></strong></a></p>
-                            <p><?php echo nl2br(htmlspecialchars($commentMessage)) ?></p>
+                            <p><?= nl2br(htmlspecialchars($commentMessage)) ?></p>
                         </div>
                         <!--Pour avoir les sauts de ligne à l'affichage-->
 

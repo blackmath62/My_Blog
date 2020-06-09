@@ -23,7 +23,7 @@
                                 <?php
                                 $i = 1;
                                 // todo renommer les fonctions
-                                foreach ($frontendListPost as $PostList) {
+                                foreach ($ListPosts as $PostList) {
                                     $title = $PostList->post_title;
                                     $datepost = $PostList->post_date;
                                     $postmessage = $PostList->post_content;
