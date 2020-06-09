@@ -12,7 +12,7 @@
                 <?php
                 if (!empty(htmlspecialchars($getLongPost->modification_date))) {
                 ?>
-                    <p class="mr-right p-2">Modifié le <?= htmlspecialchars($getLongPost->modification_date) ?> par <?= htmlspecialchars($getLongPost->users_id) ?></p>
+                    <p class="mr-right p-2">Modifié le <?= htmlspecialchars($getLongPost->modification_date) ?> par <?= htmlspecialchars($getLongPost->Pseudo) ?></p>
                 <?php } ?>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     <div class="col-md-10">
                         <div class="d-flex flex-column">
                             <p><a class="text-primary"><strong><?= htmlspecialchars($commentTitle) ?></strong></a></p>
-                            <p><?= nl2br(htmlspecialchars($commentMessage)) ?></p>
+                            <p><?= nl2br($commentMessage) ?></p>
                         </div>
                         <!--Pour avoir les sauts de ligne à l'affichage-->
 

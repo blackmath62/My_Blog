@@ -24,7 +24,7 @@ class ControllerFrontend
         $this->blogManager = new BlogManager();
         $this->connexionManager = new ConnexionManager();
     }
-
+    
     function pageNoFound()
     {
         $this->view->render('frontend/connect', 'pageNoFound', []);
