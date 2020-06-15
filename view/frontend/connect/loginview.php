@@ -1,4 +1,4 @@
-  <div class="container">
+<div class="container">
   <section class="page-section">
     <!-- Outer Row -->
     <div class="row justify-content-center">
@@ -24,7 +24,11 @@
                     <input type="submit" name='Valider' value='Se connecter' class="btn btn-primary btn-user btn-block">
                     <?php
                     if (isset($error)) {
-                      echo $error;
+                      ?>
+                      <div class='center'>
+                      <?=$error ?>
+                      </div>
+                    <?php
                     }
                     ?>
                     <hr>

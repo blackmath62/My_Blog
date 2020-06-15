@@ -35,7 +35,7 @@
     <?php include_once 'Header.php'; ?>
     <!-- Main Content -->
     <div id="content">
-      <?= $content ?>
+    <?=$content ?>
       <?php include_once 'Footer.php' ?>
 
       <!-- End of Content Wrapper -->

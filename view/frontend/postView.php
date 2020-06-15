@@ -51,10 +51,7 @@
     <?php } ?>
     <?php // Comment Form
     if (!empty($_SESSION)) {   
-       if (!empty($getComment->error)) {
-            echo $getComment->error;
-       }
-
+      
     ?>
         <!--Commentaires-->
         <section class="mb-4 center bg-primary pt-4 rounded" id="contact">

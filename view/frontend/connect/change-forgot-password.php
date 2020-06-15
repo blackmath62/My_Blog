@@ -14,7 +14,6 @@
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-2">Mot de passe oublié?</h1>
-                    <p class="mb-4">Veuillez saisir votre nouveau mot de passe ! </p>
                   </div>
                   <form class="user" action='index.php?action=get_passchange' method='POST' name='changemdp'>
                     <div class="form-group">
@@ -29,7 +28,11 @@
                     <div class="center">
                     <?php
                     if (isset($error)) {
-                      echo $error;
+                      ?>
+                    <div class='center'>
+                      <?= $error; ?>
+                    </div>
+                      <?php
                     }
                     ?>
                     </div>

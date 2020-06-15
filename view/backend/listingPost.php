@@ -55,7 +55,7 @@
                                             </a>
                                         </td>
                                         <!-- Modal HTML embedded directly into document -->
-                                        <div id="delete<?= $postnumber ?>" class="modal visible h-25 text-center">
+                                        <div id="delete<?= $postnumber ?>" class="modal visible h-auto text-center">
                                             <p class="p-2">Veuillez confirmer la suppression</p>
                                             <div class="d-flex justify-content-center flex-column">
                                                 <a href="#" class="btn btn-xl btn-success m-2" rel="modal:close">Non ! je ne veux pas supprimer ce post !</a>

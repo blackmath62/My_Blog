@@ -14,7 +14,7 @@ session_start();
 
 $request = new Request();
 $controllerFront = new ControllerFrontend();
-$controllerBackend = new ControllerBackend(); 
+$controllerBackend = new ControllerBackend();
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise en prod
@@ -144,6 +144,13 @@ if (isset($action)) {
 }
 catch(Exception $e){
         echo 'Erreur : ' . $e->getMessage();
-        require('view\frontend\error.php'); 
-        throw new Exception('Aucun identifiant de billet envoyé');
+        require_once 'view\frontend\error.php'; 
+        throw new Exception('Aucun identifiant envoyé');
 }
+?>
+<script language="javascript" type='text/javascript'>
+    function session(){
+        window.location="index.php?action=connexion"; //page de déconnexion
+    }
+    setTimeout("session()",300000); //ça fait bien 5min??? c'est pour le test
+</script>

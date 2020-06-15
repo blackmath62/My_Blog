@@ -23,7 +23,11 @@
                     <div class="center">
                     <?php
                     if (isset($error)) {
-                      echo $error;
+                      ?>
+                      <div class='center'>
+                      <?= $error ?>
+                      </div>
+                      <?php
                     }
                     ?>
                     </div>

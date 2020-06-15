@@ -7,6 +7,7 @@ use App\Entity\Member;
 use App\config\Request;
 use App\Entity\View;
 use App\Model\ConnexionManager;
+use App\Entity\Error;
 
 class ControllerFrontend
 {
@@ -15,6 +16,7 @@ class ControllerFrontend
     private $user;
     private $blogManager;
     private $connexionManager;
+    private $error;
 
     function __construct()
     {
@@ -23,6 +25,7 @@ class ControllerFrontend
         $this->user = new Member;
         $this->blogManager = new BlogManager();
         $this->connexionManager = new ConnexionManager();
+        $this->error = new Error();
     }
         
     function error()
@@ -33,7 +36,8 @@ class ControllerFrontend
     function connexion() // affichage page connexion avec suppression variable de 
     
     {
-        $this->view->render('frontend/connect', 'loginview', []);
+        $error = 'Veuillez saisir votre identifiant et votre mot de passe';
+        $this->view->render('frontend/connect', 'loginview', ['error' => $error]);
     }
 
     function check_connexion($mail, $mdp) // Contrôler id et mdp et se connecter
@@ -47,28 +51,28 @@ class ControllerFrontend
         $this->user->setUsersId($controlUser['users_id']);
         // contrôler que le mail existe dans la BDD
         if (!$controlUser) {
-            $error = "le mail n'existe pas ";
-            $this->view->render('frontend/connect', 'loginview', []);
+            $error = 'Le mail n\'hesiste pas';
+            $this->view->render('frontend/connect', 'loginview', ['error' => $error]);
         } else {
 
             // le mail a été trouvé une seule fois
             $passwordCorrect = password_verify($this->user->mdp(), $controlUser['mdp']);
             if ($passwordCorrect) {
-                $error = "Connexion réussie ! ";
                 $this->request->getSession()->setter('users_id', $this->user->users_id());
                 $this->request->getSession()->setter('mail', $this->user->mail());
                 $this->request->getSession()->setter('law_id', $controlUser['law_id']);
                 $this->home();
             } else {
-                $error  = "Mot de passe incorrect !";
-                $this->view->render('frontend/connect', 'loginview', []);
+                $error  = "Identifiant ou Mot de passe incorrect !";
+                $this->view->render('frontend/connect', 'loginview', ['error' => $error]);
             }
         }
     }
     // début création compte
     function registerPage() // afficher la vue d'inscription
     {
-        $this->view->render('frontend/connect', 'registerview', []);
+        $error = 'Veuillez renseigner les informations pour la création de votre compte';        
+        $this->view->render('frontend/connect', 'registerview', ['error' => $error]);
     }
 
     function check_register($identity, $mdp, $mdpcontrol, $pseudo) // la fonction pour contrôler si l'utilisateur peut être créé et le créer
@@ -91,21 +95,22 @@ class ControllerFrontend
                     {
                         $this->connexionManager->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
                         $error = " Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet" . '</br';
-                        $this->connexion();
+                        $this->view->render('frontend/connect', 'loginview', ['error' => $error]);
                     } else {
                         $error = "Vos 2 mots de passe ne sont pas identiques";
                     }
                 }
             }
         }
-        $this->view->render('frontend/connect', 'registerview', []);
+        $this->view->render('frontend/connect', 'registerview', ['error' => $error]);
     }
     // fin création compte
 
     // début page mot de passe oublié
     function passforget() // afficher la vue de mot de passe oublié
     {
-        $this->view->render('frontend/connect', 'forgot-password', []);
+        $error = 'Un mail pour réinitialiter votre mot de passe va vous être envoyé';
+        $this->view->render('frontend/connect', 'forgot-password', ['error' => $error]);
     }
     function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Token
     {
@@ -135,20 +140,20 @@ class ControllerFrontend
         } elseif (!$controlUser) {
             $error = "Adresse mail inconnu";
         }
-        $this->view->render('frontend/connect', 'change-forgot-password', []);
+        $this->view->render('frontend/connect', 'change-forgot-password', ['error' => $error]);
     }
 
     function send_Mail_Password() // page pour signaler l'envoi du mail de réinitialisation
     {
         $error = " Nous vous avons envoyé un mail pour réinitialiser votre mot de passe, vous pouvez fermer cette fenêtre" . '</br>' . '</br>';
         $this->home();
-        $this->view->render('frontend', 'pageNoFound', []);
+        $this->view->render('frontend', 'pageNoFound', ['error' => $error]);
     }
 
     function passchange() // Fonction pour demander la saisie du nouveau mot de passe
     {
         $error = 'Veuillez saisir votre nouveau mot de passe';
-        $this->view->render('frontend/connect', 'change-forgot-password', []);
+        $this->view->render('frontend/connect', 'change-forgot-password', ['error' => $error]);
     }
 
     // fonction quand l'utilisateur a changé son mot de passe
@@ -158,26 +163,30 @@ class ControllerFrontend
             $check_id = $this->connexionManager->check_id($idconnect, $controltoken); // appel de la fonction qui vérifie l'existance du mail dans la BDD
             while ($profil = $check_id->fetch()) // on boucle pour récupérer les infos sur l'user
             {
-                if ($profil['token'] == $controltoken) {
+                if ($profil['token'] === $controltoken) {
                     $newpassword = $this->request->post('newmdp');
                     $controlnewpassword = $this->request->post('controlnewmdp');
                     if ($newpassword == $controlnewpassword) {
                         $hashnewpass =  password_hash($newpassword, PASSWORD_DEFAULT); // On hash le token
                         $cleartoken = '';
-                        $error = 'vous avez bien changé de mot de passe';
+                        $error = 'vous avez bien changé de mot de passe, vous pouvez maintenant vous connecter';
                         $this->connexionManager->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
-                        $this->view->render('frontend/connect', 'loginview', []);
-                        return;
+                        $this->view->render('frontend/connect', 'loginview', ['error' => $error]);
                     }
+                    if($newpassword !== $controlnewpassword){
                     $error = 'Les mots de passes ne sont pas identiques';
-                    return;
+                    $this->view->render('frontend/connect', 'change-forgot-password', ['error' => $error]);
+                    }
                 }
-                $error = 'Vous avez déjà changé votre mot de passe, rendez vous à la page de connexion';
-                $this->view->render('frontend/connect', 'loginview', []);
-                return;
+                
             }
+            if(!isset($profil['token'])){
+                $error = 'Vous aviez déjà changé votre mot de passe, vous pouvez vous connecter';
+                $this->view->render('frontend/connect', 'loginview', ['error' => $error]);
+                }
         }
-        $this->view->render('frontend/connect', 'change-forgot-password', []);
+        $error = 'Veuillez saisir votre identifiant et votre mot de passe';
+        $this->view->render('frontend/connect', 'loginview', []);
     }
     // fin page mot de passe oublié
     //  end connexion function
@@ -197,7 +206,6 @@ class ControllerFrontend
 
         mail("jpochet@lhermitte.fr", "Vous avez reçu un nouveau message en provenance du Blog", "Objet:" . $subject . "</br>" . "</br>" . "Envoyé par: " . $name . "</br>" . "</br>" . "Adresse mail: " . $mail . "</br>" . "</br>" . "Message: " . "</br>" . nl2br($message), $header);
         $this->home();
-        /*require 'view/frontend/mail.php';*/
     }
     function allPost() // Chapo post list
     {
@@ -212,7 +220,7 @@ class ControllerFrontend
         $this->longPost($postnumber);
     }
 
-    function home() // home page 3 last chapo post
+    function home() // homepage 3 last chapo post
     {
         $homePageChapo = $this->blogManager->lastPost();
         $this->view->render('frontend', 'templateFrontend', ['homePageChapo' => $homePageChapo]);
