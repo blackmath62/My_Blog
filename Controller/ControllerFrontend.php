@@ -24,10 +24,10 @@ class ControllerFrontend
         $this->blogManager = new BlogManager();
         $this->connexionManager = new ConnexionManager();
     }
-    
-    function pageNoFound()
+        
+    function error()
     {
-        $this->view->render('frontend/connect', 'pageNoFound', []);
+        $this->view->render('frontend/connect', 'error', []);
     }
     // connexion function
     function connexion() // affichage page connexion avec suppression variable de 
@@ -78,7 +78,6 @@ class ControllerFrontend
             $mailconnect = htmlspecialchars($identity);  //on déclare les variables
             $mdpconnect = password_hash($mdp, PASSWORD_DEFAULT); // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
             $check_connect = $this->connexionManager->checkMailExist($mailconnect); // on vérifie si le compte n'existe pas déjà
-            //$mailExist = $check_connect->rowCount(); // compter le nombre de ligne 
             $check_pseudo = $this->connexionManager->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
             $pseudoExist = $check_pseudo->rowCount(); // compter le nombre de ligne
             if ($check_connect) {

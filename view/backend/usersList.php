@@ -29,11 +29,11 @@
                                 $lawnumber = $allLaw->rowCount(); // compter le nombre de ligne
 
                                 foreach ($allUsers as $user) {
-                                    $usersId = $user->users_id;
-                                    $usersMail = $user->mail;
-                                    $pseudo = $user->Pseudo;
-                                    $usersdate = $user->create_date_users;
-                                    $usersLawId = $user->law_id;
+                                    $usersId = htmlspecialchars($user->users_id);
+                                    $usersMail = htmlspecialchars($user->mail);
+                                    $pseudo = htmlspecialchars($user->Pseudo);
+                                    $usersdate = htmlspecialchars($user->create_date_users);
+                                    $usersLawId = htmlspecialchars($user->law_id);
                                     ?>
                                     <tr>
                                         <td class="text-center">

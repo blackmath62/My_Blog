@@ -24,14 +24,14 @@
                                 $i = 1;
                                 // todo renommer les fonctions
                                 foreach ($ListPosts as $PostList) {
-                                    $title = $PostList->post_title;
-                                    $datepost = $PostList->post_date;
-                                    $postmessage = $PostList->post_content;
-                                    $chapo = $PostList->post_chapo;
-                                    $postnumber = $PostList->post_id;
-                                    $postuser = $PostList->users_id;
-                                    $modificationDate = $PostList->modification_date;
-                                    $pseudo = $PostList->Pseudo;
+                                    $title = htmlspecialchars($PostList->post_title);
+                                    $datepost = htmlspecialchars($PostList->post_date);
+                                    $postmessage = htmlspecialchars($PostList->post_content);
+                                    $chapo = htmlspecialchars($PostList->post_chapo);
+                                    $postnumber = htmlspecialchars($PostList->post_id);
+                                    $postuser = htmlspecialchars($PostList->users_id);
+                                    $modificationDate = htmlspecialchars($PostList->modification_date);
+                                    $pseudo = htmlspecialchars($PostList->Pseudo);
 
                                 ?>
                                     <tr class="center phone-special p-4" id="<?= $i ?>" data-target="#postId<?= $postnumber ?>" data-toggle="modal">

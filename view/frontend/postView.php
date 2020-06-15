@@ -36,14 +36,14 @@
                     </div>-->
                     <div class="col-md-10">
                         <div class="d-flex flex-column">
-                            <p><a class="text-primary"><strong><?= htmlspecialchars($commentTitle) ?></strong></a></p>
+                            <p><a class="text-primary"><strong><?= $commentTitle ?></strong></a></p>
                             <p><?= nl2br($commentMessage) ?></p>
                         </div>
                         <!--Pour avoir les sauts de ligne à l'affichage-->
 
                     </div>
                     <div class="card-footer w-100 center">
-                        <p class="text-secondary text-center">Commentaire du <?= htmlspecialchars($dateComment) ?> par <?= htmlspecialchars($commentPseudo) ?></p>
+                        <p class="text-secondary text-center">Commentaire du <?= $dateComment ?> par <?= $commentPseudo ?></p>
                     </div>
                 </div>
             </div>
@@ -51,9 +51,9 @@
     <?php } ?>
     <?php // Comment Form
     if (!empty($_SESSION)) {   
-        if (!empty($getComment->error)) {
+       if (!empty($getComment->error)) {
             echo $getComment->error;
-        }
+       }
 
     ?>
         <!--Commentaires-->
@@ -63,7 +63,7 @@
             <div class="row">
                 <!--Grid column-->
                 <div class="col-md-9 mb-md-0 mb-5 mx-auto">
-                    <form id="contact-form" name="contact-form" action="index.php?action=commentaire&id=<?= htmlspecialchars($getLongPost->post_id) ?>" method="POST">
+                    <form id="contact-form" name="contact-form" action="index.php?action=commentaire&id=<?= $getLongPost->post_id ?>" method="POST">
                         <!--Grid row-->
                         <div class="row">
                             <div class="col-md-12">

@@ -4,9 +4,11 @@ use App\Entity\Autoloader;
 use App\config\Request;
 use App\Controller\ControllerBackend;
 use App\Controller\ControllerFrontend;
+use Exception;
 
 require 'Entity/Autoloader.php';
 
+try{
 Autoloader::registerAutoload();
 session_start();
 
@@ -139,4 +141,9 @@ if (isset($action)) {
         $controllerFront->home();
 }
 
-
+}
+catch(Exception $e){
+        echo 'Erreur : ' . $e->getMessage();
+        require('view\frontend\error.php'); 
+        throw new Exception('Aucun identifiant de billet envoyé');
+}
