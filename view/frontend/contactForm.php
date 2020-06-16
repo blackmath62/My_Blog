@@ -48,7 +48,6 @@
                             <label for="message" class="pt-3">Message</label>
                             <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea>
                         </div>
-
                     </div>
                 </div>
                 <!--Grid row-->

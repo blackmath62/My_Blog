@@ -22,17 +22,7 @@
                       <input type="password" name='mdpconnect' class="form-control form-control-user" id="exampleInputPassword" placeholder="Mot de passe">
                     </div>
                     <input type="submit" name='Valider' value='Se connecter' class="btn btn-primary btn-user btn-block">
-                    <?php
-                    if (isset($error)) {
-                      ?>
-                      <div class='center'>
-                      <?=$error ?>
-                      </div>
-                    <?php
-                    }
-                    ?>
                     <hr>
-
                   </form>
                   <hr>
                   <div class="text-center">
@@ -50,5 +40,5 @@
       </div>
 
     </div>
-    </section>
-  </div>
+  </section>
+</div>

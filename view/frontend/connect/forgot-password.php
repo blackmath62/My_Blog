@@ -21,15 +21,6 @@
                     </div>
                     <input type="submit" value='Réinitialiser le mot de passe par mail' class="btn btn-primary btn-user btn-block">
                     <div class="center">
-                    <?php
-                    if (isset($error)) {
-                      ?>
-                      <div class='center'>
-                      <?= $error ?>
-                      </div>
-                      <?php
-                    }
-                    ?>
                     </div>
                   </form>
                   <hr>

@@ -26,15 +26,6 @@
                       <input type="submit" value='Changer le mot de passe' class="btn btn-primary btn-user btn-block">
                     </div>
                     <div class="center">
-                    <?php
-                    if (isset($error)) {
-                      ?>
-                    <div class='center'>
-                      <?= $error; ?>
-                    </div>
-                      <?php
-                    }
-                    ?>
                     </div>
                   </form>
                   <hr>

@@ -33,7 +33,7 @@
   <!-- Content Wrapper -->
   <div id="content-wrapper" class="d-flex flex-column">
     <?php include_once 'Header.php'; ?>
-    <!-- Main Content -->
+  <!-- Main Content -->
     <div id="content">
     <?=$content ?>
       <?php include_once 'Footer.php' ?>
@@ -80,7 +80,6 @@
     });
   });
 </script>
-
 </body>
 
 </html>
