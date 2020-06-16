@@ -127,7 +127,6 @@ class ControllerFrontend
         $userId = $controlUser['users_id'];
         if ($controlUser) // si l'user est trouvé c'est qu'il existe
         {
-            $error = $mailconnect;
             $receivetoken = $this->connexionManager->getTokenpassforget($mailconnect); // appel du model qui prépare l'injection du Token
             $Token = $controlUser['mail'] . $userId . $controlUser['law_id']; // le mot de passe de connexion est le mot de passe renseigné Hachage du mot de passe
             $hash_Token = password_hash($Token, PASSWORD_DEFAULT); // On hash le token
