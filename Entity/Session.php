@@ -12,7 +12,7 @@ class Session{
     public function flash(){
         if(isset($_SESSION['flash'])){
             ?>
-            <div class="alert alert-<?=$_SESSION['flash']['type'];?> alert-dismissible fade show fixed-bottom" role="alert">
+            <div class="alert alert-<?=$_SESSION['flash']['type'];?> alert-dismissible fade show fixed-bottom" id='monAlert' role="alert">
                 <strong><?php echo $_SESSION['flash']['message'];?></strong>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -23,4 +23,5 @@ class Session{
         }
     }
 }
+?>
                 

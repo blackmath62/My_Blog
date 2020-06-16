@@ -75,7 +75,7 @@ class ControllerBackend
     function ChangeLawUser($idLaw, $idUser)
     {
         $this->adminManager->getChangeLawUser($idLaw, $idUser);
-        $this->session->setFlash("L'utilisateur a bien changé de droit","success");
+        $this->session->setFlash("L&rsquo;utilisateur a bien changé de droit","success");
         $this->session->flash();
         $this->adminManager->getLawList();
         $this->usersList();
@@ -84,7 +84,7 @@ class ControllerBackend
     function deleteUser($idUser)
     {
         $this->adminManager->deleteUser($idUser);
-        $this->session->setFlash("L'utilisateur a bien été supprimé","success");
+        $this->session->setFlash("L&rsquo;utilisateur a bien été supprimé","success");
         $this->session->flash();
         $this->adminManager->getLawList();
         $this->usersList();

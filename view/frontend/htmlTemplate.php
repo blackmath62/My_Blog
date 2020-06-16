@@ -44,7 +44,7 @@
 
   <!-- End of Page Wrapper -->
   <!-- jQuery -->
-
+  <script type="text/javascript" src="public/js/main.js"></script>
  <!-- Bootstrap core JavaScript -->
  <script src="public/vendor/jquery/jquery.min.js"></script>
   <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
