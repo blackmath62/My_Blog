@@ -32,7 +32,6 @@
                              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                  <?php echo $_SESSION['mail']; ?> </a>
                              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                 <a class="dropdown-item" href="index.php?action=monCompte">Mon compte</a>
                                  <?php
                                     if (!empty($_SESSION) AND !empty($_SESSION['law_id'])) {
                                         if ($_SESSION['law_id'] == 1) { ?>

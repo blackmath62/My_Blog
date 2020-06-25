@@ -43,8 +43,6 @@
   </div>
 
   <!-- End of Page Wrapper -->
-  <!-- jQuery -->
-  <script type="text/javascript" src="public/js/main.js"></script>
  <!-- Bootstrap core JavaScript -->
  <script src="public/vendor/jquery/jquery.min.js"></script>
   <script src="public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -60,12 +58,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
+<script type="text/javascript" src="public/js/main.js"></script>
+
 <script src="public/vendor/datatables/jquery.dataTables.js"></script>
 <script src="public/vendor/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- AdminLTE App -->
 <script src="public/vendor/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="public/vendor/dist/js/demo.js"></script>
+
 <!-- page script -->
 <script>
   $(function () {

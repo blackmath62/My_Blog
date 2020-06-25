@@ -30,30 +30,30 @@ if (isset($action)) {
                         $controllerFront->connexion($request->stopSession());
                         break;
                 case 'check_connexion':
-                        $mail = $request->post('identifiant');
-                        $mdp = $request->post('mdpconnect');
+                        $mail = filter_var($request->post('identifiant'),FILTER_VALIDATE_EMAIL);
+                        $mdp = filter_var($request->post('mdpconnect'), FILTER_SANITIZE_STRING);
                         $controllerFront->check_connexion($mail,$mdp);
                         break;
                 case 'inscription':
                         $controllerFront->registerPage();
                         break;
                 case 'check_register':
-                        $identity = $request->post('identifiant');
-                        $mdp = $request->post('mdpconnect');
-                        $mdpcontrol = $request->post('mdp_register_verif');
-                        $pseudo = $request->post('pseudo');
+                        $identity = filter_var($request->post('identifiant'),FILTER_VALIDATE_EMAIL);
+                        $mdp = filter_var($request->post('mdpconnect'), FILTER_SANITIZE_STRING);
+                        $mdpcontrol = filter_var($request->post('mdp_register_verif'), FILTER_SANITIZE_STRING);
+                        $pseudo = filter_var($request->post('pseudo'), FILTER_SANITIZE_STRING);
                         $controllerFront->check_register($identity,$mdp,$mdpcontrol,$pseudo);
                         break;
                 case 'passforget':
                         $controllerFront->passforget();
                         break;
                 case 'get_passforget':
-                        $mail = $request->post('identifiant');
+                        $mail = filter_var($request->post('identifiant'), FILTER_VALIDATE_EMAIL);
                         $controllerFront->get_passforget($mail);
                         break;
                 case 'passchange':
-                        $idconnect = $request->get('id');
-                        $controltoken = $request->get('token');
+                        $idconnect = filter_var($request->get('id'), FILTER_VALIDATE_INT);
+                        $controltoken = filter_var($request->get('token'), FILTER_SANITIZE_STRING);
                         $request->getSession()->setter('users_id', $idconnect);
                         $request->getSession()->setter('token', $controltoken);
                         $controllerFront->passchange();
@@ -71,24 +71,24 @@ if (isset($action)) {
                         $controllerFront->allPost();
                         break;
                 case 'longPost':
-                        $postnumber = $request->get('id');
+                        $postnumber = filter_var($request->get('id'), FILTER_VALIDATE_INT);
                         $controllerFront->longPost($postnumber);
                         break;
                 case 'admin':
                         $controllerBackend->getAdmin();
                         break;
                 case 'commentaire':
-                        $title = $request->post('subject');
-                        $content = $request->post('message');
-                        $postId = $request->get("id");
-                        $usersId = $request->session('users_id');
+                        $title = filter_var($request->post('subject'), FILTER_SANITIZE_STRING);
+                        $content = filter_var($request->post('message'), FILTER_SANITIZE_STRING);
+                        $postId = filter_var($request->get("id"),FILTER_VALIDATE_INT);
+                        $usersId = filter_var($request->session('users_id'),FILTER_VALIDATE_INT);
                         $controllerFront->getComment($title,$content, $postId, $usersId);
                         break;
                 case 'newPost':
                         if(!empty($request->post('subject'))){
-                        $title = $request->post('subject');
-                        $content = $request->post('message');
-                        $usersId = $request->session('users_id');
+                        $title = filter_var($request->post('subject'), FILTER_SANITIZE_STRING);
+                        $content = filter_var($request->post('message'), FILTER_SANITIZE_STRING);
+                        $usersId = filter_var($request->session('users_id'),FILTER_VALIDATE_INT);
                         $controllerBackend->newPost($title, $content, $usersId);
                         } else {
                         $controllerBackend->viewNewPost();
@@ -98,40 +98,40 @@ if (isset($action)) {
                         $controllerBackend->listingPost();
                         break;
                 case 'deletePost':
-                        $postnumber = $request->get('id');
+                        $postnumber = filter_var($request->get('id'),FILTER_VALIDATE_INT);
                         $controllerBackend->deletePost($postnumber);
                         break;
                 case 'changePost':
-                        $postnumber = $request->get('id');
+                        $postnumber = filter_var($request->get('id'),FILTER_VALIDATE_INT);
                         $controllerBackend->changePost($postnumber);
                         break;
                 case 'updatePost':
-                        $postnumber = $request->get('id');
-                        $subject = $request->post('subject');
-                        $message = $request->post('message');
+                        $postnumber = filter_var($request->get('id'),FILTER_VALIDATE_INT);
+                        $subject = filter_var($request->post('subject'),FILTER_SANITIZE_STRING);
+                        $message = filter_var($request->post('message'),FILTER_SANITIZE_STRING);
                         $controllerBackend->updatePost($postnumber, $subject, $message);
                         break;
                 case 'usersList':
                         $controllerBackend->usersList();
                         break;
                 case 'changeLawUser':
-                        $idLaw = $request->get('id');
-                        $idUser = $request->get('userid');
+                        $idLaw = filter_var($request->get('id'),FILTER_VALIDATE_INT);
+                        $idUser = filter_var($request->get('userid'),FILTER_VALIDATE_INT);
                         $controllerBackend->ChangeLawUser($idLaw, $idUser);
                         break;
                 case 'deleteUser':
                         $controllerBackend->deleteUser($request->get('userid'));
                         break;
                 case 'mail':
-                        $name = $request->post('name');
-                        $mail = $request->post('email');
-                        $subject = $request->post('subject');
-                        $message = $request->post('message');
+                        $name = filter_var($request->post('name'),FILTER_SANITIZE_STRING);
+                        $mail = filter_var($request->post('email'),FILTER_VALIDATE_EMAIL);
+                        $subject = filter_var($request->post('subject'),FILTER_SANITIZE_STRING);
+                        $message = filter_var($request->post('message'),FILTER_SANITIZE_STRING);
                         $controllerFront->contact_me($name,$mail,$subject,$message);
                         break;
                 case 'changeStatusComment':
-                        $commentId = $request->get('id');
-                        $validateId = $request->get('modification');
+                        $commentId = filter_var($request->get('id'),FILTER_VALIDATE_INT);
+                        $validateId = filter_var($request->get('modification'),FILTER_SANITIZE_STRING);
                         $controllerBackend->changeStatusComment($commentId,$validateId);
                         break;
         }

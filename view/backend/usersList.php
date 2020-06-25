@@ -8,7 +8,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped table-responsive-lg vertical-align-center">
                             <thead>
                                 <tr>
                                     <th class="text-center"><span>Utilisateur</span></th>

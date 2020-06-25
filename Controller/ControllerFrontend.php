@@ -36,8 +36,6 @@ class ControllerFrontend
     function connexion() // affichage page connexion avec suppression variable de 
     
     {
-        $this->session->setFlash("Veuillez saisir votre identifiant et votre mot de passe","success");
-        $this->session->flash();
         $this->view->render('frontend/connect', 'loginview', []);
     }
 
@@ -52,9 +50,8 @@ class ControllerFrontend
         $this->user->setUsersId($controlUser['users_id']);
         // contrôler que le mail existe dans la BDD
         if (!$controlUser) {
+            $this->connexion();
             $this->session->setFlash("Le mail n&rsquo;existe pas","danger");
-            $this->session->flash();
-            $this->view->render('frontend/connect', 'loginview', []);
         } else {
 
             // le mail a été trouvé une seule fois
@@ -65,18 +62,18 @@ class ControllerFrontend
                 $this->request->getSession()->setter('law_id', $controlUser['law_id']);
                 $this->home();
             } else {
-                $this->session->setFlash("Identifiant ou Mot de passe incorrect !","danger");
-                $this->session->flash();
                 $this->view->render('frontend/connect', 'loginview', []);
+                $this->session->setFlash("Identifiant ou Mot de passe incorrect !","danger");
             }
         }
+        $this->session->flash();
     }
     // début création compte
     function registerPage() // afficher la vue d'inscription
-    {
-        $this->session->setFlash("Veuillez renseigner les informations pour la création de votre compte","info");
-        $this->session->flash();      
+    {    
         $this->view->render('frontend/connect', 'registerview', []);
+        $this->session->setFlash("Veuillez renseigner les informations pour la création de votre compte","info");
+        $this->session->flash();  
     }
 
     function check_register($identity, $mdp, $mdpcontrol, $pseudo) // la fonction pour contrôler si l'utilisateur peut être créé et le créer
@@ -89,37 +86,33 @@ class ControllerFrontend
             $check_pseudo = $this->connexionManager->checkPseudoExist($pseudo); // on vérifie si le compte n'existe pas déjà
             $pseudoExist = $check_pseudo->rowCount(); // compter le nombre de ligne
             if ($check_connect) {
-                $this->session->setFlash("Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.","danger");
-                $this->session->flash();   
+                $this->session->setFlash("Le mail est déjà utilisé, veuillez choisir un autre mail ou vous connecter.","danger"); 
             } elseif (!$check_connect) {
 
                 if ($pseudoExist) {
                     $this->session->setFlash("Le pseudo est déjà utilisé, veuillez choisir un autre pseudo ou vous connecter.","danger");
-                    $this->session->flash(); 
                 } elseif (!$pseudoExist) {
                     if ($mdp == $mdpcontrol) //si les 2 mots de passes sont identiques
                     {
                         $this->connexionManager->addRegister($mailconnect, $pseudo, $mdpconnect); // création de compte
                         $this->session->setFlash("Nous avons créé votre compte " . $pseudo . " ! L'administrateur va débloquer votre compte pour que vous puissiez ajouter des commentaires sur le site internet","success");
-                        $this->session->flash();  
-                        $this->view->render('frontend/connect', 'loginview', []);
                     } else {
                         $this->session->setFlash("Vos 2 mots de passe ne sont pas identiques","danger");
-                        $this->session->flash(); 
                     }
                 }
             }
         }
         $this->view->render('frontend/connect', 'registerview', []);
+        $this->session->flash(); 
     }
     // fin création compte
 
     // début page mot de passe oublié
     function passforget() // afficher la vue de mot de passe oublié
-    {
-        $this->session->setFlash("Un mail pour réinitialiter votre mot de passe va vous être envoyé","success");
-        $this->session->flash(); 
+    { 
         $this->view->render('frontend/connect', 'forgot-password', []);
+        $this->session->setFlash("Un mail pour réinitialiter votre mot de passe va vous être envoyé","success");
+        $this->session->flash();
     }
     function get_passforget($mailconnect) // Contrôle et envoi du mail avec le Token
     {
@@ -144,27 +137,25 @@ class ControllerFrontend
                 . '</br>' . '</br>' . 'Cdt,';
 
             mail("$mailconnect", "Réinitialité votre mot de passe", $message, $header);
-            $this->connexion();
         } elseif (!$controlUser) {
             $this->session->setFlash("Adresse mail inconnu","danger");
-            $this->session->flash(); 
+            $this->session->flash();
         }
-        $this->view->render('frontend/connect', 'change-forgot-password', []);
+        $this->send_Mail_Password();
     }
 
     function send_Mail_Password() // page pour signaler l'envoi du mail de réinitialisation
     {
+        $this->connexion();
         $this->session->setFlash("Nous vous avons envoyé un mail pour réinitialiser votre mot de passe, vous pouvez fermer cette fenêtre","info");
         $this->session->flash(); 
-        $this->home();
-        $this->view->render('frontend', 'pageNoFound', []);
     }
 
     function passchange() // Fonction pour demander la saisie du nouveau mot de passe
     {
+        $this->view->render('frontend/connect', 'change-forgot-password', []);
         $this->session->setFlash("Veuillez saisir votre nouveau mot de passe","info");
         $this->session->flash(); 
-        $this->view->render('frontend/connect', 'change-forgot-password', []);
     }
 
     // fonction quand l'utilisateur a changé son mot de passe
@@ -180,28 +171,23 @@ class ControllerFrontend
                     if ($newpassword == $controlnewpassword) {
                         $hashnewpass =  password_hash($newpassword, PASSWORD_DEFAULT); // On hash le token
                         $cleartoken = '';
-                        $this->session->setFlash("Vous avez bien changé de mot de passe, vous pouvez maintenant vous connecter","success");
-                        $this->session->flash(); 
                         $this->connexionManager->changepass($idconnect, $hashnewpass, $cleartoken); // appel du model qui prépare l'injection du Token
-                        $this->view->render('frontend/connect', 'loginview', []);
+                        $this->session->setFlash("Vous avez bien changé de mot de passe, vous pouvez maintenant vous connecter","success"); 
                     }
                     if($newpassword !== $controlnewpassword){
-                    $this->session->setFlash("Les mots de passes ne sont pas identiques","danger");
-                    $this->session->flash();
                     $this->view->render('frontend/connect', 'change-forgot-password', []);
+                    $this->session->setFlash("Les mots de passes ne sont pas identiques","danger");
                     }
                 }
                 
             }
             if(!isset($profil['token'])){
                 $this->session->setFlash("Vous aviez déjà changé votre mot de passe, vous pouvez vous connecter","danger");
-                $this->session->flash();
-                $this->view->render('frontend/connect', 'loginview', []);
                 }
         }
+        $this->view->render('frontend/connect', 'loginview', []);
         $this->session->setFlash("Veuillez saisir votre identifiant et votre mot de passe","info");
         $this->session->flash();
-        $this->view->render('frontend/connect', 'loginview', []);
     }
     // fin page mot de passe oublié
     //  end connexion function
@@ -220,9 +206,9 @@ class ControllerFrontend
         $header .= 'Content-Transfer-Encoding: 8bit';
 
         mail("jpochet@lhermitte.fr", "Vous avez reçu un nouveau message en provenance du Blog", "Objet:" . $subject . "</br>" . "</br>" . "Envoyé par: " . $name . "</br>" . "</br>" . "Adresse mail: " . $mail . "</br>" . "</br>" . "Message: " . "</br>" . nl2br($message), $header);
+        $this->home();
         $this->session->setFlash("Votre message a bien été envoyé, Nous nous efforcons de vous répondre dans les plus bref délais","success");
         $this->session->flash();
-        $this->home();
     }
     function allPost() // Chapo post list
     {
@@ -232,10 +218,10 @@ class ControllerFrontend
     function getComment($title, $content, $postId, $usersId)
     {
         $this->blogManager->addComment($title, $content, $postId, $usersId);
-        $this->session->setFlash("Votre commentaire est soumis à un modérateur, nous faisons au plus vite ...","success");
-        $this->session->flash();
         $postnumber = $this->request->get('id');
         $this->longPost($postnumber);
+        $this->session->setFlash("Votre commentaire est soumis à un modérateur, nous faisons au plus vite ...","success");
+        $this->session->flash();
     }
 
     function home() // homepage 3 last chapo post

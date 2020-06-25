@@ -7,8 +7,8 @@
                         <h3 class="card-title text-center">Liste des commentaires</h3>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                    <div class="card-body table-responsive-lg">
+                        <table id="example1" class="table table-bordered table-striped ">
                             <thead>
                                 <tr>
                                 <th class="phone text-center">Id</th>    
@@ -23,15 +23,15 @@
                                 $i = 0;
                                 // todo voir pour récupérer le mail au lieu de l'ID = $commentUser = $chapoPostList->users_id()
                                 foreach ($allComment as $commentList) {
-                                    $title = htmlspecialchars($commentList->comment_title);
-                                    $dateComment = htmlspecialchars($commentList->comment_date);
-                                    $commentMessage = htmlspecialchars($commentList->comment_content);
-                                    $commentNumber = htmlspecialchars($commentList->comment_id);
-                                    $commentUser = htmlspecialchars($commentList->users_id);
-                                    $treatmentDate = htmlspecialchars($commentList->treatment_date);
-                                    $status = htmlspecialchars($commentList->validation_label);
-                                    $statusId = htmlspecialchars($commentList->validate_id);
-                                    $pseudo = htmlspecialchars($commentList->Pseudo);
+                                    $title = $commentList->comment_title;
+                                    $dateComment = $commentList->comment_date;
+                                    $commentMessage = $commentList->comment_content;
+                                    $commentNumber = $commentList->comment_id;
+                                    $commentUser = $commentList->users_id;
+                                    $treatmentDate = $commentList->treatment_date;
+                                    $status = $commentList->validation_label;
+                                    $statusId = $commentList->validate_id;
+                                    $pseudo = $commentList->Pseudo;
 
                                 ?>
                                     <tr class="center phone-special p-4" id="<?= $i ?>" data-target="#postId<?= $commentNumber ?>" data-toggle="modal">
@@ -45,7 +45,7 @@
                                         <td class="text-center d-flex">
                                         <div class="d-flex flex-column">
                                         <p class="phone text-center"><?= $status . "</br> le " . $treatmentDate ?></p>
-                                        <div class="d-flex flex-row">    
+                                        <div class="d-flex flex-row justify-content-center">    
                                         <a href="index.php?action=changeStatusComment&id=<?= $commentNumber ?>&modification=2" class="table-link">
                                                 <span class="fa-stack ml-2 m-1">
                                                     <i class="fa fa-square fa-stack-2x"></i>

@@ -15,6 +15,9 @@
                                     <a href="https://www.facebook.com/quepuisjefairepour.nous" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook fa-2x"></i></a>
                                 </li>
                                 <li>
+                                    <a href="https://github.com/blackmath62?tab=repositories" class="btn-social btn-outline"><i class="fa fa-fw fa-github fa-2x"></i></a>
+                                </li>
+                                <li>
                                     <a href="https://twitter.com/Jardinew62" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter fa-2x"></i></a>
                                 </li>
                                 <li>

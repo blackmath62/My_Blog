@@ -17,6 +17,7 @@
             </div>
         </div>
     </section>
+    <h2 class="text-center">Commentaires:</h2>
     <?php
     // todo voir pour récupérer le mail au lieu de l'ID = $commentUser = $comment->users_id();
     foreach ($listCommentToPost as $comment) {

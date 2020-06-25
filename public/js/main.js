@@ -1,7 +1,8 @@
-JQuery(function($) {
+jQuery(function($) {
 
     var monAlert = $('#monAlert');
+    console.log(monAlert);
     if (monAlert.length > 0) {
-        monAlert.hide().slideUp(500).delay(3000).slideDown();
+        monAlert.hide().slideDown(500).delay(3000).slideUp();
     }
 });
