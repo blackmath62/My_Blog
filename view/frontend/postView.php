@@ -1,18 +1,18 @@
 <div class="container ">
     <section class="page-section">
         <!-- Blog Post -->
-        <div class="text-center border" id="<?= htmlspecialchars($getLongPost->post_id) ?>">
+        <div class="text-center border" id="<?= $getLongPost->post_id ?>">
             <!--<img class="card-img-top" src="public/img/oc.png" alt="Card image cap"> -->
-            <h2 class="card-title btn-primary rounded p-2"><?= htmlspecialchars($getLongPost->post_title) ?></h2>
+            <h2 class="card-title btn-primary rounded p-2"><?= $getLongPost->post_title ?></h2>
             <div class="card-body">
-                <p class="card-text"><?= nl2br(htmlspecialchars($getLongPost->post_content)) ?></p>
+                <p class="card-text"><?= nl2br($getLongPost->post_content) ?></p>
             </div>
             <div class="text-muted card-footer d-flex">
-                <p class="mr-auto p-2">Posté le <?= htmlspecialchars($getLongPost->post_date) ?> par <?= htmlspecialchars($getLongPost->Pseudo) ?></p>
+                <p class="mr-auto p-2">Posté le <?= $getLongPost->post_date ?> par <?= $getLongPost->Pseudo ?></p>
                 <?php
-                if (!empty(htmlspecialchars($getLongPost->modification_date))) {
+                if (!empty($getLongPost->modification_date)) {
                 ?>
-                    <p class="mr-right p-2">Modifié le <?= htmlspecialchars($getLongPost->modification_date) ?> par <?= htmlspecialchars($getLongPost->Pseudo) ?></p>
+                    <p class="mr-right p-2">Modifié le <?= $getLongPost->modification_date ?> par <?= $getLongPost->Pseudo ?></p>
                 <?php } ?>
             </div>
         </div>
@@ -21,13 +21,13 @@
     <?php
     // todo voir pour récupérer le mail au lieu de l'ID = $commentUser = $comment->users_id();
     foreach ($listCommentToPost as $comment) {
-        $commentId = htmlspecialchars($comment->comment_id);
-        $commentValidateId = htmlspecialchars($comment->validate_id);
-        $commentTitle = htmlspecialchars($comment->comment_title);
-        $dateComment = htmlspecialchars($comment->comment_date);
-        $commentMessage = htmlspecialchars($comment->comment_content);
-        $commentUser = htmlspecialchars($comment->users_id);
-        $commentPseudo = htmlspecialchars($comment->Pseudo);
+        $commentId = $comment->comment_id;
+        $commentValidateId = $comment->validate_id;
+        $commentTitle = $comment->comment_title;
+        $dateComment = $comment->comment_date;
+        $commentMessage = $comment->comment_content;
+        $commentUser = $comment->users_id;
+        $commentPseudo = $comment->Pseudo;
     ?>
         <div class="card card-inner mb-4">
             <div class="card-body pb-0">

@@ -29,6 +29,7 @@
                         <div class="footer-col col-md-4">
                             <h3 class="m-4">à propos</h3>
                             <p>C'est avec plaisir que nous discuterons de votre projet : <a href=mailto:jpochet@lhermitte.fr>jpochet@jpochet.fr</a>.</p>
+                            <a href="https://app.codacy.com/manual/blackmath62/My_Blog/dashboard?bid=17609776" class="btn-social btn-outline">Vous Pouvez consulter mon Codacy Ici !</a>
                             <?php 
                             if(!empty($_SESSION) AND (!empty($_SESSION['law_id']))) {
                             if($_SESSION['law_id'] == 1){ ?>

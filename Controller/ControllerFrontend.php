@@ -198,7 +198,6 @@ class ControllerFrontend
 
     function contact_me($name, $mail, $subject, $message) // Formulaire de contact
     {
-
         // Envoyer un mail
         $header = "MIME-Version: 1.0\r\n";
         $header .= 'From:"Jpochet"<jpochet@lhermitte.fr>' . "\n";
@@ -217,11 +216,18 @@ class ControllerFrontend
     }
     function getComment($title, $content, $postId, $usersId)
     {
+        $checkPostId = $this->blogManager->checkPost($postId);
+        if(!$checkPostId){
+            $this->session->setFlash("Je ne trouve pas ce post, cherchez plutôt dans ceux ci !","danger");
+        $this->allPost();
+        $this->session->flash();    
+        }else{
         $this->blogManager->addComment($title, $content, $postId, $usersId);
         $postnumber = $this->request->get('id');
         $this->longPost($postnumber);
         $this->session->setFlash("Votre commentaire est soumis à un modérateur, nous faisons au plus vite ...","success");
         $this->session->flash();
+        }
     }
 
     function home() // homepage 3 last chapo post
@@ -231,9 +237,16 @@ class ControllerFrontend
     }
     function longPost($postnumber) // Long Post view
     {
+        $checkPostId = $this->blogManager->checkPost($postnumber);
+        if(!$checkPostId){
+            $this->session->setFlash("Je ne trouve pas ce post, cherchez plutôt dans ceux ci !","danger");
+        $this->allPost();
+        $this->session->flash();    
+        }else{
         $GetLongPost = $this->blogManager->getLongPost($postnumber); // affichage du post entier
         $listCommentToPost = $this->blogManager->postComment($postnumber); // affichage des commentaires validés
         $this->view->render('frontend', 'postView', ['getLongPost' => $GetLongPost, 'listCommentToPost' =>$listCommentToPost ]);
+        }
     }
     // end site page function
 }

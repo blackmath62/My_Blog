@@ -15,7 +15,7 @@ session_start();
 $request = new Request();
 $controllerFront = new ControllerFrontend();
 $controllerBackend = new ControllerBackend();
-        
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1); // Afficher plus d'erreur a retirer pour la mise en prod
 
@@ -95,6 +95,7 @@ if (isset($action)) {
                         }
                         break;
                 case 'listingPost':
+
                         $controllerBackend->listingPost();
                         break;
                 case 'deletePost':
@@ -134,6 +135,7 @@ if (isset($action)) {
                         $validateId = filter_var($request->get('modification'),FILTER_SANITIZE_STRING);
                         $controllerBackend->changeStatusComment($commentId,$validateId);
                         break;
+                default:$controllerFront->home();
         }
 } else {
         $controllerFront->home();

@@ -11,6 +11,13 @@ class BlogManager extends Manager // la classe CommentManager hérite de Manager
     {
         $this->bdd =  $this->bddConnect();
     }
+    public function checkPost($postnumber)
+    {
+        $check = $this->bdd->prepare("SELECT post_id FROM post_list WHERE post_id = ?");
+        $check->execute(array($postnumber));
+        $exec = $check->fetch();
+        return $exec;
+    }
     public function lastPost() // affichage des 3 derniers chapos pour la page d'accueil
     {
         $lastPostResult = $this->bdd->query("SELECT post_id, post_title, post_date,post_chapo, post_content, users_id,users.Pseudo, users.mail, users.Pseudo FROM users INNER JOIN post_list USING(users_id)ORDER BY post_date DESC LIMIT 3");

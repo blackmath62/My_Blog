@@ -1,27 +1,28 @@
-# [Start Bootstrap](http://startbootstrap.com/) - [Freelancer](http://startbootstrap.com/template-overviews/freelancer/)
+# [J.POCHET](https://github.com/blackmath62/My_Blog)
 
-[Freelancer](http://startbootstrap.com/template-overviews/freelancer/) is a one page freelancer portfolio theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This theme features several content sections, a responsive portfolio grid with hover effects, full page portfolio item modals, and a working PHP contact form.
+My_Blog is a ready-to-use blog in which users can subscribe and participate by commenting on articles, it is possible to manage user rights, validate comments, modify posts, delete them, add posts, present your activity.
 
 ## Getting Started
 
-To begin using this template, choose one of the following options to get started:
-* [Download the latest release on Start Bootstrap](http://startbootstrap.com/template-overviews/freelancer/)
-* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-freelancer.git`
-* Fork the repo
+To install the project, just put the my_blog folder in the www directory of your server, create the database using the file "BDD_Structure_my_blog.sql",
+then go to the site with your browser => localhost / my_blog / index.php click on connect then registration then create your account,
+you will then have to go to the database to switch the law_id of your account to 1 (1 = administrator, 3 = Visitor and 4 = unknown),
+you can now reconnect to the blog and access the administration section of the site, you can post posts, manage user accounts,
+modify or delete posts, and validate user comments.
 
 ## Bugs and Issues
 
-Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-freelancer/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/freelancer/).
+Have a bug or an issue with this template? [Open a new issue](https://github.com/blackmath62/My_Blog)
 
 ## Creator
 
-Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**, Owner of [Blackrock Digital](http://blackrockdigital.io/).
+Jérôme POCHET
 
-* https://twitter.com/davidmillerskt
-* https://github.com/davidtmiller
-
-Start Bootstrap is based on the [Bootstrap](http://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
+* https://www.facebook.com/quepuisjefairepour.nous
+* https://github.com/blackmath62?tab=repositories
+* https://twitter.com/Jardinew62
+* https://www.linkedin.com/checkpoint/challengesV2/AQEpr6nVUiUztgAAAXLsl7nI1i1kZ_cSmK8_BICcGj6sQJIIqtlYUG9CMfNRtNMPcN93cV_byjmt2qfKadKKVy7fFKUcTSf_dA
 
 ## Copyright and License
 
-Copyright 2013-2016 Blackrock Digital LLC. Code released under the [MIT](https://github.com/BlackrockDigital/startbootstrap-freelancer/blob/gh-pages/LICENSE) license.
+OpenSource
